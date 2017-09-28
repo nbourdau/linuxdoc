@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.kfigure &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>linuxdoc.kfigure</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for linuxdoc.kfigure</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8; mode: python -*-</span>
+<span class="c1"># pylint: disable=C0103, R0903, R0912, R0915</span>
+<span class="sa">u</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    scalable figure and image handling</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    Sphinx extension which implements scalable image handling.</span>
+
+<span class="sd">    :copyright:  Copyright (C) 2016  Markus Heiser</span>
+<span class="sd">    :license:    GPL Version 2, June 1991 see Linux/COPYING for details.</span>
+
+<span class="sd">    The build for image formats depend on image&#39;s source format and output&#39;s</span>
+<span class="sd">    destination format. This extension implement methods to simplify image</span>
+<span class="sd">    handling from the author&#39;s POV. Directives like ``kernel-figure`` implement</span>
+<span class="sd">    methods *to* always get the best output-format even if some tools are not</span>
+<span class="sd">    installed. For more details take a look at ``convert_image(...)`` which is</span>
+<span class="sd">    the core of all conversions.</span>
+
+<span class="sd">    * ``.. kernel-image``: for image handling / a ``.. image::`` replacement</span>
+
+<span class="sd">    * ``.. kernel-figure``: for figure handling / a ``.. figure::`` replacement</span>
+
+<span class="sd">    * ``.. kernel-render``: for render markup / a concept to embed *render*</span>
+<span class="sd">      markups (or languages). Supported markups (see ``RENDER_MARKUP_EXT``)</span>
+
+<span class="sd">      - ``DOT``: render embedded Graphviz&#39;s **DOC**</span>
+<span class="sd">      - ``SVG``: render embedded Scalable Vector Graphics (**SVG**)</span>
+<span class="sd">      - ... *developable*</span>
+
+<span class="sd">    Used tools:</span>
+
+<span class="sd">    * ``dot(1)``: Graphviz (http://www.graphviz.org). If Graphviz is not</span>
+<span class="sd">      available, the DOT language is inserted as literal-block.</span>
+
+<span class="sd">    * SVG to PDF: To generate PDF, you need at least one of this tools:</span>
+
+<span class="sd">      - ``convert(1)``: ImageMagick (https://www.imagemagick.org)</span>
+
+<span class="sd">    List of customizations:</span>
+
+<span class="sd">    * generate PDF from SVG / used by PDF (LaTeX) builder</span>
+
+<span class="sd">    * generate SVG (html-builder) and PDF (latex-builder) from DOT files.</span>
+<span class="sd">      DOT: see http://www.graphviz.org/content/dot-language</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="k">import</span> <span class="n">sha1</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">docutils</span> <span class="k">import</span> <span class="n">nodes</span>
+<span class="kn">from</span> <span class="nn">docutils.statemachine</span> <span class="k">import</span> <span class="n">ViewList</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst</span> <span class="k">import</span> <span class="n">directives</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst.directives</span> <span class="k">import</span> <span class="n">images</span>
+<span class="kn">import</span> <span class="nn">sphinx</span>
+
+<span class="kn">from</span> <span class="nn">sphinx.util.nodes</span> <span class="k">import</span> <span class="n">clean_astext</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">iteritems</span>
+
+<span class="n">PY3</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+
+<span class="k">if</span> <span class="n">PY3</span><span class="p">:</span>
+    <span class="n">_unicode</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">_unicode</span> <span class="o">=</span> <span class="n">unicode</span>  <span class="c1"># pylint: disable=E0602</span>
+
+<span class="c1"># Get Sphinx version</span>
+<span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">patch</span> <span class="o">=</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">major</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">minor</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="c1"># patches.Figure only landed in Sphinx 1.4</span>
+    <span class="kn">from</span> <span class="nn">sphinx.directives.patches</span> <span class="k">import</span> <span class="n">Figure</span>  <span class="c1"># pylint: disable=C0412</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">Figure</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">Figure</span>
+
+<span class="n">__version__</span>  <span class="o">=</span> <span class="s1">&#39;1.0.0&#39;</span>
+
+<span class="c1"># simple helper</span>
+<span class="c1"># -------------</span>
+
+<div class="viewcode-block" id="which"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.which">[docs]</a><span class="k">def</span> <span class="nf">which</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Searches the ``cmd`` in the ``PATH`` enviroment.</span>
+
+<span class="sd">    This *which* searches the PATH for executable ``cmd`` . First match is</span>
+<span class="sd">    returned, if nothing is found, ``None`` is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">envpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PATH&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">defpath</span>
+    <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">envpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">):</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">cmd</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">fname</span></div>
+
+<div class="viewcode-block" id="mkdir"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.mkdir">[docs]</a><span class="k">def</span> <span class="nf">mkdir</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mo">0o775</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="file2literal"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.file2literal">[docs]</a><span class="k">def</span> <span class="nf">file2literal</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">src</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">literal_block</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="isNewer"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.isNewer">[docs]</a><span class="k">def</span> <span class="nf">isNewer</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span> <span class="n">path2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns True if ``path1`` is newer than ``path2``</span>
+
+<span class="sd">    If ``path1`` exists and is newer than ``path2`` the function returns</span>
+<span class="sd">    ``True`` is returned otherwise ``False``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path1</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">path1</span><span class="p">)</span><span class="o">.</span><span class="n">st_ctime</span> <span class="o">&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">path2</span><span class="p">)</span><span class="o">.</span><span class="n">st_ctime</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="pass_handle"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.pass_handle">[docs]</a><span class="k">def</span> <span class="nf">pass_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>           <span class="c1"># pylint: disable=W0613</span>
+    <span class="k">pass</span></div>
+
+<span class="c1"># setup conversion tools and sphinx extension</span>
+<span class="c1"># -------------------------------------------</span>
+
+<span class="c1"># Graphviz&#39;s dot(1) support</span>
+<span class="n">dot_cmd</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># ImageMagick&#39; convert(1) support</span>
+<span class="n">convert_cmd</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="c1"># check toolchain first</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;builder-inited&#39;</span><span class="p">,</span> <span class="n">setupTools</span><span class="p">)</span>
+
+    <span class="c1"># image handling</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s2">&quot;kernel-image&quot;</span><span class="p">,</span>  <span class="n">KernelImage</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">kernel_image</span><span class="p">,</span>
+                 <span class="n">html</span>    <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_image</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">latex</span>   <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_image</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">texinfo</span> <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_image</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">text</span>    <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_image</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">man</span>     <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_image</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span> <span class="p">)</span>
+
+    <span class="c1"># figure handling</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s2">&quot;kernel-figure&quot;</span><span class="p">,</span> <span class="n">KernelFigure</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">kernel_figure</span><span class="p">,</span>
+                 <span class="n">html</span>    <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_figure</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">latex</span>   <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_figure</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">texinfo</span> <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_figure</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">text</span>    <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_figure</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">man</span>     <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_figure</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span> <span class="p">)</span>
+
+    <span class="c1"># render handling</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s1">&#39;kernel-render&#39;</span><span class="p">,</span> <span class="n">KernelRender</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">kernel_render</span><span class="p">,</span>
+                 <span class="n">html</span>    <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_render</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">latex</span>   <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_render</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">texinfo</span> <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_render</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">text</span>    <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_render</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span>
+                 <span class="n">man</span>     <span class="o">=</span> <span class="p">(</span><span class="n">visit_kernel_render</span><span class="p">,</span> <span class="n">pass_handle</span><span class="p">),</span> <span class="p">)</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;doctree-read&#39;</span><span class="p">,</span> <span class="n">add_kernel_figure_to_std_domain</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">__version__</span><span class="p">,</span>
+        <span class="n">parallel_read_safe</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">parallel_write_safe</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="setupTools"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.setupTools">[docs]</a><span class="k">def</span> <span class="nf">setupTools</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+    <span class="sa">u</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check available build tools and log some *verbose* messages.</span>
+
+<span class="sd">    This function is called once, when the builder is initiated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">dot_cmd</span><span class="p">,</span> <span class="n">convert_cmd</span>   <span class="c1"># pylint: disable=W0603</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;kfigure: check installed tools ...&quot;</span><span class="p">)</span>
+
+    <span class="n">dot_cmd</span> <span class="o">=</span> <span class="n">which</span><span class="p">(</span><span class="s1">&#39;dot&#39;</span><span class="p">)</span>
+    <span class="n">convert_cmd</span> <span class="o">=</span> <span class="n">which</span><span class="p">(</span><span class="s1">&#39;convert&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dot_cmd</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;use dot(1) from: &quot;</span> <span class="o">+</span> <span class="n">dot_cmd</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;dot(1) not found, for better output quality install &quot;</span>
+                 <span class="s2">&quot;graphviz from http://www.graphviz.org&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">convert_cmd</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;use convert(1) from: &quot;</span> <span class="o">+</span> <span class="n">convert_cmd</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;convert(1) not found, for SVG to PDF conversion install &quot;</span>
+            <span class="s2">&quot;ImageMagick (https://www.imagemagick.org)&quot;</span><span class="p">)</span></div>
+
+
+<span class="c1"># integrate conversion tools</span>
+<span class="c1"># --------------------------</span>
+
+<span class="n">RENDER_MARKUP_EXT</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># The &#39;.ext&#39; must be handled by convert_image(..) function&#39;s *in_ext* input.</span>
+    <span class="c1"># &lt;name&gt; : &lt;.ext&gt;</span>
+    <span class="s1">&#39;DOT&#39;</span> <span class="p">:</span> <span class="s1">&#39;.dot&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SVG&#39;</span> <span class="p">:</span> <span class="s1">&#39;.svg&#39;</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="convert_image"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.convert_image">[docs]</a><span class="k">def</span> <span class="nf">convert_image</span><span class="p">(</span><span class="n">img_node</span><span class="p">,</span> <span class="n">translator</span><span class="p">,</span> <span class="n">src_fname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert a image node for the builder.</span>
+
+<span class="sd">    Different builder prefer different image formats, e.g. *latex* builder</span>
+<span class="sd">    prefer PDF while *html* builder prefer SVG format for images.</span>
+
+<span class="sd">    This function handles output image formats in dependence of source the</span>
+<span class="sd">    format (of the image) and the translator&#39;s output format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">app</span>
+
+    <span class="n">fname</span><span class="p">,</span> <span class="n">in_ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="n">src_fname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">src_fname</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">srcdir</span><span class="p">,</span> <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_fname</span><span class="p">):</span>
+            <span class="n">src_fname</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
+
+    <span class="n">dst_fname</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># in kernel builds, use &#39;make SPHINXOPTS=-v&#39; to see verbose messages</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;assert best format for: &#39;</span> <span class="o">+</span> <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">in_ext</span> <span class="o">==</span> <span class="s1">&#39;.dot&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dot_cmd</span><span class="p">:</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;dot from graphviz not available / include DOT raw.&quot;</span><span class="p">)</span>
+            <span class="n">img_node</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">file2literal</span><span class="p">(</span><span class="n">src_fname</span><span class="p">))</span>
+
+        <span class="k">elif</span> <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;latex&#39;</span><span class="p">:</span>
+            <span class="n">dst_fname</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">)</span>
+            <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span>
+            <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;candidates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">}</span>
+
+
+        <span class="k">elif</span> <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+            <span class="n">dst_fname</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span>
+                <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">imagedir</span><span class="p">,</span>
+                <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.svg&#39;</span><span class="p">)</span>
+            <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">imgpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.svg&#39;</span><span class="p">)</span>
+            <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;candidates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">imgpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.svg&#39;</span><span class="p">)}</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># all other builder formats will include DOT as raw</span>
+            <span class="n">img_node</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">file2literal</span><span class="p">(</span><span class="n">src_fname</span><span class="p">))</span>
+
+    <span class="k">elif</span> <span class="n">in_ext</span> <span class="o">==</span> <span class="s1">&#39;.svg&#39;</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;latex&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">convert_cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;no SVG to PDF conversion available / include SVG raw.&quot;</span><span class="p">)</span>
+                <span class="n">img_node</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">file2literal</span><span class="p">(</span><span class="n">src_fname</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dst_fname</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">)</span>
+                <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span>
+                <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;candidates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="n">fname</span> <span class="o">+</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">dst_fname</span><span class="p">:</span>
+        <span class="c1"># the builder needs not to copy one more time, so pop it if exists.</span>
+        <span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">_name</span> <span class="o">=</span> <span class="n">dst_fname</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">translator</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">if</span> <span class="n">isNewer</span><span class="p">(</span><span class="n">dst_fname</span><span class="p">,</span> <span class="n">src_fname</span><span class="p">):</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;convert: </span><span class="si">{out}</span><span class="s2">/</span><span class="si">%s</span><span class="s2"> already exists and is newer&quot;</span> <span class="o">%</span> <span class="n">_name</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ok</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">dst_fname</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">in_ext</span> <span class="o">==</span> <span class="s1">&#39;.dot&#39;</span><span class="p">:</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;convert DOT to: </span><span class="si">{out}</span><span class="s1">/&#39;</span> <span class="o">+</span> <span class="n">_name</span><span class="p">)</span>
+                <span class="n">ok</span> <span class="o">=</span> <span class="n">dot2format</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">src_fname</span><span class="p">,</span> <span class="n">dst_fname</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">in_ext</span> <span class="o">==</span> <span class="s1">&#39;.svg&#39;</span><span class="p">:</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;convert SVG to: </span><span class="si">{out}</span><span class="s1">/&#39;</span> <span class="o">+</span> <span class="n">_name</span><span class="p">)</span>
+                <span class="n">ok</span> <span class="o">=</span> <span class="n">svg2pdf</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">src_fname</span><span class="p">,</span> <span class="n">dst_fname</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+                <span class="n">img_node</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">file2literal</span><span class="p">(</span><span class="n">src_fname</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="dot2format"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.dot2format">[docs]</a><span class="k">def</span> <span class="nf">dot2format</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">dot_fname</span><span class="p">,</span> <span class="n">out_fname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts DOT file to ``out_fname`` using ``dot(1)``.</span>
+
+<span class="sd">    * ``dot_fname`` pathname of the input DOT file, including extension ``.dot``</span>
+<span class="sd">    * ``out_fname`` pathname of the output file, including format extension</span>
+
+<span class="sd">    The *format extension* depends on the ``dot`` command (see ``man dot``</span>
+<span class="sd">    option ``-Txxx``). Normally you will use one of the following extensions:</span>
+
+<span class="sd">    - ``.ps`` for PostScript,</span>
+<span class="sd">    - ``.svg`` or ``svgz`` for Structured Vector Graphics,</span>
+<span class="sd">    - ``.fig`` for XFIG graphics and</span>
+<span class="sd">    - ``.png`` or ``gif`` for common bitmap graphics.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">out_format</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">out_fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">dot_cmd</span><span class="p">,</span> <span class="s1">&#39;-T</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">out_format</span><span class="p">,</span> <span class="n">dot_fname</span><span class="p">]</span>
+    <span class="n">exit_code</span> <span class="o">=</span> <span class="mi">42</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_fname</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+        <span class="n">exit_code</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span> <span class="o">=</span> <span class="n">out</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">exit_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">app</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error #</span><span class="si">%d</span><span class="s2"> when calling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exit_code</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">exit_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="svg2pdf"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.svg2pdf">[docs]</a><span class="k">def</span> <span class="nf">svg2pdf</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">svg_fname</span><span class="p">,</span> <span class="n">pdf_fname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts SVG to PDF with ``convert(1)`` command.</span>
+
+<span class="sd">    Uses ``convert(1)`` from ImageMagick (https://www.imagemagick.org) for</span>
+<span class="sd">    conversion.  Returns ``True`` on success and ``False`` if an error occurred.</span>
+
+<span class="sd">    * ``svg_fname`` pathname of the input SVG file with extension (``.svg``)</span>
+<span class="sd">    * ``pdf_name``  pathname of the output PDF file with extension (``.pdf``)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="n">convert_cmd</span><span class="p">,</span> <span class="n">svg_fname</span><span class="p">,</span> <span class="n">pdf_fname</span><span class="p">]</span>
+    <span class="c1"># use stdout and stderr from parent</span>
+    <span class="n">exit_code</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">exit_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error #</span><span class="si">%d</span><span class="s2"> when calling: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exit_code</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">exit_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span></div>
+
+
+<span class="c1"># image handling</span>
+<span class="c1"># ---------------------</span>
+
+<div class="viewcode-block" id="visit_kernel_image"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.visit_kernel_image">[docs]</a><span class="k">def</span> <span class="nf">visit_kernel_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>    <span class="c1"># pylint: disable=W0613</span>
+    <span class="sd">&quot;&quot;&quot;Visitor of the ``kernel_image`` Node.</span>
+
+<span class="sd">    Handles the ``image`` child-node with the ``convert_image(...)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img_node</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">convert_image</span><span class="p">(</span><span class="n">img_node</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="kernel_image"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.kernel_image">[docs]</a><span class="k">class</span> <span class="nc">kernel_image</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Node for ``kernel-image`` directive.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="KernelImage"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelImage">[docs]</a><span class="k">class</span> <span class="nc">KernelImage</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">Image</span><span class="p">):</span>
+    <span class="sa">u</span><span class="sd">&quot;&quot;&quot;KernelImage directive</span>
+
+<span class="sd">    Earns everything from ``.. image::`` directive, except *remote URI* and</span>
+<span class="sd">    *glob* pattern. The KernelImage wraps a image node into a</span>
+<span class="sd">    kernel_image node. See ``visit_kernel_image``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="KernelImage.run"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelImage.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">uri</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.*&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">uri</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span>
+                <span class="s1">&#39;Error in &quot;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&quot;: glob pattern and remote images are not allowed&#39;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">uri</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="o">.</span><span class="n">system_message</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="p">(</span><span class="n">image_node</span><span class="p">,)</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="c1"># wrap image node into a kernel_image node / see visitors</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">kernel_image</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">image_node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span></div></div>
+
+<span class="c1"># figure handling</span>
+<span class="c1"># ---------------------</span>
+
+<div class="viewcode-block" id="visit_kernel_figure"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.visit_kernel_figure">[docs]</a><span class="k">def</span> <span class="nf">visit_kernel_figure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>   <span class="c1"># pylint: disable=W0613</span>
+    <span class="sd">&quot;&quot;&quot;Visitor of the ``kernel_figure`` Node.</span>
+
+<span class="sd">    Handles the ``image`` child-node with the ``convert_image(...)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img_node</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">convert_image</span><span class="p">(</span><span class="n">img_node</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="kernel_figure"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.kernel_figure">[docs]</a><span class="k">class</span> <span class="nc">kernel_figure</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">figure</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Node for ``kernel-figure`` directive.&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="KernelFigure"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelFigure">[docs]</a><span class="k">class</span> <span class="nc">KernelFigure</span><span class="p">(</span><span class="n">Figure</span><span class="p">):</span>
+    <span class="sa">u</span><span class="sd">&quot;&quot;&quot;KernelImage directive</span>
+
+<span class="sd">    Earns everything from ``.. figure::`` directive, except *remote URI* and</span>
+<span class="sd">    *glob* pattern.  The KernelFigure wraps a figure node into a kernel_figure</span>
+<span class="sd">    node. See ``visit_kernel_figure``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="KernelFigure.run"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelFigure.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">uri</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.*&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">uri</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span>
+                <span class="s1">&#39;Error in &quot;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&quot;:&#39;</span>
+                <span class="s1">&#39; glob pattern and remote images are not allowed&#39;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">uri</span><span class="p">))</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Figure</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="o">.</span><span class="n">system_message</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="p">(</span><span class="n">figure_node</span><span class="p">,)</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="c1"># wrap figure node into a kernel_figure node / see visitors</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">kernel_figure</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">figure_node</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span></div></div>
+
+
+<span class="c1"># render handling</span>
+<span class="c1"># ---------------------</span>
+
+<div class="viewcode-block" id="visit_kernel_render"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.visit_kernel_render">[docs]</a><span class="k">def</span> <span class="nf">visit_kernel_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Visitor of the ``kernel_render`` Node.</span>
+
+<span class="sd">    If rendering tools available, save the markup of the ``literal_block`` child</span>
+<span class="sd">    node into a file and replace the ``literal_block`` node with a new created</span>
+<span class="sd">    ``image`` node, pointing to the saved markup file. Afterwards, handle the</span>
+<span class="sd">    image child-node with the ``convert_image(...)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">app</span>
+    <span class="n">srclang</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;srclang&#39;</span><span class="p">)</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;visit kernel-render node lang: &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">srclang</span><span class="p">))</span>
+
+    <span class="n">tmp_ext</span> <span class="o">=</span> <span class="n">RENDER_MARKUP_EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">srclang</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tmp_ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;kernel-render: &quot;</span><span class="si">%s</span><span class="s1">&quot; unknow / include raw.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">srclang</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dot_cmd</span> <span class="ow">and</span> <span class="n">tmp_ext</span> <span class="o">==</span> <span class="s1">&#39;.dot&#39;</span><span class="p">:</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;dot from graphviz not available / include raw.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">literal_block</span> <span class="o">=</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">code</span>      <span class="o">=</span> <span class="n">literal_block</span><span class="o">.</span><span class="n">astext</span><span class="p">()</span>
+    <span class="n">hashobj</span>   <span class="o">=</span> <span class="n">code</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="c1">#  str(node.attributes)</span>
+    <span class="n">fname</span>     <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">srclang</span><span class="p">,</span> <span class="n">sha1</span><span class="p">(</span><span class="n">hashobj</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()))</span>
+
+    <span class="n">tmp_fname</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">imagedir</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="n">tmp_ext</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">tmp_fname</span><span class="p">):</span>
+        <span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">tmp_fname</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tmp_fname</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+
+    <span class="n">img_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">rawsource</span><span class="p">,</span> <span class="o">**</span><span class="n">node</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span>
+    <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">imgpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="n">tmp_ext</span><span class="p">)</span>
+    <span class="n">img_node</span><span class="p">[</span><span class="s1">&#39;candidates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">imgpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">+</span> <span class="n">tmp_ext</span><span class="p">)}</span>
+
+    <span class="n">literal_block</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">img_node</span><span class="p">)</span>
+    <span class="n">convert_image</span><span class="p">(</span><span class="n">img_node</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">tmp_fname</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="kernel_render"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.kernel_render">[docs]</a><span class="k">class</span> <span class="nc">kernel_render</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">General</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Inline</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Element</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Node for ``kernel-render`` directive.&quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="KernelRender"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelRender">[docs]</a><span class="k">class</span> <span class="nc">KernelRender</span><span class="p">(</span><span class="n">Figure</span><span class="p">):</span>
+    <span class="sa">u</span><span class="sd">&quot;&quot;&quot;KernelRender directive</span>
+
+<span class="sd">    Render content by external tool.  Has all the options known from the</span>
+<span class="sd">    *figure*  directive, plus option ``caption``.  If ``caption`` has a</span>
+<span class="sd">    value, a figure node with the *caption* is inserted. If not, a image node is</span>
+<span class="sd">    inserted.</span>
+
+<span class="sd">    The KernelRender directive wraps the text of the directive into a</span>
+<span class="sd">    literal_block node and wraps it into a kernel_render node. See</span>
+<span class="sd">    ``visit_kernel_render``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">has_content</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">required_arguments</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">optional_arguments</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">final_argument_whitespace</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># earn options from &#39;figure&#39;</span>
+    <span class="n">option_spec</span> <span class="o">=</span> <span class="n">Figure</span><span class="o">.</span><span class="n">option_spec</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">option_spec</span><span class="p">[</span><span class="s1">&#39;caption&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span>
+
+<div class="viewcode-block" id="KernelRender.run"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelRender.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">build_node</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="KernelRender.build_node"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.KernelRender.build_node">[docs]</a>    <span class="k">def</span> <span class="nf">build_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">srclang</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">srclang</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">RENDER_MARKUP_EXT</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">state_machine</span><span class="o">.</span><span class="n">reporter</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Unknow source language &quot;</span><span class="si">%s</span><span class="s1">&quot;, use one of: </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">srclang</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RENDER_MARKUP_EXT</span><span class="o">.</span><span class="n">keys</span><span class="p">())),</span>
+                <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="p">)]</span>
+
+        <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">code</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">state_machine</span><span class="o">.</span><span class="n">reporter</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;Ignoring &quot;</span><span class="si">%s</span><span class="s1">&quot; directive without content.&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                <span class="n">line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="p">)]</span>
+
+        <span class="n">node</span> <span class="o">=</span> <span class="n">kernel_render</span><span class="p">()</span>
+        <span class="n">node</span><span class="p">[</span><span class="s1">&#39;alt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">node</span><span class="p">[</span><span class="s1">&#39;srclang&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">srclang</span>
+        <span class="n">literal_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">literal_block</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">+=</span> <span class="n">literal_node</span>
+
+        <span class="n">caption</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;caption&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+            <span class="c1"># parse caption&#39;s content</span>
+            <span class="n">parsed</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Element</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">nested_parse</span><span class="p">(</span>
+                <span class="n">ViewList</span><span class="p">([</span><span class="n">caption</span><span class="p">],</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_offset</span><span class="p">,</span> <span class="n">parsed</span><span class="p">)</span>
+            <span class="n">caption_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">caption</span><span class="p">(</span>
+                <span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rawsource</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+            <span class="n">caption_node</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">source</span>
+            <span class="n">caption_node</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">parsed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">line</span>
+
+            <span class="n">figure_node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">figure_node</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="n">figure_node</span> <span class="o">+=</span> <span class="n">caption_node</span>
+
+            <span class="n">node</span> <span class="o">=</span> <span class="n">figure_node</span>
+
+        <span class="k">return</span> <span class="n">node</span></div></div>
+
+<div class="viewcode-block" id="add_kernel_figure_to_std_domain"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kfigure.html#linuxdoc.kfigure.add_kernel_figure_to_std_domain">[docs]</a><span class="k">def</span> <span class="nf">add_kernel_figure_to_std_domain</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">doctree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add kernel-figure anchors to &#39;std&#39; domain.</span>
+
+<span class="sd">    The ``StandardDomain.process_doc(..)`` method does not know how to resolve</span>
+<span class="sd">    the caption (label) of ``kernel-figure`` directive (it only knows about</span>
+<span class="sd">    standard nodes, e.g. table, figure etc.). Without any additional handling</span>
+<span class="sd">    this will result in a &#39;undefined label&#39; for kernel-figures.</span>
+
+<span class="sd">    This handle adds labels of kernel-figure to the &#39;std&#39; domain labels.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">std</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">domains</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">]</span>
+    <span class="n">docname</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">docname</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">std</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">explicit</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">doctree</span><span class="o">.</span><span class="n">nametypes</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">explicit</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">labelid</span> <span class="o">=</span> <span class="n">doctree</span><span class="o">.</span><span class="n">nameids</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">labelid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">doctree</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">labelid</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">tagname</span> <span class="o">==</span> <span class="s1">&#39;kernel_figure&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">next_node</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">tagname</span> <span class="o">==</span> <span class="s1">&#39;caption&#39;</span><span class="p">:</span>
+                    <span class="n">sectname</span> <span class="o">=</span> <span class="n">clean_astext</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="c1"># add label to std domain</span>
+                    <span class="n">labels</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">docname</span><span class="p">,</span> <span class="n">labelid</span><span class="p">,</span> <span class="n">sectname</span>
+                    <span class="k">break</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

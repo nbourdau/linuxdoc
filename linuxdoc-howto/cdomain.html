@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Customized sphinx c-domain &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="LinuxDoc HowTo" href="index.html"/>
+        <link rel="next" title="man pages from kernel-doc comments" href="man-pages.html"/>
+        <link rel="prev" title="About tables" href="table-markup.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+      <li>Customized sphinx c-domain</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/cdomain.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="customized-sphinx-c-domain">
+<span id="customized-c-domain"></span><h1>Customized sphinx c-domain<a class="headerlink" href="#customized-sphinx-c-domain" title="Permalink to this headline">¶</a></h1>
+<p>The LinuxDoc brings a customized <a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html#cross-referencing-c-constructs">Sphinx’s C Domain</a> extension. List of
+customizations:</p>
+<ul>
+<li><p class="first">Handle signatures of function-like macros well. Don’t try to deduce
+arguments types of function-like macros.</p>
+</li>
+<li><p class="first">Moved the <em>duplicate C object description</em> warnings for function
+declarations in the nitpicky mode. See Sphinx documentation for
+the config values for <a class="reference external" href="http://www.sphinx-doc.org/en/stable/config.html#confval-nitpicky">nitpicky</a> and <a class="reference external" href="http://www.sphinx-doc.org/en/stable/config.html#confval-nitpick_ignore">nitpick_ignore</a>.</p>
+</li>
+<li><p class="first">Add option <code class="docutils literal"><span class="pre">name</span></code> to the <code class="docutils literal"><span class="pre">c:function:</span></code> directive. With option <code class="docutils literal"><span class="pre">name</span></code> the
+ref-name of a function can be modified. E.g. you can <em>rename</em> the reference
+name of a function with a common name like <code class="docutils literal"><span class="pre">open</span></code> or <code class="docutils literal"><span class="pre">ioctl</span></code>:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">c:function</span><span class="p">::</span> int ioctl( int fd, int request )
+   <span class="nc">:name:</span> <span class="nf">VIDIOC_LOG_STATUS</span>
+</pre></div>
+</div>
+<p>The func-name (e.g. ioctl) remains in the output but the ref-name changed from
+<code class="docutils literal"><span class="pre">ioctl</span></code> to <code class="docutils literal"><span class="pre">VIDIOC_LOG_STATUS</span></code>. The index entry for this function is also
+changed to <code class="docutils literal"><span class="pre">VIDIOC_LOG_STATUS</span></code> and the function can now referenced by:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="na">:c:func:</span><span class="nv">`VIDIOC_LOG_STATUS`</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="man-pages.html" class="btn btn-neutral float-right" title="man pages from kernel-doc comments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="table-markup.html" class="btn btn-neutral" title="About tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

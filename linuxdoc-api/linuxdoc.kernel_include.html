@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.kernel_include module &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="linuxdoc package" href="linuxdoc.html"/>
+        <link rel="next" title="linuxdoc.kfigure module" href="linuxdoc.kfigure.html"/>
+        <link rel="prev" title="linuxdoc.kernel_doc module" href="linuxdoc.kernel_doc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="linuxdoc.html">linuxdoc package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="linuxdoc.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.autodoc.html">linuxdoc.autodoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.cdomain.html">linuxdoc.cdomain module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.grep_doc.html">linuxdoc.grep_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_doc.html">linuxdoc.kernel_doc module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">linuxdoc.kernel_include module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kernel-include">kernel-include</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kfigure.html">linuxdoc.kfigure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.lint.html">linuxdoc.lint module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.manKernelDoc.html">linuxdoc.manKernelDoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstFlatTable.html">linuxdoc.rstFlatTable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstKernelDoc.html">linuxdoc.rstKernelDoc module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linuxdoc.html#module-linuxdoc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="linuxdoc.html">linuxdoc package</a> &raquo;</li>
+        
+      <li>linuxdoc.kernel_include module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-api/linuxdoc.kernel_include.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-linuxdoc.kernel_include">
+<span id="linuxdoc-kernel-include-module"></span><h1>linuxdoc.kernel_include module<a class="headerlink" href="#module-linuxdoc.kernel_include" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="kernel-include">
+<h2>kernel-include<a class="headerlink" href="#kernel-include" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of the <code class="docutils literal"><span class="pre">kernel-include</span></code> reST-directive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">Copyright (C) 2016  Markus Heiser</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">GPL Version 2, June 1991 see linux/COPYING for details.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal"><span class="pre">kernel-include</span></code> reST-directive is a replacement for the <code class="docutils literal"><span class="pre">include</span></code>
+directive. The <code class="docutils literal"><span class="pre">kernel-include</span></code> directive expand environment variables in
+the path name and allows to include files from arbitrary locations.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Including files from arbitrary locations (e.g. from <code class="docutils literal"><span class="pre">/etc</span></code>) is a
+security risk for builders. This is why the <code class="docutils literal"><span class="pre">include</span></code> directive from
+docutils <em>prohibit</em> pathnames pointing to locations <em>above</em> the filesystem
+tree where the reST document with the include directive is placed.</p>
+</div>
+<p>Substrings of the form $name or ${name} are replaced by the value of
+environment variable name. Malformed variable names and references to
+non-existing variables are left unchanged.</p>
+<dl class="class">
+<dt id="linuxdoc.kernel_include.KernelInclude">
+<em class="property">class </em><code class="descclassname">linuxdoc.kernel_include.</code><code class="descname">KernelInclude</code><span class="sig-paren">(</span><em>name</em>, <em>arguments</em>, <em>options</em>, <em>content</em>, <em>lineno</em>, <em>content_offset</em>, <em>block_text</em>, <em>state</em>, <em>state_machine</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kernel_include.html#KernelInclude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kernel_include.KernelInclude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">docutils.parsers.rst.directives.misc.Include</span></code></p>
+<p>KernelInclude (<code class="docutils literal"><span class="pre">kernel-include</span></code>) directive</p>
+<dl class="method">
+<dt id="linuxdoc.kernel_include.KernelInclude.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kernel_include.html#KernelInclude.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kernel_include.KernelInclude.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kernel_include.setup">
+<code class="descclassname">linuxdoc.kernel_include.</code><code class="descname">setup</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kernel_include.html#setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kernel_include.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="linuxdoc.kfigure.html" class="btn btn-neutral float-right" title="linuxdoc.kfigure module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="linuxdoc.kernel_doc.html" class="btn btn-neutral" title="linuxdoc.kernel_doc module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

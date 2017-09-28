@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.kernel_include &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>linuxdoc.kernel_include</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for linuxdoc.kernel_include</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8; mode: python -*-</span>
+<span class="c1"># pylint: disable=R0914,R0912,R0915</span>
+<span class="sa">u</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    kernel-include</span>
+<span class="sd">    ~~~~~~~~~~~~~~</span>
+
+<span class="sd">    Implementation of the ``kernel-include`` reST-directive.</span>
+
+<span class="sd">    :copyright:  Copyright (C) 2016  Markus Heiser</span>
+<span class="sd">    :license:    GPL Version 2, June 1991 see linux/COPYING for details.</span>
+
+<span class="sd">    The ``kernel-include`` reST-directive is a replacement for the ``include``</span>
+<span class="sd">    directive. The ``kernel-include`` directive expand environment variables in</span>
+<span class="sd">    the path name and allows to include files from arbitrary locations.</span>
+
+<span class="sd">    .. hint::</span>
+
+<span class="sd">      Including files from arbitrary locations (e.g. from ``/etc``) is a</span>
+<span class="sd">      security risk for builders. This is why the ``include`` directive from</span>
+<span class="sd">      docutils *prohibit* pathnames pointing to locations *above* the filesystem</span>
+<span class="sd">      tree where the reST document with the include directive is placed.</span>
+
+<span class="sd">    Substrings of the form $name or ${name} are replaced by the value of</span>
+<span class="sd">    environment variable name. Malformed variable names and references to</span>
+<span class="sd">    non-existing variables are left unchanged.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># imports</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="kn">from</span> <span class="nn">docutils</span> <span class="k">import</span> <span class="n">io</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">statemachine</span>
+<span class="kn">from</span> <span class="nn">docutils.utils.error_reporting</span> <span class="k">import</span> <span class="n">SafeString</span><span class="p">,</span> <span class="n">ErrorString</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst</span> <span class="k">import</span> <span class="n">directives</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst.directives.body</span> <span class="k">import</span> <span class="n">CodeBlock</span><span class="p">,</span> <span class="n">NumberLines</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst.directives.misc</span> <span class="k">import</span> <span class="n">Include</span>
+
+<span class="n">__version__</span>  <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span>
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kernel_include.html#linuxdoc.kernel_include.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<span class="c1"># ==============================================================================</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s2">&quot;kernel-include&quot;</span><span class="p">,</span> <span class="n">KernelInclude</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">__version__</span><span class="p">,</span>
+        <span class="n">parallel_read_safe</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">parallel_write_safe</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span></div>
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="KernelInclude"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kernel_include.html#linuxdoc.kernel_include.KernelInclude">[docs]</a><span class="k">class</span> <span class="nc">KernelInclude</span><span class="p">(</span><span class="n">Include</span><span class="p">):</span>
+<span class="c1"># ==============================================================================</span>
+
+    <span class="sa">u</span><span class="sd">&quot;&quot;&quot;KernelInclude (``kernel-include``) directive&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="KernelInclude.run"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.kernel_include.html#linuxdoc.kernel_include.KernelInclude.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expandvars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="c1"># to get a bit security back, prohibit /etc:</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;etc&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span>
+                <span class="s1">&#39;Problems with &quot;</span><span class="si">%s</span><span class="s1">&quot; directive, prohibited path: </span><span class="si">%s</span><span class="s1">&#39;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+
+        <span class="c1">#return super(KernelInclude, self).run() # won&#39;t work, see HINTs in _run()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Include a file as part of the content of this reST file.&quot;&quot;&quot;</span>
+
+        <span class="c1"># HINT: I had to copy&amp;paste the whole Include.run method. I&#39;am not happy</span>
+        <span class="c1"># with this, but due to security reasons, the Include.run method does</span>
+        <span class="c1"># not allow absolute or relative pathnames pointing to locations *above*</span>
+        <span class="c1"># the filesystem tree where the reST document is placed.</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">file_insertion_enabled</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; directive disabled.&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_machine</span><span class="o">.</span><span class="n">input_lines</span><span class="o">.</span><span class="n">source</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lineno</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_machine</span><span class="o">.</span><span class="n">input_offset</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">source_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">directives</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">standard_include_path</span><span class="p">,</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+
+        <span class="c1"># HINT: this is the only line I had to change / commented out:</span>
+        <span class="c1">#path = utils.relative_path(None, path)</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">reprunicode</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">input_encoding</span><span class="p">)</span>
+        <span class="n">e_handler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">input_encoding_error_handler</span>
+        <span class="n">tab_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;tab-width&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">tab_width</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">record_dependencies</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">include_file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">FileInput</span><span class="p">(</span><span class="n">source_path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                                        <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+                                        <span class="n">error_handler</span><span class="o">=</span><span class="n">e_handler</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">UnicodeEncodeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span><span class="s1">&#39;Problems with &quot;</span><span class="si">%s</span><span class="s1">&quot; directive path:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                              <span class="s1">&#39;Cannot encode input file path &quot;</span><span class="si">%s</span><span class="s1">&quot; &#39;</span>
+                              <span class="s1">&#39;(wrong locale?).&#39;</span> <span class="o">%</span>
+                              <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">SafeString</span><span class="p">(</span><span class="n">path</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span><span class="s1">&#39;Problems with &quot;</span><span class="si">%s</span><span class="s1">&quot; directive path:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span>
+                      <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ErrorString</span><span class="p">(</span><span class="n">error</span><span class="p">)))</span>
+        <span class="n">startline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start-line&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">endline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end-line&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rawtext</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">startline</span> <span class="ow">or</span> <span class="p">(</span><span class="n">endline</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">lines</span> <span class="o">=</span> <span class="n">include_file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+                <span class="n">rawtext</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">startline</span><span class="p">:</span><span class="n">endline</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rawtext</span> <span class="o">=</span> <span class="n">include_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">UnicodeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span><span class="s1">&#39;Problem with &quot;</span><span class="si">%s</span><span class="s1">&quot; directive:</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                              <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ErrorString</span><span class="p">(</span><span class="n">error</span><span class="p">)))</span>
+        <span class="c1"># start-after/end-before: no restrictions on newlines in match-text,</span>
+        <span class="c1"># and no restrictions on matching inside lines vs. line boundaries</span>
+        <span class="n">after_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start-after&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">after_text</span><span class="p">:</span>
+            <span class="c1"># skip content in rawtext before *and incl.* a matching text</span>
+            <span class="n">after_index</span> <span class="o">=</span> <span class="n">rawtext</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">after_text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">after_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span><span class="s1">&#39;Problem with &quot;start-after&quot; option of &quot;</span><span class="si">%s</span><span class="s1">&quot; &#39;</span>
+                                  <span class="s1">&#39;directive:</span><span class="se">\n</span><span class="s1">Text not found.&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">rawtext</span> <span class="o">=</span> <span class="n">rawtext</span><span class="p">[</span><span class="n">after_index</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">after_text</span><span class="p">):]</span>
+        <span class="n">before_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;end-before&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">before_text</span><span class="p">:</span>
+            <span class="c1"># skip content in rawtext after *and incl.* a matching text</span>
+            <span class="n">before_index</span> <span class="o">=</span> <span class="n">rawtext</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">before_text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">before_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">severe</span><span class="p">(</span><span class="s1">&#39;Problem with &quot;end-before&quot; option of &quot;</span><span class="si">%s</span><span class="s1">&quot; &#39;</span>
+                                  <span class="s1">&#39;directive:</span><span class="se">\n</span><span class="s1">Text not found.&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">rawtext</span> <span class="o">=</span> <span class="n">rawtext</span><span class="p">[:</span><span class="n">before_index</span><span class="p">]</span>
+
+        <span class="n">include_lines</span> <span class="o">=</span> <span class="n">statemachine</span><span class="o">.</span><span class="n">string2lines</span><span class="p">(</span><span class="n">rawtext</span><span class="p">,</span> <span class="n">tab_width</span><span class="p">,</span>
+                                                  <span class="n">convert_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;literal&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+            <span class="c1"># Convert tabs to spaces, if `tab_width` is positive.</span>
+            <span class="k">if</span> <span class="n">tab_width</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">rawtext</span><span class="o">.</span><span class="n">expandtabs</span><span class="p">(</span><span class="n">tab_width</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">rawtext</span>
+            <span class="n">literal_block</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">literal_block</span><span class="p">(</span><span class="n">rawtext</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                                    <span class="n">classes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+            <span class="n">literal_block</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_name</span><span class="p">(</span><span class="n">literal_block</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;number-lines&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">startline</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;number-lines&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;:number-lines: with non-integer &#39;</span>
+                                     <span class="s1">&#39;start value&#39;</span><span class="p">)</span>
+                <span class="n">endline</span> <span class="o">=</span> <span class="n">startline</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">include_lines</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+                    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">tokens</span> <span class="o">=</span> <span class="n">NumberLines</span><span class="p">([([],</span> <span class="n">text</span><span class="p">)],</span> <span class="n">startline</span><span class="p">,</span> <span class="n">endline</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">classes</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">classes</span><span class="p">:</span>
+                        <span class="n">literal_block</span> <span class="o">+=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">inline</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span>
+                                                      <span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">literal_block</span> <span class="o">+=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">literal_block</span> <span class="o">+=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">literal_block</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;code&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+            <span class="n">codeblock</span> <span class="o">=</span> <span class="n">CodeBlock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                  <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)],</span> <span class="c1"># arguments</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">,</span>
+                                  <span class="n">include_lines</span><span class="p">,</span> <span class="c1"># content</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">content_offset</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">block_text</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">state_machine</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">codeblock</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_machine</span><span class="o">.</span><span class="n">insert_input</span><span class="p">(</span><span class="n">include_lines</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

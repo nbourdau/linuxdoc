@@ -1,0 +1,26 @@
+linuxdoc package
+================
+
+Submodules
+----------
+
+.. toctree::
+
+   linuxdoc.autodoc
+   linuxdoc.cdomain
+   linuxdoc.grep_doc
+   linuxdoc.kernel_doc
+   linuxdoc.kernel_include
+   linuxdoc.kfigure
+   linuxdoc.lint
+   linuxdoc.manKernelDoc
+   linuxdoc.rstFlatTable
+   linuxdoc.rstKernelDoc
+
+Module contents
+---------------
+
+.. automodule:: linuxdoc
+    :members:
+    :undoc-members:
+    :show-inheritance:

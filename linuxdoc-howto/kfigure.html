@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scalable figure and image handling &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="LinuxDoc HowTo" href="index.html"/>
+        <link rel="next" title="About tables" href="table-markup.html"/>
+        <link rel="prev" title="Vintage kernel-doc mode" href="vintage-kernel-doc-mode.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Scalable figure and image handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#figures-images">Figures &amp; images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+      <li>Scalable figure and image handling</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/kfigure.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scalable-figure-and-image-handling">
+<span id="kfigure"></span><h1>Scalable figure and image handling<a class="headerlink" href="#scalable-figure-and-image-handling" title="Permalink to this headline">¶</a></h1>
+<p>The LinuxDoc brings the <code class="docutils literal"><span class="pre">kfigure</span></code> Sphinx extension which implements scalable
+image handling.  The build for image formats depend on image’s source format and
+output’s destination format. This extension implement methods to simplify image
+handling from the author’s POV. Directives like <code class="docutils literal"><span class="pre">kernel-figure</span></code> implement
+methods <em>to</em> always get the best output-format even if some tools are not
+installed.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">..</span> <span class="pre">kernel-image</span></code>: for image handling / a <code class="docutils literal"><span class="pre">..</span> <span class="pre">image::</span></code> replacement</li>
+<li><code class="docutils literal"><span class="pre">..</span> <span class="pre">kernel-figure</span></code>: for figure handling / a <code class="docutils literal"><span class="pre">..</span> <span class="pre">figure::</span></code> replacement</li>
+<li><code class="docutils literal"><span class="pre">..</span> <span class="pre">kernel-render</span></code>: for render markup / a concept to embed <em>render</em>
+markups (or languages). Supported markups:<ul>
+<li><code class="docutils literal"><span class="pre">DOT</span></code>: render embedded Graphviz’s <strong>DOC</strong></li>
+<li><code class="docutils literal"><span class="pre">SVG</span></code>: render embedded Scalable Vector Graphics (<strong>SVG</strong>)</li>
+<li>… <em>developable</em></li>
+</ul>
+</li>
+</ul>
+<p>Used tools:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">dot(1)</span></code>: Graphviz (<a class="reference external" href="http://www.graphviz.org">http://www.graphviz.org</a>). If Graphviz is not
+available, the DOT language is inserted as literal-block.</li>
+<li>SVG to PDF: To generate PDF, you need at least one of this tools:<ul>
+<li><code class="docutils literal"><span class="pre">convert(1)</span></code>: ImageMagick (<a class="reference external" href="https://www.imagemagick.org">https://www.imagemagick.org</a>)</li>
+</ul>
+</li>
+</ul>
+<p>List of customizations:</p>
+<ul class="simple">
+<li>generate PDF from SVG / used by PDF (LaTeX) builder</li>
+<li>generate SVG (html-builder) and PDF (latex-builder) from DOT files.
+DOT: see <a class="reference external" href="http://www.graphviz.org/content/dot-language">http://www.graphviz.org/content/dot-language</a></li>
+</ul>
+<div class="section" id="figures-images">
+<h2>Figures &amp; images<a class="headerlink" href="#figures-images" title="Permalink to this headline">¶</a></h2>
+<p>If you want to add an image, you should use the <code class="docutils literal"><span class="pre">kernel-figure</span></code> and
+<code class="docutils literal"><span class="pre">kernel-image</span></code> directives. E.g. to insert a figure with a scalable image
+format use SVG (<a class="reference internal" href="#svg-image-example"><span class="std std-ref">SVG image example</span></a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">kernel</span><span class="o">-</span><span class="n">figure</span><span class="p">::</span>  <span class="n">svg_image</span><span class="o">.</span><span class="n">svg</span>
+   <span class="p">:</span><span class="n">alt</span><span class="p">:</span>    <span class="n">simple</span> <span class="n">SVG</span> <span class="n">image</span>
+
+   <span class="n">SVG</span> <span class="n">image</span> <span class="n">example</span>
+</pre></div>
+</div>
+<div class="figure" id="id1">
+<img alt="simple SVG image" src="../_images/svg_image.svg" /><p class="caption"><span class="caption-text">SVG image example</span></p>
+</div>
+<p>The kernel figure (and image) directive support <strong>DOT</strong> formated files, see</p>
+<ul class="simple">
+<li>DOT: <a class="reference external" href="http://graphviz.org/pdf/dotguide.pdf">http://graphviz.org/pdf/dotguide.pdf</a></li>
+<li>Graphviz: <a class="reference external" href="http://www.graphviz.org/content/dot-language">http://www.graphviz.org/content/dot-language</a></li>
+</ul>
+<p>A simple example (<a class="reference internal" href="#hello-dot-file"><span class="std std-ref">DOT’s hello world example</span></a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">kernel</span><span class="o">-</span><span class="n">figure</span><span class="p">::</span>  <span class="n">hello</span><span class="o">.</span><span class="n">dot</span>
+   <span class="p">:</span><span class="n">alt</span><span class="p">:</span>    <span class="n">hello</span> <span class="n">world</span>
+
+   <span class="n">DOT</span><span class="s1">&#39;s hello world example</span>
+</pre></div>
+</div>
+<div class="figure" id="id2">
+<img alt="hello world" src="../_images/hello.svg" /><p class="caption"><span class="caption-text">DOT’s hello world example</span></p>
+</div>
+<p>Embed <em>render</em> markups (or languages) like Graphviz’s <strong>DOT</strong> is provided by the
+<code class="docutils literal"><span class="pre">kernel-render</span></code> directives.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">kernel</span><span class="o">-</span><span class="n">render</span><span class="p">::</span> <span class="n">DOT</span>
+   <span class="p">:</span><span class="n">alt</span><span class="p">:</span> <span class="n">foobar</span> <span class="n">digraph</span>
+   <span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">Embedded</span> <span class="o">**</span><span class="n">DOT</span><span class="o">**</span> <span class="p">(</span><span class="n">Graphviz</span><span class="p">)</span> <span class="n">code</span>
+
+   <span class="n">digraph</span> <span class="n">foo</span> <span class="p">{</span>
+    <span class="s2">&quot;bar&quot;</span> <span class="o">-&gt;</span> <span class="s2">&quot;baz&quot;</span><span class="p">;</span>
+   <span class="p">}</span>
+</pre></div>
+</div>
+<p>How this will be rendered depends on the installed tools. If Graphviz is
+installed, you will see an vector image. If not the raw markup is inserted as
+<em>literal-block</em> (<a class="reference internal" href="#hello-dot-render"><span class="std std-ref">Embedded DOT (Graphviz) code</span></a>).</p>
+<div class="figure" id="id3">
+<span id="hello-dot-render"></span><img alt="foobar digraph" src="../_images/DOT-1e38538b2ff52f303e5ecd4abe763316501a0a12.svg" /><p class="caption"><span class="caption-text">Embedded <strong>DOT</strong> (Graphviz) code</span></p>
+</div>
+<p>The <em>render</em> directive has all the options known from the <em>figure</em> directive,
+plus option <code class="docutils literal"><span class="pre">caption</span></code>.  If <code class="docutils literal"><span class="pre">caption</span></code> has a value, a <em>figure</em> node is
+inserted. If not, a <em>image</em> node is inserted. A <code class="docutils literal"><span class="pre">caption</span></code> is also needed, if
+you want to refer it (<a class="reference internal" href="#hello-svg-render"><span class="std std-ref">Embedded SVG markup</span></a>).</p>
+<p>Embedded <strong>SVG</strong>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>.. kernel-render:: SVG
+   :caption: Embedded **SVG** markup
+   :alt: so-nw-arrow
+
+   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+   &lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; ...&gt;
+      ...
+   &lt;/svg&gt;
+</pre></div>
+</div>
+<div class="figure" id="id4">
+<span id="hello-svg-render"></span><img alt="so-nw-arrow" src="../_images/SVG-3bcc8521eb73e7bcc8b0de14afcc31d733ec6b25.svg" /><p class="caption"><span class="caption-text">Embedded <strong>SVG</strong> markup</span></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="table-markup.html" class="btn btn-neutral float-right" title="About tables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="vintage-kernel-doc-mode.html" class="btn btn-neutral" title="Vintage kernel-doc mode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

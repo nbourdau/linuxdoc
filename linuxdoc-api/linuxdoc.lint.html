@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.lint module &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="linuxdoc package" href="linuxdoc.html"/>
+        <link rel="next" title="linuxdoc.manKernelDoc module" href="linuxdoc.manKernelDoc.html"/>
+        <link rel="prev" title="linuxdoc.kfigure module" href="linuxdoc.kfigure.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="linuxdoc.html">linuxdoc package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="linuxdoc.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.autodoc.html">linuxdoc.autodoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.cdomain.html">linuxdoc.cdomain module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.grep_doc.html">linuxdoc.grep_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_doc.html">linuxdoc.kernel_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_include.html">linuxdoc.kernel_include module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kfigure.html">linuxdoc.kfigure module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">linuxdoc.lint module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lint">lint</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.manKernelDoc.html">linuxdoc.manKernelDoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstFlatTable.html">linuxdoc.rstFlatTable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstKernelDoc.html">linuxdoc.rstKernelDoc module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linuxdoc.html#module-linuxdoc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="linuxdoc.html">linuxdoc package</a> &raquo;</li>
+        
+      <li>linuxdoc.lint module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-api/linuxdoc.lint.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-linuxdoc.lint">
+<span id="linuxdoc-lint-module"></span><h1>linuxdoc.lint module<a class="headerlink" href="#module-linuxdoc.lint" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lint">
+<h2>lint<a class="headerlink" href="#lint" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of the <code class="docutils literal"><span class="pre">kernel-lintdoc</span></code> command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">Copyright (C) 2016  Markus Heiser</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">GPL Version 2, June 1991 see Linux/COPYING for details.</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal"><span class="pre">kernel-doclint</span></code> command <em>lints</em> documentation from Linux kernel’s
+source code comments, see <code class="docutils literal"><span class="pre">--help</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ kernel-lintdoc --help
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The kernel-lintdoc command is under construction, no stable release
+yet. The command-line arguments might be changed/extended in the near
+future.</p>
+</div>
+<dl class="function">
+<dt id="linuxdoc.lint.ERR">
+<code class="descclassname">linuxdoc.lint.</code><code class="descname">ERR</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#linuxdoc.lint.ERR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.lint.FATAL">
+<code class="descclassname">linuxdoc.lint.</code><code class="descname">FATAL</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#linuxdoc.lint.FATAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.lint.MSG">
+<code class="descclassname">linuxdoc.lint.</code><code class="descname">MSG</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#linuxdoc.lint.MSG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.lint.lintdoc_file">
+<code class="descclassname">linuxdoc.lint.</code><code class="descname">lintdoc_file</code><span class="sig-paren">(</span><em>fname</em>, <em>CMD</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/lint.html#lintdoc_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.lint.lintdoc_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.lint.main">
+<code class="descclassname">linuxdoc.lint.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/lint.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.lint.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="linuxdoc.manKernelDoc.html" class="btn btn-neutral float-right" title="linuxdoc.manKernelDoc module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="linuxdoc.kfigure.html" class="btn btn-neutral" title="linuxdoc.kfigure module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

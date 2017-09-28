@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.autodoc &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>linuxdoc.autodoc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for linuxdoc.autodoc</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8; mode: python -*-</span>
+<span class="c1"># pylint: disable=C0103</span>
+
+<span class="sa">u</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    autodoc</span>
+<span class="sd">    ~~~~~~~</span>
+
+<span class="sd">    Implementation of the ``kernel-autodoc`` command.</span>
+
+<span class="sd">    :copyright:  Copyright (C) 2016  Markus Heiser</span>
+<span class="sd">    :license:    GPL Version 2, June 1991 see Linux/COPYING for details.</span>
+
+<span class="sd">    The ``kernel-autodoc`` command extracts documentation from Linux kernel&#39;s</span>
+<span class="sd">    source code comments, see ``--help``::</span>
+
+<span class="sd">        $ kernel-autodoc --help</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">       The kernel-autodoc command is under construction, no stable release</span>
+<span class="sd">       yet. The command line arguments might be changed/extended in the near</span>
+<span class="sd">       future.&quot;&quot;&quot;</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># imports</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="kn">from</span> <span class="nn">fspath</span> <span class="k">import</span> <span class="n">FSPath</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">kernel_doc</span> <span class="k">as</span> <span class="n">kerneldoc</span>
+<span class="kn">from</span> <span class="nn">.kernel_doc</span> <span class="k">import</span> <span class="n">Container</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># config</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="n">MARKUP</span> <span class="o">=</span> <span class="s2">&quot;kernel-doc&quot;</span> <span class="c1"># &quot;reST&quot;</span>
+<span class="n">MSG</span>    <span class="o">=</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stderr__</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;INFO : </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+<span class="n">ERR</span>    <span class="o">=</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stderr__</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ERROR: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+<span class="n">FATAL</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">__stderr__</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FATAL: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+
+<span class="n">TEMPLATE_INDEX</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">.. -*- coding: utf-8; mode: rst -*-</span>
+
+<span class="s2">================================================================================</span>
+<span class="si">%(title)s</span><span class="s2"></span>
+<span class="s2">================================================================================</span>
+
+<span class="s2">.. toctree::</span>
+<span class="s2">    :maxdepth: 1</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">epilog</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;&quot;&quot;This implementation of uses the kernel-doc parser</span>
+<span class="s2">from the linuxdoc extension, for detail informations read</span>
+<span class="s2">http://return42.github.io/sphkerneldoc/books/kernel-doc-HOWTO&quot;&quot;&quot;</span>
+
+<span class="n">CMD</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.autodoc.html#linuxdoc.autodoc.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+    <span class="k">global</span> <span class="n">CMD</span>  <span class="c1"># pylint: disable=W0603</span>
+
+    <span class="n">CLI</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Parse *kernel-doc* comments from source code&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="n">epilog</span> <span class="o">=</span> <span class="n">epilog</span>
+        <span class="p">,</span> <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">)</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;srctree&quot;</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="s2">&quot;Folder of source code.&quot;</span>
+        <span class="p">,</span> <span class="nb">type</span>    <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">FSPath</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">ABSPATH</span><span class="p">)</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;doctree&quot;</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="s2">&quot;Folder to place reST documentation.&quot;</span>
+        <span class="p">,</span> <span class="nb">type</span>    <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">FSPath</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">ABSPATH</span><span class="p">)</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--sloppy&quot;</span>
+        <span class="p">,</span> <span class="n">action</span>  <span class="o">=</span> <span class="s2">&quot;store_true&quot;</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="s2">&quot;Sloppy comment check, reports only severe errors.&quot;</span><span class="p">)</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--force&quot;</span>
+        <span class="p">,</span> <span class="n">action</span>  <span class="o">=</span> <span class="s2">&quot;store_true&quot;</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="s2">&quot;Don&#39;t stop if doctree exists.&quot;</span><span class="p">)</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--threads&quot;</span>
+        <span class="p">,</span> <span class="nb">type</span>    <span class="o">=</span>  <span class="nb">int</span>
+        <span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="s2">&quot;Use up to n threads.&quot;</span><span class="p">)</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--markup&quot;</span>
+        <span class="p">,</span> <span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;reST&quot;</span><span class="p">,</span> <span class="s2">&quot;kernel-doc&quot;</span><span class="p">]</span>
+        <span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;reST&quot;</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;Markup of the comments. Change this option only if you know&quot;</span>
+            <span class="s2">&quot; what you do. New comments must be marked up with reST!&quot;</span><span class="p">))</span>
+
+    <span class="n">CLI</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--rst-files&quot;</span>
+        <span class="p">,</span> <span class="nb">type</span>    <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">FSPath</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">ABSPATH</span>
+        <span class="p">,</span> <span class="n">help</span>    <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;File that list source files, which has comments in reST markup.&quot;</span>
+            <span class="s2">&quot; Use kernel-grepdoc command to generate those file.&quot;</span><span class="p">))</span>
+
+    <span class="n">CMD</span> <span class="o">=</span> <span class="n">CLI</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span><span class="o">.</span><span class="n">EXISTS</span><span class="p">:</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> does not exists.&quot;</span> <span class="o">%</span> <span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span><span class="o">.</span><span class="n">ISDIR</span><span class="p">:</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not a folder.&quot;</span> <span class="o">%</span> <span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">CMD</span><span class="o">.</span><span class="n">force</span> <span class="ow">and</span> <span class="n">CMD</span><span class="o">.</span><span class="n">doctree</span><span class="o">.</span><span class="n">EXISTS</span><span class="p">:</span>
+        <span class="n">ERR</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is in the way, remove it first&quot;</span> <span class="o">%</span> <span class="n">CMD</span><span class="o">.</span><span class="n">doctree</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">CMD</span><span class="o">.</span><span class="n">markup</span> <span class="o">==</span> <span class="s2">&quot;kernel-doc&quot;</span> <span class="ow">and</span> <span class="n">CMD</span><span class="o">.</span><span class="n">rst_files</span><span class="p">:</span>
+        <span class="n">CMD</span><span class="o">.</span><span class="n">rst_files</span> <span class="o">=</span> <span class="n">CMD</span><span class="o">.</span><span class="n">rst_files</span><span class="o">.</span><span class="n">readFile</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">CMD</span><span class="o">.</span><span class="n">rst_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">CMD</span><span class="o">.</span><span class="n">threads</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">CMD</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">autodoc_file</span><span class="p">,</span> <span class="n">gather_filenames</span><span class="p">(</span><span class="n">CMD</span><span class="p">))</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">gather_filenames</span><span class="p">(</span><span class="n">CMD</span><span class="p">):</span>
+            <span class="n">autodoc_file</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+
+    <span class="n">insert_index_files</span><span class="p">(</span><span class="n">CMD</span><span class="o">.</span><span class="n">doctree</span><span class="p">)</span></div>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="gather_filenames"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.autodoc.html#linuxdoc.autodoc.gather_filenames">[docs]</a><span class="k">def</span> <span class="nf">gather_filenames</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+    <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">cmd</span><span class="o">.</span><span class="n">srctree</span><span class="o">.</span><span class="n">reMatchFind</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^.*\.[ch]$&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span><span class="o">/</span><span class="s2">&quot;Documentation&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">yield</span> <span class="n">fname</span></div>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="autodoc_file"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.autodoc.html#linuxdoc.autodoc.autodoc_file">[docs]</a><span class="k">def</span> <span class="nf">autodoc_file</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+    <span class="n">fname</span>  <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span><span class="p">)</span>
+    <span class="n">markup</span> <span class="o">=</span> <span class="n">CMD</span><span class="o">.</span><span class="n">markup</span>
+
+    <span class="k">if</span> <span class="n">CMD</span><span class="o">.</span><span class="n">markup</span> <span class="o">==</span> <span class="s2">&quot;kernel-doc&quot;</span> <span class="ow">and</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">CMD</span><span class="o">.</span><span class="n">rst_files</span><span class="p">:</span>
+        <span class="n">markup</span> <span class="o">=</span> <span class="s2">&quot;reST&quot;</span>
+
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">kerneldoc</span><span class="o">.</span><span class="n">ParseOptions</span><span class="p">(</span>
+        <span class="n">rel_fname</span>       <span class="o">=</span> <span class="n">fname</span>
+        <span class="p">,</span> <span class="n">src_tree</span>      <span class="o">=</span> <span class="n">CMD</span><span class="o">.</span><span class="n">srctree</span>
+        <span class="p">,</span> <span class="n">verbose_warn</span>  <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">CMD</span><span class="o">.</span><span class="n">sloppy</span><span class="p">)</span>
+        <span class="p">,</span> <span class="n">use_all_docs</span>  <span class="o">=</span> <span class="kc">True</span>
+        <span class="p">,</span> <span class="n">markup</span>        <span class="o">=</span> <span class="n">markup</span> <span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">kerneldoc</span><span class="o">.</span><span class="n">Parser</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">kerneldoc</span><span class="o">.</span><span class="n">NullTranslator</span><span class="p">())</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c1"># pylint: disable=W0703</span>
+        <span class="n">FATAL</span><span class="p">(</span><span class="s2">&quot;kernel-doc markup of </span><span class="si">%s</span><span class="s2"> seems buggy / can&#39;t parse&quot;</span> <span class="o">%</span> <span class="n">opts</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">parser</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">dump_storage</span><span class="p">:</span>
+        <span class="c1"># no kernel-doc comments found</span>
+        <span class="n">MSG</span><span class="p">(</span><span class="s2">&quot;parsed: NONE comments: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">opts</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">MSG</span><span class="p">(</span><span class="s2">&quot;parsed: </span><span class="si">%4d</span><span class="s2"> comments: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">dump_storage</span><span class="p">),</span> <span class="n">opts</span><span class="o">.</span><span class="n">fname</span><span class="p">))</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">rst</span> <span class="o">=</span> <span class="n">six</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+        <span class="n">translator</span> <span class="o">=</span> <span class="n">kerneldoc</span><span class="o">.</span><span class="n">ReSTTranslator</span><span class="p">()</span>
+        <span class="n">opts</span><span class="o">.</span><span class="n">out</span>   <span class="o">=</span> <span class="n">rst</span>
+
+        <span class="c1"># First try to output reST, this might fail, because the kernel-doc</span>
+        <span class="c1"># parser part is to tollerant (&quot;bad lines&quot;, &quot;function name and function</span>
+        <span class="c1"># declaration are different&quot;, etc ...).</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse_dump_storage</span><span class="p">(</span><span class="n">translator</span><span class="o">=</span><span class="n">translator</span><span class="p">)</span>
+
+        <span class="n">outFile</span> <span class="o">=</span> <span class="n">CMD</span><span class="o">.</span><span class="n">doctree</span> <span class="o">/</span> <span class="n">fname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.rst&quot;</span>
+        <span class="n">outFile</span><span class="o">.</span><span class="n">DIRNAME</span><span class="o">.</span><span class="n">makedirs</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">outFile</span><span class="o">.</span><span class="n">openTextFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rst</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c1"># pylint: disable=W0703</span>
+        <span class="n">FATAL</span><span class="p">(</span><span class="s2">&quot;kernel-doc markup of </span><span class="si">%s</span><span class="s2"> seems buggy / can&#39;t parse&quot;</span> <span class="o">%</span> <span class="n">opts</span><span class="o">.</span><span class="n">fname</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<div class="viewcode-block" id="insert_index_files"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.autodoc.html#linuxdoc.autodoc.insert_index_files">[docs]</a><span class="k">def</span> <span class="nf">insert_index_files</span><span class="p">(</span><span class="n">root_folder</span><span class="p">):</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+    <span class="k">for</span> <span class="n">folder</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">root_folder</span><span class="o">.</span><span class="n">walk</span><span class="p">():</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span> <span class="n">title</span> <span class="o">=</span> <span class="n">folder</span><span class="o">.</span><span class="n">FILENAME</span> <span class="p">)</span>
+        <span class="n">dirnames</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">filenames</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">indexFile</span> <span class="o">=</span> <span class="n">folder</span> <span class="o">/</span> <span class="s2">&quot;index.rst&quot;</span>
+        <span class="n">MSG</span><span class="p">(</span><span class="s2">&quot;create index: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">indexFile</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">indexFile</span><span class="o">.</span><span class="n">openTextFile</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index</span><span class="p">:</span>
+            <span class="n">index</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">TEMPLATE_INDEX</span> <span class="o">%</span> <span class="n">ctx</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirnames</span><span class="p">:</span>
+                <span class="n">index</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">%s</span><span class="s2">/index</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">d</span><span class="o">.</span><span class="n">FILENAME</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">FILENAME</span> <span class="o">==</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">index</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;    </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">f</span><span class="o">.</span><span class="n">FILENAME</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

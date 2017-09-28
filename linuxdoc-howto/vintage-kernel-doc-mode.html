@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Vintage kernel-doc mode &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="LinuxDoc HowTo" href="index.html"/>
+        <link rel="next" title="Scalable figure and image handling" href="kfigure.html"/>
+        <link rel="prev" title="reST kernel-doc mode" href="reST-kernel-doc-mode.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Vintage kernel-doc mode</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vintage-mode-quirks">vintage mode quirks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+      <li>Vintage kernel-doc mode</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/vintage-kernel-doc-mode.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vintage-kernel-doc-mode">
+<span id="id1"></span><h1>Vintage kernel-doc mode<a class="headerlink" href="#vintage-kernel-doc-mode" title="Permalink to this headline">¶</a></h1>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This section exists mainly for historical reasons. The <em>vintage</em> kernel-doc
+mode is only relevant for those who have to work with old kernel-doc
+comments (e.g. <a class="reference external" href="https://h2626237.stratoserver.net/kernel/linux_src_doc/index.html">Kernel’s Source code documentation</a>).</p>
+</div>
+<p>Within the <em>vintage</em> kernel-doc mode the kernel-doc parser ignores any
+whitespace formatting/markup. Since formatting with whitespace is substantial
+for ASCII markups, it’s recommended to use the <a class="reference internal" href="reST-kernel-doc-mode.html#rest-kernel-doc-mode"><span class="std std-ref">reST kernel-doc mode</span></a> on
+any new or changed comment!</p>
+<p>Determined by the history of the kernel-doc comments, the <em>vintage</em> kernel-doc
+comments contain characters like “*” or strings with e.g. leading/trailing
+underscore (“_”), which are in-line markups in reST. Here a short example from a
+<em>vintage</em> comment:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">SNIP</span><span class="o">&gt;</span> <span class="o">-----</span>
+<span class="o">*</span> <span class="n">In</span> <span class="n">contrast</span> <span class="n">to</span> <span class="n">the</span> <span class="n">other</span> <span class="n">drm_get_</span><span class="o">*</span><span class="n">_name</span> <span class="n">functions</span> <span class="n">this</span> <span class="n">one</span> <span class="n">here</span> <span class="n">returns</span> <span class="n">a</span>
+<span class="o">*</span> <span class="n">const</span> <span class="n">pointer</span> <span class="ow">and</span> <span class="n">hence</span> <span class="ow">is</span> <span class="n">threadsafe</span><span class="o">.</span>
+<span class="o">&lt;</span><span class="n">SNAP</span><span class="o">&gt;</span> <span class="o">-----</span>
+</pre></div>
+</div>
+<p>Within reST markup (the new base format), the wildcard in the string
+<code class="docutils literal"><span class="pre">drm_get_*_name</span></code> has to be masked by the kernel-doc parser:
+<code class="docutils literal"><span class="pre">drm_get_\\*_name</span></code>. Some more examples from reST markup:</p>
+<ul class="simple">
+<li>Emphasis “*”:  like <code class="docutils literal"><span class="pre">*emphasis*</span></code> or <code class="docutils literal"><span class="pre">**emphasis</span> <span class="pre">strong**</span></code></li>
+<li>Leading “_” :  is a <em>anchor</em> in reST markup (<code class="docutils literal"><span class="pre">_foo</span></code>).</li>
+<li>Trailing “_:  is a reference in reST markup (<code class="docutils literal"><span class="pre">foo_</span></code>).</li>
+<li>interpreted text: “`”</li>
+<li>in-line literals: “``”</li>
+<li>substitution references: “|”</li>
+</ul>
+<p>As long as the kernel-doc parser runs in the <em>vintage</em> kernel-doc mode, these
+special strings will be masked in the reST output and can’t be used as
+<em>plain-text markup</em>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The kernel source contains tens of thousands of vintage kernel-doc comments,
+applications which has to work with them must be able to distinguish between
+vintage and the new reST markup.</p>
+</div>
+<p>To force the parser to switch into the reST mode add the following comment
+(e.g.) at the top of your source code file (or at any line where reST content
+starts).:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/*</span> <span class="n">parse</span><span class="o">-</span><span class="n">markup</span><span class="p">:</span> <span class="n">reST</span> <span class="o">*/</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>In reST mode the kernel-doc parser pass through all text unchanged to the reST
+tool-chain including any whitespace and reST markup. To toggle back to
+<a class="reference internal" href="#vintage-kernel-doc-mode"><span class="std std-ref">Vintage kernel-doc mode</span></a> type the following line:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/*</span> <span class="n">parse</span><span class="o">-</span><span class="n">markup</span><span class="p">:</span> <span class="n">kernel</span><span class="o">-</span><span class="n">doc</span> <span class="o">*/</span>
+</pre></div>
+</div>
+<div class="section" id="vintage-mode-quirks">
+<span id="id2"></span><h2>vintage mode quirks<a class="headerlink" href="#vintage-mode-quirks" title="Permalink to this headline">¶</a></h2>
+<p>In the following, you will find some quirks of the <em>vintage</em> kernel-doc mode.</p>
+<ul>
+<li><p class="first">Since a colon introduce a new section, you can’t use colons. E.g. a comment
+line like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">prints</span> <span class="n">out</span><span class="p">:</span> <span class="n">hello</span> <span class="n">world</span>
+</pre></div>
+</div>
+<p>will result in a section with the title “prints out” and a paragraph with only
+“hello world” in, this is mostly not what you expect. To avoid sectioning,
+place a space in front of the column:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">prints</span> <span class="n">out</span> <span class="p">:</span> <span class="n">hello</span> <span class="n">world</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The multi-line descriptive text you provide does <em>not</em> recognize
+line breaks, so if you try to format some text nicely, as in:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Return</span><span class="p">:</span>
+   <span class="mi">0</span> <span class="o">-</span> <span class="n">cool</span>
+   <span class="mi">1</span> <span class="o">-</span> <span class="n">invalid</span> <span class="n">arg</span>
+   <span class="mi">2</span> <span class="o">-</span> <span class="n">out</span> <span class="n">of</span> <span class="n">memory</span>
+</pre></div>
+</div>
+<p>this will all run together and produce:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Return</span><span class="p">:</span> <span class="mi">0</span> <span class="o">-</span> <span class="n">cool</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">invalid</span> <span class="n">arg</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">out</span> <span class="n">of</span> <span class="n">memory</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the descriptive text you provide has lines that begin with some phrase
+followed by a colon, each of those phrases will be taken as a new section
+heading, which means you should similarly try to avoid text like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Return</span><span class="p">:</span>
+  <span class="mi">0</span><span class="p">:</span> <span class="n">cool</span>
+  <span class="mi">1</span><span class="p">:</span> <span class="n">invalid</span> <span class="n">arg</span>
+  <span class="mi">2</span><span class="p">:</span> <span class="n">out</span> <span class="n">of</span> <span class="n">memory</span>
+</pre></div>
+</div>
+<p>every line of which would start a new section.  Again, probably not what you
+were after.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kfigure.html" class="btn btn-neutral float-right" title="Scalable figure and image handling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="reST-kernel-doc-mode.html" class="btn btn-neutral" title="reST kernel-doc mode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

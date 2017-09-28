@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Additional tests &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="kernel-doc examples &amp; tests" href="kernel-doc-examples.html"/>
+        <link rel="next" title="reST kernel-doc mode" href="reST-kernel-doc-mode.html"/>
+        <link rel="prev" title="rendered all-in-a-tumble.[ch]" href="all-in-a-tumble.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="all-in-a-tumble-src.html">source of <code class="docutils literal"><span class="pre">all-in-a-tumble.[ch]</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="all-in-a-tumble-debug.html">reST of <code class="docutils literal"><span class="pre">all-in-a-tumble.h</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="all-in-a-tumble.html">rendered <code class="docutils literal"><span class="pre">all-in-a-tumble.[ch]</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Additional tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#doc-sections">DOC sections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exported-symbols">exported symbols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#syscall-event">SYSCALL &amp; EVENT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+          <li><a href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a> &raquo;</li>
+        
+      <li>Additional tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/kernel-doc-tests.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="additional-tests">
+<span id="kernel-doc-tests"></span><h1>Additional tests<a class="headerlink" href="#additional-tests" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="doc-sections">
+<h2>DOC sections<a class="headerlink" href="#doc-sections" title="Permalink to this headline">¶</a></h2>
+<p>The DOC section tests are based on this comment:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * DOC: Theory of Operation</span>
+<span class="cm"> *</span>
+<span class="cm"> * The whizbang foobar is a dilly of a gizmo.  It can do whatever you</span>
+<span class="cm"> * want it to do, at any time.  It reads your mind.  Here&#39;s how it works.</span>
+<span class="cm"> *</span>
+<span class="cm"> * foo bar splat</span>
+<span class="cm"> * -------------</span>
+<span class="cm"> *</span>
+<span class="cm"> * The only drawback to this gizmo is that is can sometimes damage hardware,</span>
+<span class="cm"> * software, or its subject(s).</span>
+<span class="cm"> *</span>
+<span class="cm"> * DOC: multiple DOC sections</span>
+<span class="cm"> *</span>
+<span class="cm"> * It&#39;s not recommended to place more than one &quot;DOC:&quot; section in the same</span>
+<span class="cm"> * comment block. To insert a new &quot;DOC:&quot; section, create a new comment block and</span>
+<span class="cm"> * to create a sub-section use the reST markup for headings, see documentation</span>
+<span class="cm"> * of function rst_mode()</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<div class="section" id="multiple-doc-sections">
+<h3>multiple DOC sections<a class="headerlink" href="#multiple-doc-sections" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.h
+    <span class="nc">:doc:</span> <span class="nf">multiple DOC sections</span>
+    <span class="nc">:no-header:</span>
+</pre></div>
+</div>
+<div class="rst-example admonition">
+<p class="first admonition-title">DOC section</p>
+<p class="last">It’s not recommended to place more than one “DOC:” section in the same
+comment block. To insert a new “DOC:” section, create a new comment block and
+to create a sub-section use the reST markup for headings, see documentation
+of function <a class="reference internal" href="all-in-a-tumble.html#c.rst_mode" title="rst_mode"><code class="xref c c-func docutils literal"><span class="pre">rst_mode()</span></code></a></p>
+</div>
+</div>
+<div class="section" id="option-no-header">
+<h3>option no-header<a class="headerlink" href="#option-no-header" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.h
+    <span class="nc">:doc:</span>  <span class="nf">Theory of Operation</span>
+    <span class="nc">:no-header:</span>
+</pre></div>
+</div>
+<div class="rst-example admonition">
+<p class="first admonition-title">DOC section with “no-header”</p>
+<p>The whizbang foobar is a dilly of a gizmo.  It can do whatever you
+want it to do, at any time.  It reads your mind.  Here’s how it works.</p>
+<div class="last section" id="foo-bar-splat">
+<h4>foo bar splat<a class="headerlink" href="#foo-bar-splat" title="Permalink to this headline">¶</a></h4>
+<p>The only drawback to this gizmo is that is can sometimes damage hardware,
+software, or its subject(s).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exported-symbols">
+<h2>exported symbols<a class="headerlink" href="#exported-symbols" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="get-documentation-of-exported-symbols">
+<h3>Get documentation of exported symbols<a class="headerlink" href="#get-documentation-of-exported-symbols" title="Permalink to this headline">¶</a></h3>
+<p>This test gathers exports from <code class="docutils literal"><span class="pre">all-in-a-tumble.h</span></code> and <code class="docutils literal"><span class="pre">all-in-a-tumble.c</span></code>
+and parses comments from <code class="docutils literal"><span class="pre">all-in-a-tumble.c</span></code>.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.c
+    <span class="nc">:export:</span>  <span class="nf">./all-in-a-tumble.h</span>
+    <span class="nc">:module:</span> <span class="nf">test-example</span>
+    <span class="nc">:man-sect:</span> <span class="nf">2</span>
+</pre></div>
+</div>
+<div class="rst-example admonition">
+<p class="first admonition-title">exported symbols</p>
+<div class="last section" id="user-function">
+<span id="test-example-user-function"></span><h4>user_function<a class="headerlink" href="#user-function" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="c.user_function">
+int <code class="descname">user_function</code><span class="sig-paren">(</span>int<em>&nbsp;a</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.user_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that can only be called in user context</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<em>int</em>) – some argument</li>
+<li><strong>ellipsis</strong> (<em>ellipsis</em>) – ellipsis operator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="description">
+<span id="test-example-user-function-description"></span><h5>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h5>
+<p>This function makes no sense, it’s only a kernel-doc demonstration.</p>
+</div>
+<div class="section" id="example">
+<span id="test-example-user-function-example"></span><h5>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">user_function</span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="return">
+<span id="test-example-user-function-return"></span><h5>Return<a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h5>
+<p>Returns first argument</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="get-documentation-of-internal-symbols">
+<h3>Get documentation of internal symbols<a class="headerlink" href="#get-documentation-of-internal-symbols" title="Permalink to this headline">¶</a></h3>
+<p>This test gathers exports from <code class="docutils literal"><span class="pre">all-in-a-tumble.h</span></code> and <code class="docutils literal"><span class="pre">all-in-a-tumble.c</span></code>
+and parses comments from <code class="docutils literal"><span class="pre">all-in-a-tumble.c</span></code>, from where only the <em>not
+exported</em> definitions are used in the reST output:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.c
+    <span class="nc">:internal:</span>  <span class="nf">./all-in-a-tumble.h</span>
+    <span class="nc">:module:</span> <span class="nf">additional-tests</span>
+</pre></div>
+</div>
+<div class="rst-example admonition">
+<p class="first admonition-title">internal symbols</p>
+<div class="section" id="internal-function">
+<span id="additional-tests-internal-function"></span><h4>internal_function<a class="headerlink" href="#internal-function" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="c.internal_function">
+int <code class="descname">internal_function</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.internal_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>the answer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>void</strong> – no arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="context">
+<span id="additional-tests-internal-function-context"></span><h5>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h5>
+<p>!sanity()</p>
+</div>
+<div class="section" id="additional-tests-internal-function-return">
+<span id="id1"></span><h5>Return<a class="headerlink" href="#additional-tests-internal-function-return" title="Permalink to this headline">¶</a></h5>
+<p>The answer to the ultimate question of life, the universe and everything.</p>
+</div>
+</div>
+<div class="section" id="sys-rt-sigprocmask">
+<span id="additional-tests-sys-rt-sigprocmask"></span><h4>sys_rt_sigprocmask<a class="headerlink" href="#sys-rt-sigprocmask" title="Permalink to this headline">¶</a></h4>
+<dl class="function">
+<dt id="c.sys_rt_sigprocmask">
+long <code class="descname">sys_rt_sigprocmask</code><span class="sig-paren">(</span>int<em>&nbsp;how</em>, sigset_t __user<em>&nbsp;*nset</em>, sigset_t __user<em>&nbsp;*oset</em>, size_t<em>&nbsp;sigsetsize</em><span class="sig-paren">)</span><a class="headerlink" href="#c.sys_rt_sigprocmask" title="Permalink to this definition">¶</a></dt>
+<dd><p>change the list of currently blocked signals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>how</strong> (<em>int</em>) – whether to add, remove, or set signals</li>
+<li><strong>__user *nset</strong> (<em>sigset_t</em>) – stores pending signals</li>
+<li><strong>__user *oset</strong> (<em>sigset_t</em>) – previous value of signal mask if non-null</li>
+<li><strong>sigsetsize</strong> (<em>size_t</em>) – size of sigset_t type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="additional-tests-sys-rt-sigprocmask-return">
+<span id="id2"></span><h5>Return<a class="headerlink" href="#additional-tests-sys-rt-sigprocmask-return" title="Permalink to this headline">¶</a></h5>
+<p>0</p>
+</div>
+</div>
+<div class="section" id="enum-rarely-enum">
+<span id="additional-tests-rarely-enum"></span><h4>enum rarely_enum<a class="headerlink" href="#enum-rarely-enum" title="Permalink to this headline">¶</a></h4>
+<dl class="type">
+<dt id="c.rarely_enum">
+enum <code class="descname">rarely_enum</code><a class="headerlink" href="#c.rarely_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>enum to test parsing rarely code styles</p>
+</dd></dl>
+
+<div class="section" id="definition">
+<span id="additional-tests-rarely-enum-definition"></span><h5>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">rarely_enum</span> <span class="p">{</span>
+    <span class="n">F1</span><span class="p">,</span>
+    <span class="n">F2</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constants">
+<span id="additional-tests-rarely-enum-constants"></span><h5>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h5>
+<dl class="docutils">
+<dt>F1</dt>
+<dd>f1</dd>
+<dt>F2</dt>
+<dd>f2</dd>
+</dl>
+</div>
+</div>
+<div class="last section" id="struct-rarely-struct">
+<span id="additional-tests-rarely-struct"></span><h4>struct rarely_struct<a class="headerlink" href="#struct-rarely-struct" title="Permalink to this headline">¶</a></h4>
+<dl class="type">
+<dt id="c.rarely_struct">
+struct <code class="descname">rarely_struct</code><a class="headerlink" href="#c.rarely_struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>struct to test parsing rarely code styles</p>
+</dd></dl>
+
+<div class="section" id="additional-tests-rarely-struct-definition">
+<span id="id3"></span><h5>Definition<a class="headerlink" href="#additional-tests-rarely-struct-definition" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">rarely_struct</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">foo</span> <span class="n">foofoo</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">bar</span> <span class="n">barbar</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="members">
+<span id="additional-tests-rarely-struct-members"></span><h5>Members<a class="headerlink" href="#members" title="Permalink to this headline">¶</a></h5>
+<dl class="docutils">
+<dt>foofoo</dt>
+<dd>lorem</dd>
+<dt>barbar</dt>
+<dd>ipsum</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="missing-exports">
+<h3>Missing exports<a class="headerlink" href="#missing-exports" title="Permalink to this headline">¶</a></h3>
+<p>In the next test, the <code class="docutils literal"><span class="pre">:export:</span> <span class="pre">{file</span> <span class="pre">glob</span> <span class="pre">pattern}</span></code> is used, but it does not
+match any file, or there are no exports in the matching files. Whatever, An
+empty list of exported symbols is treated as an error:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.c
+    <span class="nc">:export:</span>  <span class="nf">./match_files_without_exports*</span>
+</pre></div>
+</div>
+<div class="rst-example admonition">
+<p class="first admonition-title">missing exports</p>
+<div class="admonition-todo last admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p>Oops: Document generation inconsistency.</p>
+<p>The template for this document tried to insert structured comment at this point, but an error occoured. This dummy section is inserted to allow generation to continue.:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">linuxdoc</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="n">linuxdoc</span><span class="o">-</span><span class="n">howto</span><span class="o">/</span><span class="n">kernel</span><span class="o">-</span><span class="n">doc</span><span class="o">-</span><span class="n">tests</span><span class="o">.</span><span class="n">rst</span><span class="p">:</span><span class="mi">113</span><span class="p">:</span> <span class="p">(</span><span class="n">ERROR</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="n">using</span> <span class="n">option</span> <span class="p">:</span><span class="n">export</span><span class="p">:</span> <span class="n">but</span> <span class="n">there</span> <span class="n">are</span> <span class="n">no</span> <span class="n">exported</span> <span class="n">symbols</span>
+
+<span class="o">..</span> <span class="n">kernel</span><span class="o">-</span><span class="n">doc</span><span class="p">::</span>  <span class="o">./</span><span class="nb">all</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">tumble</span><span class="o">.</span><span class="n">c</span>
+    <span class="p">:</span><span class="n">export</span><span class="p">:</span>  <span class="o">./</span><span class="n">match_files_without_exports</span><span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="syscall-event">
+<h2>SYSCALL &amp; EVENT<a class="headerlink" href="#syscall-event" title="Permalink to this headline">¶</a></h2>
+<p>Source code:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> *  sys_rt_sigprocmask - change the list of currently blocked signals</span>
+<span class="cm"> *  @how: whether to add, remove, or set signals</span>
+<span class="cm"> *  @nset: stores pending signals</span>
+<span class="cm"> *  @oset: previous value of signal mask if non-null</span>
+<span class="cm"> *  @sigsetsize: size of sigset_t type</span>
+<span class="cm"> *</span>
+<span class="cm"> * Return: 0</span>
+<span class="cm"> */</span>
+<span class="n">SYSCALL_DEFINE4</span><span class="p">(</span><span class="n">rt_sigprocmask</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="n">how</span><span class="p">,</span> <span class="kt">sigset_t</span> <span class="n">__user</span> <span class="o">*</span><span class="p">,</span> <span class="n">nset</span><span class="p">,</span>
+                <span class="kt">sigset_t</span> <span class="n">__user</span> <span class="o">*</span><span class="p">,</span> <span class="n">oset</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">,</span> <span class="n">sigsetsize</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="p">...</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.c
+    <span class="nc">:functions:</span>  <span class="nf">sys_rt_sigprocmask</span>
+</pre></div>
+</div>
+<div class="rst-example admonition">
+<p class="first admonition-title">missing exports</p>
+<div class="last section" id="id4">
+<span id="id5"></span><h3>sys_rt_sigprocmask<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+long <code class="descname">sys_rt_sigprocmask</code><span class="sig-paren">(</span>int<em>&nbsp;how</em>, sigset_t __user<em>&nbsp;*nset</em>, sigset_t __user<em>&nbsp;*oset</em>, size_t<em>&nbsp;sigsetsize</em><span class="sig-paren">)</span></dt>
+<dd><p>change the list of currently blocked signals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>how</strong> (<em>int</em>) – whether to add, remove, or set signals</li>
+<li><strong>__user *nset</strong> (<em>sigset_t</em>) – stores pending signals</li>
+<li><strong>__user *oset</strong> (<em>sigset_t</em>) – previous value of signal mask if non-null</li>
+<li><strong>sigsetsize</strong> (<em>size_t</em>) – size of sigset_t type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="sys-rt-sigprocmask-return">
+<span id="id6"></span><h4>Return<a class="headerlink" href="#sys-rt-sigprocmask-return" title="Permalink to this headline">¶</a></h4>
+<p>0</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reST-kernel-doc-mode.html" class="btn btn-neutral float-right" title="reST kernel-doc mode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="all-in-a-tumble.html" class="btn btn-neutral" title="rendered all-in-a-tumble.[ch]" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

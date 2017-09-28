@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.manKernelDoc &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>linuxdoc.manKernelDoc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for linuxdoc.manKernelDoc</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8; mode: python -*-</span>
+<span class="c1"># pylint: disable=C1801</span>
+
+<span class="sa">u</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    kernel-doc-man</span>
+<span class="sd">    ~~~~~~~~~~~~~~</span>
+
+<span class="sd">    Implementation of the ``kernel-doc-man`` builder.</span>
+
+<span class="sd">    :copyright:  Copyright (C) 2016  Markus Heiser</span>
+<span class="sd">    :license:    GPL Version 2, June 1991 see Linux/COPYING for details.</span>
+
+<span class="sd">    The ``kernel-doc-man`` (:py:class:`KernelDocManBuilder`) produces manual</span>
+<span class="sd">    pages in the groff format. It is a *man* page sphinx-builder mainly written</span>
+<span class="sd">    to generate manual pages from kernel-doc comments by :</span>
+
+<span class="sd">    * scanning the master doc-tree for sections marked with the</span>
+<span class="sd">      ``.. kernel-doc-man::`` directive and build manual pages for theses</span>
+<span class="sd">      sections.</span>
+
+<span class="sd">    * reorder / rename (sub-) sections according to the conventions that should</span>
+<span class="sd">      be employed when writing man pages for the Linux man-pages project, see</span>
+<span class="sd">      man-pages(7)</span>
+
+<span class="sd">    Usage::</span>
+
+<span class="sd">        $ sphinx-build -b kernel-doc-man</span>
+
+<span class="sd">    rest-Markup entry (e.g)::</span>
+
+<span class="sd">        .. kernel-doc-man::  manpage-name.9</span>
+
+<span class="sd">    Since the ``kernel-doc-man`` is an extension of the common `sphinx *man*</span>
+<span class="sd">    builder</span>
+<span class="sd">    &lt;http://www.sphinx-doc.org/en/stable/config.html#confval-man_pages&gt;`_, it is</span>
+<span class="sd">    also a full replacement, building booth, the common sphinx man-pages and</span>
+<span class="sd">    those marked with the ``.. kernel-doc-man::`` directive.</span>
+
+<span class="sd">    Mostly authors will use this feature in their reST documents in conjunction</span>
+<span class="sd">    with the ``.. kernel-doc::`` :ref:`directive</span>
+<span class="sd">    &lt;kernel-doc-directive&gt;`, to create man pages from kernel-doc</span>
+<span class="sd">    comments.  This could be done, by setting the man section number with the</span>
+<span class="sd">    option ``man-sect``, e.g.::</span>
+
+<span class="sd">      .. kernel-doc:: include/linux/debugobjects.h</span>
+<span class="sd">          :man-sect: 9</span>
+<span class="sd">          :internal:</span>
+
+<span class="sd">    With this ``:man-sect: 9`` option, the kernel-doc parser will insert a</span>
+<span class="sd">    ``.. kernel-doc-man:: &lt;declaration-name&gt;.&lt;man-sect no&gt;`` directive in the</span>
+<span class="sd">    reST output, for every section describing a function, union etc.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># imports</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">docutils.io</span> <span class="k">import</span> <span class="n">FileOutput</span>
+<span class="kn">from</span> <span class="nn">docutils.frontend</span> <span class="k">import</span> <span class="n">OptionParser</span>
+<span class="kn">from</span> <span class="nn">docutils</span> <span class="k">import</span> <span class="n">nodes</span>
+<span class="kn">from</span> <span class="nn">docutils.utils</span> <span class="k">import</span> <span class="n">new_document</span>
+<span class="kn">from</span> <span class="nn">docutils.parsers.rst</span> <span class="k">import</span> <span class="n">Directive</span>
+<span class="kn">from</span> <span class="nn">docutils.transforms</span> <span class="k">import</span> <span class="n">Transform</span>
+
+<span class="kn">from</span> <span class="nn">sphinx</span> <span class="k">import</span> <span class="n">addnodes</span>
+<span class="kn">from</span> <span class="nn">sphinx.util.nodes</span> <span class="k">import</span> <span class="n">inline_all_toctrees</span>
+<span class="kn">from</span> <span class="nn">sphinx.util.console</span> <span class="k">import</span> <span class="n">bold</span><span class="p">,</span> <span class="n">darkgreen</span>     <span class="c1"># pylint: disable=E0611</span>
+<span class="kn">from</span> <span class="nn">sphinx.writers.manpage</span> <span class="k">import</span> <span class="n">ManualPageWriter</span>
+
+<span class="kn">from</span> <span class="nn">sphinx.builders.manpage</span> <span class="k">import</span> <span class="n">ManualPageBuilder</span>
+
+
+<span class="kn">from</span> <span class="nn">.kernel_doc</span> <span class="k">import</span> <span class="n">Container</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># common globals</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="n">DEFAULT_MAN_SECT</span>  <span class="o">=</span> <span class="mi">9</span>
+
+<span class="c1"># The version numbering follows numbering of the specification</span>
+<span class="c1"># (Documentation/books/kernel-doc-HOWTO).</span>
+<span class="n">__version__</span>  <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span>
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="setup"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.setup">[docs]</a><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<span class="c1"># ==============================================================================</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">add_builder</span><span class="p">(</span><span class="n">KernelDocManBuilder</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_directive</span><span class="p">(</span><span class="s2">&quot;kernel-doc-man&quot;</span><span class="p">,</span> <span class="n">KernelDocMan</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s1">&#39;env&#39;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">kernel_doc_man</span>
+                 <span class="p">,</span> <span class="n">html</span>    <span class="o">=</span> <span class="p">(</span><span class="n">skip_kernel_doc_man</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                 <span class="p">,</span> <span class="n">latex</span>   <span class="o">=</span> <span class="p">(</span><span class="n">skip_kernel_doc_man</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                 <span class="p">,</span> <span class="n">texinfo</span> <span class="o">=</span> <span class="p">(</span><span class="n">skip_kernel_doc_man</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                 <span class="p">,</span> <span class="n">text</span>    <span class="o">=</span> <span class="p">(</span><span class="n">skip_kernel_doc_man</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                 <span class="p">,</span> <span class="n">man</span>     <span class="o">=</span> <span class="p">(</span><span class="n">skip_kernel_doc_man</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">version</span> <span class="o">=</span> <span class="n">__version__</span>
+        <span class="p">,</span> <span class="n">parallel_read_safe</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="p">,</span> <span class="n">parallel_write_safe</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span></div>
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="kernel_doc_man"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.kernel_doc_man">[docs]</a><span class="k">class</span> <span class="nc">kernel_doc_man</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">Invisible</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Element</span><span class="p">):</span>    <span class="c1"># pylint: disable=C0103</span>
+<span class="c1"># ==============================================================================</span>
+    <span class="sd">&quot;&quot;&quot;Node to mark a section as *manpage*&quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="skip_kernel_doc_man"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.skip_kernel_doc_man">[docs]</a><span class="k">def</span> <span class="nf">skip_kernel_doc_man</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>                     <span class="c1"># pylint: disable=W0613</span>
+    <span class="k">raise</span> <span class="n">nodes</span><span class="o">.</span><span class="n">SkipNode</span></div>
+
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="KernelDocMan"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocMan">[docs]</a><span class="k">class</span> <span class="nc">KernelDocMan</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+<span class="c1"># ==============================================================================</span>
+
+    <span class="n">required_arguments</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">optional_arguments</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="KernelDocMan.run"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocMan.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">man_node</span> <span class="o">=</span> <span class="n">kernel_doc_man</span><span class="p">()</span>
+        <span class="n">man_node</span><span class="p">[</span><span class="s2">&quot;manpage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">man_node</span><span class="p">]</span></div></div>
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="Section2Manpage"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.Section2Manpage">[docs]</a><span class="k">class</span> <span class="nc">Section2Manpage</span><span class="p">(</span><span class="n">Transform</span><span class="p">):</span>
+<span class="c1"># ==============================================================================</span>
+    <span class="sa">u</span><span class="sd">&quot;&quot;&quot;Transforms a *section* tree into an *manpage* tree.</span>
+
+<span class="sd">    The structural layout of a man-page differs from the one produced, by the</span>
+<span class="sd">    kernel-doc parser. The kernel-doc parser produce reST which fits to *normal*</span>
+<span class="sd">    documentation, e.g. the declaration of a function in reST is like.</span>
+
+<span class="sd">    .. code-block:: rst</span>
+
+<span class="sd">        user_function</span>
+<span class="sd">        =============</span>
+
+<span class="sd">        .. c:function:: int user_function(int a)</span>
+
+<span class="sd">           The *purpose* description.</span>
+
+<span class="sd">           :param int a:</span>
+<span class="sd">               Parameter a description</span>
+
+<span class="sd">       Description</span>
+<span class="sd">       ===========</span>
+
+<span class="sd">       lorem ipsum ..</span>
+
+<span class="sd">       Return</span>
+<span class="sd">       ======</span>
+
+<span class="sd">       Returns first argument</span>
+
+<span class="sd">    On the other side, in man-pages it is common (see ``man man-pages``) to</span>
+<span class="sd">    print the *purpose* line in the &quot;NAME&quot; section, function&#39;s prototype in the</span>
+<span class="sd">    &quot;SYNOPSIS&quot; section and the parameter description in the &quot;OPTIONS&quot; section::</span>
+
+<span class="sd">       NAME</span>
+<span class="sd">              user_function -- The *purpose* description.</span>
+
+<span class="sd">       SYNOPSIS</span>
+<span class="sd">               int user_function(int a)</span>
+
+<span class="sd">       OPTIONS</span>
+<span class="sd">               a</span>
+
+<span class="sd">       DESCRIPTION</span>
+<span class="sd">               lorem ipsum</span>
+
+<span class="sd">       RETURN VALUE</span>
+<span class="sd">               Returns first argument</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># The common section order is:</span>
+    <span class="n">manTitles</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^SYNOPSIS|^DEFINITION&quot;</span>
+                    <span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;SYNOPSIS&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^CONFIG&quot;</span><span class="p">,</span>     <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;CONFIGURATION&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^DESCR&quot;</span><span class="p">,</span>      <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;DESCRIPTION&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^OPTION&quot;</span><span class="p">,</span>     <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;OPTIONS&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^EXIT&quot;</span><span class="p">,</span>       <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;EXIT STATUS&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^RETURN&quot;</span><span class="p">,</span>     <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;RETURN VALUE&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^ERROR&quot;</span><span class="p">,</span>      <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;ERRORS&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^ENVIRON&quot;</span><span class="p">,</span>    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;ENVIRONMENT&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^FILE&quot;</span><span class="p">,</span>       <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;FILES&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^VER&quot;</span><span class="p">,</span>        <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;VERSIONS&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^ATTR&quot;</span><span class="p">,</span>       <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;ATTRIBUTES&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^CONFOR&quot;</span><span class="p">,</span>     <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;CONFORMING TO&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^NOTE&quot;</span><span class="p">,</span>       <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;NOTES&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^BUG&quot;</span><span class="p">,</span>        <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;BUGS&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^EXAMPLE&quot;</span><span class="p">,</span>    <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;EXAMPLE&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^SEE&quot;</span><span class="p">,</span>        <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">),</span> <span class="s2">&quot;SEE ALSO&quot;</span><span class="p">)</span>
+        <span class="p">,</span> <span class="p">]</span>
+
+    <span class="n">manTitleOrder</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="n">manTitles</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Section2Manpage.getFirstChild"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.Section2Manpage.getFirstChild">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">getFirstChild</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">subtree</span><span class="p">,</span> <span class="o">*</span><span class="n">classes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">subtree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">subtree</span><span class="o">.</span><span class="n">first_child_matching_class</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">subtree</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">break</span>
+            <span class="n">subtree</span> <span class="o">=</span> <span class="n">subtree</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">subtree</span></div>
+
+<div class="viewcode-block" id="Section2Manpage.strip_man_info"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.Section2Manpage.strip_man_info">[docs]</a>    <span class="k">def</span> <span class="nf">strip_man_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">section</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">man_info</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="n">authors</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">man_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">kernel_doc_man</span><span class="p">)</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">sect</span> <span class="o">=</span> <span class="p">(</span><span class="n">man_node</span><span class="p">[</span><span class="s2">&quot;manpage&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">DEFAULT_MAN_SECT</span><span class="p">])[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;manpage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;mansect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sect</span>
+
+        <span class="c1"># strip field list</span>
+        <span class="n">field_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">field_list</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">field_list</span><span class="p">:</span>
+            <span class="n">field_list</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">field_list</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">field_list</span><span class="p">:</span>
+                <span class="n">name</span>  <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astext</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">field</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astext</span><span class="p">()</span>
+                <span class="n">man_info</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">man_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">[</span><span class="n">value</span><span class="p">,]</span>
+
+            <span class="c1"># normalize authors</span>
+            <span class="k">for</span> <span class="n">auth</span><span class="p">,</span> <span class="n">adr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">man_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="p">[])</span>
+                                 <span class="p">,</span> <span class="n">man_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">,</span> <span class="p">[])):</span>
+                <span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> &lt;</span><span class="si">%s</span><span class="s2">&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">adr</span><span class="p">))</span>
+
+        <span class="c1"># strip *purpose*</span>
+        <span class="n">desc_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span>
+            <span class="n">section</span><span class="p">,</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">desc</span><span class="p">,</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">desc_content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">desc_content</span><span class="p">):</span>
+            <span class="c1"># missing initial short description in kernel-doc comment</span>
+            <span class="n">man_info</span><span class="o">.</span><span class="n">subtitle</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">man_info</span><span class="o">.</span><span class="n">subtitle</span> <span class="o">=</span> <span class="n">desc_content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astext</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">desc_content</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># remove section title</span>
+        <span class="n">old_title</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">old_title</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">old_title</span><span class="p">)</span>
+
+        <span class="c1"># gather type of the declaration</span>
+        <span class="n">decl_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span>
+            <span class="n">section</span><span class="p">,</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">desc</span><span class="p">,</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">desc_signature</span><span class="p">,</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">desc_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">decl_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">decl_type</span> <span class="o">=</span> <span class="n">decl_type</span><span class="o">.</span><span class="n">astext</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">man_info</span><span class="o">.</span><span class="n">decl_type</span> <span class="o">=</span> <span class="n">decl_type</span>
+
+        <span class="c1"># complete infos</span>
+        <span class="n">man_info</span><span class="o">.</span><span class="n">title</span>    <span class="o">=</span> <span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;manpage&quot;</span><span class="p">]</span>
+        <span class="n">man_info</span><span class="o">.</span><span class="n">section</span>  <span class="o">=</span> <span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;mansect&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">man_info</span></div>
+
+<div class="viewcode-block" id="Section2Manpage.isolateSections"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.Section2Manpage.isolateSections">[docs]</a>    <span class="k">def</span> <span class="nf">isolateSections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sec_by_title</span><span class="p">):</span>
+        <span class="n">section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">sect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">sect</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">sec_parent</span> <span class="o">=</span> <span class="n">sect</span><span class="o">.</span><span class="n">parent</span>
+            <span class="n">target_idx</span> <span class="o">=</span> <span class="n">sect</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sect</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">sect</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">sect</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sec_parent</span><span class="p">[</span><span class="n">target_idx</span><span class="p">],</span> <span class="n">nodes</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
+                <span class="c1"># drop target / is useless in man-pages</span>
+                <span class="k">del</span> <span class="n">sec_parent</span><span class="p">[</span><span class="n">target_idx</span><span class="p">]</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">sect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astext</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">man_title</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">manTitles</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">title</span><span class="p">):</span>
+                    <span class="n">title</span> <span class="o">=</span> <span class="n">man_title</span>
+                    <span class="n">sect</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="n">title</span><span class="p">))</span>
+                    <span class="k">break</span>
+            <span class="c1"># we dont know if there are sections with the same title</span>
+            <span class="n">sec_by_title</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">sec_by_title</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">[</span><span class="n">sect</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">sec_by_title</span></div>
+
+<div class="viewcode-block" id="Section2Manpage.isolateSynopsis"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.Section2Manpage.isolateSynopsis">[docs]</a>    <span class="k">def</span> <span class="nf">isolateSynopsis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sec_by_title</span><span class="p">):</span>
+        <span class="n">synopsis</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">c_desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">addnodes</span><span class="o">.</span><span class="n">desc</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c_desc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">c_desc</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">c_desc</span><span class="p">)</span>
+            <span class="n">synopsis</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">section</span><span class="p">()</span>
+            <span class="n">synopsis</span> <span class="o">+=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;synopsis&#39;</span><span class="p">)</span>
+            <span class="n">synopsis</span> <span class="o">+=</span> <span class="n">c_desc</span>
+            <span class="n">sec_by_title</span><span class="p">[</span><span class="s2">&quot;SYNOPSIS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sec_by_title</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SYNOPSIS&quot;</span><span class="p">,</span> <span class="p">[])</span> <span class="o">+</span> <span class="p">[</span><span class="n">synopsis</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">sec_by_title</span></div>
+
+<div class="viewcode-block" id="Section2Manpage.apply"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.Section2Manpage.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">man_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strip_man_info</span><span class="p">()</span>
+        <span class="n">sec_by_title</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">isolateSections</span><span class="p">(</span><span class="n">sec_by_title</span><span class="p">)</span>
+        <span class="c1"># On struct, enum, union, typedef, the SYNOPSIS is taken from the</span>
+        <span class="c1"># DEFINITION section.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">man_info</span><span class="o">.</span><span class="n">decl_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="s2">&quot;struct&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">,</span> <span class="s2">&quot;union&quot;</span><span class="p">,</span> <span class="s2">&quot;typedef&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">isolateSynopsis</span><span class="p">(</span><span class="n">sec_by_title</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sec_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">manTitleOrder</span><span class="p">:</span>
+            <span class="n">sec_list</span> <span class="o">=</span> <span class="n">sec_by_title</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">sec_name</span><span class="p">,[])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sec_list</span>
+
+        <span class="k">for</span> <span class="n">sec_list</span> <span class="ow">in</span> <span class="n">sec_by_title</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sec_list</span></div></div>
+
+<span class="c1"># ==============================================================================</span>
+<div class="viewcode-block" id="KernelDocManBuilder"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder">[docs]</a><span class="k">class</span> <span class="nc">KernelDocManBuilder</span><span class="p">(</span><span class="n">ManualPageBuilder</span><span class="p">):</span>
+<span class="c1"># ==============================================================================</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Builds groff output in manual page format.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;kernel-doc-man&#39;</span>
+    <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;man&#39;</span>
+    <span class="n">supported_image_types</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="KernelDocManBuilder.init"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="KernelDocManBuilder.is_manpage"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.is_manpage">[docs]</a>    <span class="k">def</span> <span class="nf">is_manpage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>               <span class="c1"># pylint: disable=R0201</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">section</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span>
+                <span class="n">Section2Manpage</span><span class="o">.</span><span class="n">getFirstChild</span><span class="p">(</span>
+                <span class="n">node</span><span class="p">,</span> <span class="n">kernel_doc_man</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="KernelDocManBuilder.prepare_writing"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.prepare_writing">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_writing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docnames</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A place where you can add logic before :meth:`write_doc` is run&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="KernelDocManBuilder.write_doc"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.write_doc">[docs]</a>    <span class="k">def</span> <span class="nf">write_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docname</span><span class="p">,</span> <span class="n">doctree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Where you actually write something to the filesystem.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="KernelDocManBuilder.get_partial_document"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.get_partial_document">[docs]</a>    <span class="k">def</span> <span class="nf">get_partial_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span> <span class="c1"># pylint: disable=R0201</span>
+        <span class="n">doc_tree</span> <span class="o">=</span>  <span class="n">new_document</span><span class="p">(</span><span class="s1">&#39;&lt;output&gt;&#39;</span><span class="p">)</span>
+        <span class="n">doc_tree</span> <span class="o">+=</span> <span class="n">children</span>
+        <span class="k">return</span> <span class="n">doc_tree</span></div>
+
+<div class="viewcode-block" id="KernelDocManBuilder.write"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">ignored</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">man_pages</span><span class="p">:</span>
+            <span class="c1"># build manpages from config.man_pages as usual</span>
+            <span class="n">ManualPageBuilder</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">ignored</span><span class="p">)</span>
+            <span class="c1"># FIXME:</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">bold</span><span class="p">(</span><span class="s2">&quot;scan master tree for kernel-doc man-pages ... &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">darkgreen</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">),</span> <span class="n">nonl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">master_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get_doctree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">master_doc</span><span class="p">)</span>
+        <span class="n">master_tree</span> <span class="o">=</span> <span class="n">inline_all_toctrees</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="nb">set</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">master_doc</span><span class="p">,</span> <span class="n">master_tree</span><span class="p">,</span> <span class="n">darkgreen</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">master_doc</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">darkgreen</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">))</span>
+        <span class="n">man_nodes</span>   <span class="o">=</span> <span class="n">master_tree</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_manpage</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">man_nodes</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">man_pages</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;no &quot;man_pages&quot; config value nor manual section found; no manual pages &#39;</span>
+                      <span class="s1">&#39;will be written&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">bold</span><span class="p">(</span><span class="s1">&#39;writing man pages ... &#39;</span><span class="p">),</span> <span class="n">nonl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">man_parent</span> <span class="ow">in</span> <span class="n">man_nodes</span><span class="p">:</span>
+
+            <span class="n">doc_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_partial_document</span><span class="p">(</span><span class="n">man_parent</span><span class="p">)</span>
+            <span class="n">Section2Manpage</span><span class="p">(</span><span class="n">doc_tree</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">author</span><span class="p">:</span>
+                <span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
+
+            <span class="n">doc_writer</span>   <span class="o">=</span> <span class="n">ManualPageWriter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">doc_settings</span> <span class="o">=</span> <span class="n">OptionParser</span><span class="p">(</span>
+                <span class="n">defaults</span>            <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">settings</span>
+                <span class="p">,</span> <span class="n">components</span>        <span class="o">=</span> <span class="p">(</span><span class="n">doc_writer</span><span class="p">,)</span>
+                <span class="p">,</span> <span class="n">read_config_files</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="p">,</span> <span class="p">)</span><span class="o">.</span><span class="n">get_default_values</span><span class="p">()</span>
+
+            <span class="n">doc_settings</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="p">)</span>
+            <span class="n">doc_tree</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">doc_settings</span>
+            <span class="n">targetname</span>  <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="o">.</span><span class="n">decl_type</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="s2">&quot;struct&quot;</span><span class="p">,</span> <span class="s2">&quot;enum&quot;</span><span class="p">,</span> <span class="s2">&quot;union&quot;</span><span class="p">,</span> <span class="s2">&quot;typedef&quot;</span><span class="p">]:</span>
+                <span class="n">targetname</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="o">.</span><span class="n">decl_type</span><span class="p">,</span> <span class="n">targetname</span><span class="p">)</span>
+
+            <span class="n">destination</span> <span class="o">=</span> <span class="n">FileOutput</span><span class="p">(</span>
+                <span class="n">destination_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir</span><span class="p">,</span> <span class="n">targetname</span><span class="p">)</span>
+                <span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">darkgreen</span><span class="p">(</span><span class="n">targetname</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">nonl</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">resolve_references</span><span class="p">(</span><span class="n">doc_tree</span><span class="p">,</span> <span class="n">doc_tree</span><span class="o">.</span><span class="n">man_info</span><span class="o">.</span><span class="n">manpage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+            <span class="c1"># remove pending_xref nodes</span>
+            <span class="k">for</span> <span class="n">pendingnode</span> <span class="ow">in</span> <span class="n">doc_tree</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">addnodes</span><span class="o">.</span><span class="n">pending_xref</span><span class="p">):</span>
+                <span class="n">pendingnode</span><span class="o">.</span><span class="n">replace_self</span><span class="p">(</span><span class="n">pendingnode</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+            <span class="n">doc_writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">doc_tree</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="KernelDocManBuilder.finish"><a class="viewcode-back" href="../../linuxdoc-api/linuxdoc.manKernelDoc.html#linuxdoc.manKernelDoc.KernelDocManBuilder.finish">[docs]</a>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

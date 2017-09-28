@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kernel-doc in reST documents &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="LinuxDoc HowTo" href="index.html"/>
+        <link rel="next" title="kernel-doc examples &amp; tests" href="kernel-doc-examples.html"/>
+        <link rel="prev" title="kernel-doc syntax" href="kernel-doc-syntax.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kernel-doc in reST documents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#kernel-doc-options">kernel-doc options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-blocks">documentation blocks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structs-unions-enums-and-typedefs">structs, unions, enums and typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exported">exported</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snippets">Snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#man-pages">man pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#highlights-and-cross-references">Highlights and cross-references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kernel-doc-config">kernel-doc config</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+      <li>kernel-doc in reST documents</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/kernel-doc-directive.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kernel-doc-in-rest-documents">
+<span id="kernel-doc-directive"></span><h1>kernel-doc in reST documents<a class="headerlink" href="#kernel-doc-in-rest-documents" title="Permalink to this headline">¶</a></h1>
+<p>There exists a <a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#directives">reST-directive</a> named
+<code class="docutils literal"><span class="pre">kernel-doc</span></code> to integrate kernel-doc comments into a reST document (e.g. in a
+<em>book</em>). The directive comes with options to fine grain control which parts
+should be placed into the reST document. With no options given, the complete
+kernel-doc comments from a source file will be inserted. So, the first and very
+simple example is:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="gh">My Media Book</span>
+<span class="gh">=============</span>
+
+<span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> include/media/media-device.h
+</pre></div>
+</div>
+<p>With this small example the kernel-doc comments from the media-device.h will be
+inserted direct under the chapter “My Media Book”. The “DOC:” sections, the function
+and the type descriptions will be inserted in the order they appear in the source file.
+Mostly you want to select more fine grained, read on to see how.</p>
+<div class="section" id="kernel-doc-options">
+<span id="id1"></span><h2>kernel-doc options<a class="headerlink" href="#kernel-doc-options" title="Permalink to this headline">¶</a></h2>
+<p>Here is a short overview of the options:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> <span class="nt">&lt;src-filename&gt;</span>
+    <span class="nc">:doc:</span> <span class="nf">&lt;section title&gt;</span>
+    <span class="nc">:no-header:</span>
+    <span class="nc">:export:</span>
+    <span class="nc">:internal:</span>
+    <span class="nc">:functions:</span> <span class="nf">&lt;function [, functions [, ...]]&gt;</span>
+    <span class="nc">:module:</span>    <span class="nf">&lt;prefix-id&gt;</span>
+    <span class="nc">:man-sect:</span>  <span class="nf">&lt;man sect-no&gt;</span>
+    <span class="nc">:snippets:</span>  <span class="nf">&lt;snippet [, snippets [, ...]]&gt;</span>
+    <span class="nc">:language:</span>  <span class="nf">&lt;snippet-lang&gt;</span>
+    <span class="nc">:linenos:</span>
+    <span class="nc">:debug:</span>
+</pre></div>
+</div>
+<p>The argument <code class="docutils literal"><span class="pre">&lt;src-filename&gt;</span></code> is required, it points to a source file in the
+kernel source tree. The pathname is relative to kernel’s root folder.  The
+options have the following meaning, but be aware that not all combinations of
+these options make sense:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">doc</span> <span class="pre">&lt;section</span> <span class="pre">title&gt;</span></code></dt>
+<dd><p class="first">Include content of the <code class="docutils literal"><span class="pre">DOC:</span></code> section titled <code class="docutils literal"><span class="pre">&lt;section</span> <span class="pre">title&gt;</span></code>.  Spaces
+are allowed in <code class="docutils literal"><span class="pre">&lt;section</span> <span class="pre">title&gt;</span></code>; do not quote the <code class="docutils literal"><span class="pre">&lt;section</span> <span class="pre">title&gt;</span></code>.</p>
+<p>The next option make only sense in conjunction with option <code class="docutils literal"><span class="pre">doc</span></code>:</p>
+<dl class="last docutils">
+<dt><code class="docutils literal"><span class="pre">no-header</span></code></dt>
+<dd>Do not output DOC: section’s title. Useful, if the surrounding context
+already has a heading, and the DOC: section title is only used as an
+identifier. Take in mind, that this option will not suppress any native
+reST heading markup in the comment (<a class="reference internal" href="reST-kernel-doc-mode.html#rest-section-structure"><span class="std std-ref">reST section structure</span></a>).</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">export</span> <span class="pre">[&lt;src-fname-pattern&gt;</span> <span class="pre">[,</span> <span class="pre">...]]</span></code></dt>
+<dd><p class="first">Include documentation for all function, struct or whatever definition in
+<code class="docutils literal"><span class="pre">&lt;src-filename&gt;</span></code>, exported using EXPORT_SYMBOL macro (<code class="docutils literal"><span class="pre">EXPORT_SYMBOL</span></code>,
+<code class="docutils literal"><span class="pre">EXPORT_SYMBOL_GPL</span></code> &amp; <code class="docutils literal"><span class="pre">EXPORT_SYMBOL_GPL_FUTURE</span></code>) either in
+<code class="docutils literal"><span class="pre">&lt;src-filename&gt;</span></code> or in any of the files specified by
+<code class="docutils literal"><span class="pre">&lt;src-fname-pattern&gt;</span></code>.</p>
+<p class="last">The <code class="docutils literal"><span class="pre">&lt;src-fname-pattern&gt;</span></code> (glob) is useful when the kernel-doc comments
+have been placed in header files, while EXPORT_SYMBOL are next to the
+function definitions.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">internal</span> <span class="pre">[&lt;src-fname-pattern&gt;</span> <span class="pre">[,</span> <span class="pre">...]]</span></code></dt>
+<dd>Include documentation for all documented definitions, <strong>not</strong> exported using
+EXPORT_SYMBOL macro either in <code class="docutils literal"><span class="pre">&lt;src-filename&gt;</span></code> or in any of the files
+specified by <code class="docutils literal"><span class="pre">&lt;src-fname-pattern&gt;</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">functions</span> <span class="pre">&lt;name</span> <span class="pre">[,</span> <span class="pre">names</span> <span class="pre">[,</span> <span class="pre">...]]&gt;</span></code></dt>
+<dd>Include documentation for each named definition.</dd>
+<dt><code class="docutils literal"><span class="pre">module</span> <span class="pre">&lt;prefix-id&gt;</span></code></dt>
+<dd>The option <code class="docutils literal"><span class="pre">:module:</span> <span class="pre">&lt;id-prefix&gt;</span></code> sets a module-name. The module-name is
+used as a prefix for automatic generated IDs (reference anchors).</dd>
+<dt><code class="docutils literal"><span class="pre">man-sect</span> <span class="pre">&lt;sect-no&gt;</span></code></dt>
+<dd>Section number of the manual pages (see man man-pages). The man-pages are build
+by the <code class="docutils literal"><span class="pre">kernel-doc-man</span></code> builder.</dd>
+<dt><code class="docutils literal"><span class="pre">snippets</span> <span class="pre">&lt;name</span> <span class="pre">[,</span> <span class="pre">names</span> <span class="pre">[,</span> <span class="pre">...]]&gt;</span></code></dt>
+<dd><p class="first">Inserts the source-code passage(s) marked with the snippet <code class="docutils literal"><span class="pre">name</span></code>. The
+snippet is inserted with a <a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/code.html">code-block::</a>
+directive.</p>
+<p>The next options make only sense in conjunction with option <code class="docutils literal"><span class="pre">snippets</span></code>:</p>
+<dl class="last docutils">
+<dt><code class="docutils literal"><span class="pre">language</span> <span class="pre">&lt;highlighter&gt;</span></code></dt>
+<dd>Set highlighting language of the snippet code-block.</dd>
+<dt><code class="docutils literal"><span class="pre">linenos</span></code></dt>
+<dd>Set line numbers in the snippet code-block.</dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">debug</span></code></dt>
+<dd>Inserts a code-block with the generated reST source. This might sometimes
+helpful to see how the kernel-doc parser transforms the kernel-doc markup to
+reST markup.</dd>
+</dl>
+</div>
+<div class="section" id="documentation-blocks">
+<span id="kernel-doc-doc-section"></span><h2>documentation blocks<a class="headerlink" href="#documentation-blocks" title="Permalink to this headline">¶</a></h2>
+<p>The following example inserts the documentation block with the title “Theory of
+Operation”.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.h
+   <span class="nc">:doc:</span>  <span class="nf">Theory of Operation</span>
+   <span class="nc">:module:</span> <span class="nf">example</span>
+</pre></div>
+</div>
+<p>With the module name “example” the title refers by:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span>Rendered example: <span class="na">:ref:</span><span class="nv">`example.theory-of-operation`</span>
+</pre></div>
+</div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-theory-of-operation"><span class="std std-ref">Theory of Operation</span></a></p>
+</div>
+<div class="section" id="functions">
+<span id="kernel-doc-functions"></span><h2>functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>The following example inserts the documentation of struct ‘user_function’.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> ./all-in-a-tumble.h
+   <span class="nc">:functions:</span>  <span class="nf">user_function</span>
+   <span class="nc">:module:</span>     <span class="nf">example</span>
+</pre></div>
+</div>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="m">*</span> Rendered example by ID with module prefix: <span class="na">:ref:</span><span class="nv">`example.user_function`</span>
+<span class="m">*</span> Function reference: <span class="na">:c:func:</span><span class="nv">`user_function`</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Rendered example by ID with module prefix: <a class="reference internal" href="all-in-a-tumble.html#example-user-function"><span class="std std-ref">user_function</span></a></li>
+<li>Function reference: <a class="reference internal" href="kernel-doc-tests.html#c.user_function" title="user_function"><code class="xref c c-func docutils literal"><span class="pre">user_function()</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="structs-unions-enums-and-typedefs">
+<span id="kernel-doc-typedefs"></span><span id="kernel-doc-enums"></span><span id="kernel-doc-unions"></span><span id="kernel-doc-structs"></span><h2>structs, unions, enums and typedefs<a class="headerlink" href="#structs-unions-enums-and-typedefs" title="Permalink to this headline">¶</a></h2>
+<p>The following example inserts the documentation of struct ‘my_long_struct’.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> ./all-in-a-tumble.h
+   <span class="nc">:functions:</span>  <span class="nf">my_long_struct</span>
+   <span class="nc">:module:</span>     <span class="nf">example</span>
+</pre></div>
+</div>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="m">*</span> Rendered example by ID with module prefix: <span class="na">:ref:</span><span class="nv">`example.my_long_struct`</span>
+<span class="m">*</span> Type reference: <span class="na">:c:type:</span><span class="nv">`my_long_struct`</span> or the alternativ notation
+  with title <span class="na">:c:type:</span><span class="nv">`struct my_long_struct &lt;my_long_struct&gt;`</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Rendered example by ID with module prefix: <a class="reference internal" href="all-in-a-tumble.html#example-my-long-struct"><span class="std std-ref">struct my_long_struct</span></a></li>
+<li>Type reference: <a class="reference internal" href="all-in-a-tumble.html#c.my_long_struct" title="my_long_struct"><code class="xref c c-type docutils literal"><span class="pre">my_long_struct</span></code></a> or the alternativ notation
+with title <a class="reference internal" href="all-in-a-tumble.html#c.my_long_struct" title="my_long_struct"><code class="xref c c-type docutils literal"><span class="pre">struct</span> <span class="pre">my_long_struct</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="exported">
+<span id="kernel-doc-export"></span><h2>exported<a class="headerlink" href="#exported" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> include/uapi/linux/dvb/frontend.h
+   <span class="nc">:export:</span> <span class="nf">net/mac80211/*.c</span>
+   <span class="nc">:module:</span> <span class="nf">mac80211</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="snippets">
+<span id="kernel-doc-snippets"></span><h2>Snippets<a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
+<p>The kernel-doc Parser supports a comment-markup for
+<a class="reference internal" href="kernel-doc-syntax.html#kernel-doc-syntax-snippets"><span class="std std-ref">Snippets</span></a>. By example; The directive of the shown
+code-snippet below is:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.c
+   <span class="nc">:snippets:</span>  <span class="nf">hello-world</span>
+   <span class="nc">:language:</span>  <span class="nf">c</span>
+   <span class="nc">:linenos:</span>
+</pre></div>
+</div>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="man-pages">
+<span id="kernel-doc-man-pages"></span><h2>man pages<a class="headerlink" href="#man-pages" title="Permalink to this headline">¶</a></h2>
+<p>To get man pages from kernel-doc comments, add the <code class="docutils literal"><span class="pre">:man-sect:</span></code> option to your
+kernel-doc directives. E.g. to get man-pages of media’s remote control (file
+<code class="docutils literal"><span class="pre">media/kapi/rc-core.rst</span></code>) add <code class="docutils literal"><span class="pre">:man-sect:</span> <span class="pre">9</span></code> to all the kernel-doc includes.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="gh">Remote Controller devices</span>
+<span class="gh">=========================</span>
+
+<span class="gh">Remote Controller core</span>
+<span class="gh">----------------------</span>
+
+<span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> include/media/rc-core.h
+   <span class="nc">:man-sect:</span> <span class="nf">9</span>
+
+<span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> include/media/rc-map.h
+   <span class="nc">:man-sect:</span> <span class="nf">9</span>
+
+<span class="gh">LIRC</span>
+<span class="gh">----</span>
+
+<span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span> include/media/lirc_dev.h
+   <span class="nc">:man-sect:</span> <span class="nf">9</span>
+</pre></div>
+</div>
+<p>If you don’t want to edit all your kernel-doc directives to get man page from,
+set a global man-sect in your <code class="docutils literal"><span class="pre">conf.py</span></code> (see <code class="docutils literal"><span class="pre">kernel_doc_mansect</span></code> below).
+Further reading: <a class="reference internal" href="man-pages.html#man-pages"><span class="std std-ref">man pages from kernel-doc comments</span></a>.</p>
+<p>If not already exists, add a man-page target to your Makefile which calls
+sphinx-builder with the kernel-doc-man builder. E.g. in the kernel sources at
+<code class="docutils literal"><span class="pre">Documentation/Makefile</span></code> you need something like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mandocs:
+        @$(foreach var,$(SPHINXDIRS),$(call loop_cmd,sphinx,kernel-doc-man,$(var),man,$(var)))
+</pre></div>
+</div>
+</div>
+<div class="section" id="highlights-and-cross-references">
+<h2>Highlights and cross-references<a class="headerlink" href="#highlights-and-cross-references" title="Permalink to this headline">¶</a></h2>
+<p>The following special patterns are recognized in the kernel-doc comment
+descriptive text and converted to proper reStructuredText markup and <a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html#cross-referencing-c-constructs">Sphinx’s C
+Domain</a> references.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">The below are <strong>only</strong> recognized within kernel-doc comments, <strong>not</strong> within
+normal reStructuredText documents.</p>
+</div>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">funcname()</span></code></dt>
+<dd>Function reference.</dd>
+<dt><code class="docutils literal"><span class="pre">&#64;parameter</span></code></dt>
+<dd>Name of a function parameter. (No cross-referencing, just formatting.)</dd>
+<dt><code class="docutils literal"><span class="pre">%CONST</span></code></dt>
+<dd>Name of a constant. (No cross-referencing, just formatting.)</dd>
+<dt><code class="docutils literal"><span class="pre">``literal``</span></code></dt>
+<dd><p class="first">A literal block that should be handled as-is. The output will use a
+<code class="docutils literal"><span class="pre">monospaced</span> <span class="pre">font</span></code>.</p>
+<p>Useful if you need to use special characters that would otherwise have some
+meaning either by kernel-doc script of by reStructuredText.</p>
+<p class="last">This is particularly useful if you need to use things like <code class="docutils literal"><span class="pre">%ph</span></code> inside
+a function description.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">$ENVVAR</span></code></dt>
+<dd>Name of an environment variable. (No cross-referencing, just formatting.)</dd>
+<dt><code class="docutils literal"><span class="pre">&amp;struct</span> <span class="pre">name</span></code></dt>
+<dd>Structure reference.</dd>
+<dt><code class="docutils literal"><span class="pre">&amp;enum</span> <span class="pre">name</span></code></dt>
+<dd>Enum reference.</dd>
+<dt><code class="docutils literal"><span class="pre">&amp;typedef</span> <span class="pre">name</span></code></dt>
+<dd>Typedef reference.</dd>
+<dt><code class="docutils literal"><span class="pre">&amp;struct_name-&gt;member</span></code> or <code class="docutils literal"><span class="pre">&amp;struct_name.member</span></code></dt>
+<dd>Structure or union member reference. The cross-reference will be to the struct
+or union definition, not the member directly.</dd>
+<dt><code class="docutils literal"><span class="pre">&amp;name</span></code></dt>
+<dd>A generic type reference. Prefer using the full reference described above
+instead. This is mostly for legacy comments.</dd>
+</dl>
+</div>
+<div class="section" id="kernel-doc-config">
+<span id="id2"></span><h2>kernel-doc config<a class="headerlink" href="#kernel-doc-config" title="Permalink to this headline">¶</a></h2>
+<p>Within the sphinx-doc config file (<code class="docutils literal"><span class="pre">conf.py</span></code> or <code class="docutils literal"><span class="pre">my_project.conf</span></code>) you can
+set the following option.</p>
+<dl class="docutils">
+<dt>kernel_doc_raise_error: <code class="docutils literal"><span class="pre">True</span></code></dt>
+<dd><p class="first">If true, fatal errors (like missing function descriptions) raise an error. The
+default is <code class="docutils literal"><span class="pre">True</span></code>. Because this might break your build process, you can
+change the value to <code class="docutils literal"><span class="pre">False</span></code>.</p>
+<p>In this example, the documentation of definition <code class="docutils literal"><span class="pre">no_longer_exists</span></code> is
+required.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">kernel-doc</span><span class="p">::</span>  ./all-in-a-tumble.h
+    <span class="nc">:functions:</span>  <span class="nf">no_longer_exist</span>
+</pre></div>
+</div>
+<p>Since this definition not exists (anymore), the following TODO entry with Oops
+is inserted (when <code class="docutils literal"><span class="pre">kernel_doc_raise_error</span></code> is <code class="docutils literal"><span class="pre">False</span></code>).</p>
+<div class="rst-example last admonition">
+<p class="first admonition-title">parser error inserts a “.. todo::” directive with <em>Oops</em> in</p>
+<div class="admonition-todo last admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p>Oops: Document generation inconsistency.</p>
+<p>The template for this document tried to insert structured comment at this point, but an error occoured. This dummy section is inserted to allow generation to continue.:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">linuxdoc</span><span class="o">/</span><span class="n">docs</span><span class="o">/</span><span class="n">linuxdoc</span><span class="o">-</span><span class="n">howto</span><span class="o">/</span><span class="n">kernel</span><span class="o">-</span><span class="n">doc</span><span class="o">-</span><span class="n">directive</span><span class="o">.</span><span class="n">rst</span><span class="p">:</span><span class="mi">339</span><span class="p">:</span> <span class="p">(</span><span class="n">ERROR</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="n">selected</span> <span class="n">section</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+    <span class="n">no_longer_exist</span>
+
+<span class="o">..</span> <span class="n">kernel</span><span class="o">-</span><span class="n">doc</span><span class="p">::</span>  <span class="o">./</span><span class="nb">all</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">tumble</span><span class="o">.</span><span class="n">h</span>
+   <span class="p">:</span><span class="n">functions</span><span class="p">:</span>  <span class="n">no_longer_exist</span>
+</pre></div>
+</div>
+</div>
+</div>
+</dd>
+<dt>kernel_doc_verbose_warn: <code class="docutils literal"><span class="pre">True</span></code></dt>
+<dd>If true, more warnings will be logged. E.g. a missing description of a
+function’s return value will be logged.</dd>
+<dt>kernel_doc_mansect: <code class="docutils literal"><span class="pre">None</span></code></dt>
+<dd>Global fallback for man section of kernel-doc directives. Set this value if
+you want to create man pages for those kernel-doc directives, which has not
+been set a <code class="docutils literal"><span class="pre">:man-sect:</span></code> value. The default is <code class="docutils literal"><span class="pre">None</span></code>, which means; do the
+opposite and create only man pages for those directives which has been set the
+<code class="docutils literal"><span class="pre">:man-sect:</span></code> option (<code class="docutils literal"><span class="pre">None</span></code> is what you mostly want).</dd>
+<dt>kernel_doc_mode: <code class="docutils literal"><span class="pre">reST</span></code></dt>
+<dd>Set parser’s default kernel-doc mode <code class="docutils literal"><span class="pre">reST|kernel-doc</span></code>. See
+<a class="reference internal" href="reST-kernel-doc-mode.html#rest-kernel-doc-mode"><span class="std std-ref">reST kernel-doc mode</span></a> and <a class="reference internal" href="vintage-kernel-doc-mode.html#vintage-kernel-doc-mode"><span class="std std-ref">Vintage kernel-doc mode</span></a>.</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kernel-doc-examples.html" class="btn btn-neutral float-right" title="kernel-doc examples &amp; tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kernel-doc-syntax.html" class="btn btn-neutral" title="kernel-doc syntax" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

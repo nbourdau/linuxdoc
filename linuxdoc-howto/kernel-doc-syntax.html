@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>kernel-doc syntax &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="LinuxDoc HowTo" href="index.html"/>
+        <link rel="next" title="kernel-doc in reST documents" href="kernel-doc-directive.html"/>
+        <link rel="prev" title="kernel-doc introduction" href="kernel-doc-intro.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">kernel-doc syntax</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#functions">functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structs-unions">structs, unions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enums-and-typedefs">enums and typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-blocks">documentation blocks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#highlight-pattern">highlight pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snippets">Snippets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+      <li>kernel-doc syntax</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/kernel-doc-syntax.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kernel-doc-syntax">
+<span id="id1"></span><h1>kernel-doc syntax<a class="headerlink" href="#kernel-doc-syntax" title="Permalink to this headline">¶</a></h1>
+<p>The format of a block comment is like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>/**
+ * (data-type|DOC)? name(:)? (- short description)?
+(* @x: (description of parameter/member x)?)*
+(* a blank line)?
+ * (Description of function or data structure)?
+(* a blank line)?
+ * (sub-section header:
+ * (sub-section description) )*
+ (*)?*/
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">(...)?</span></code> signifies optional structure and</li>
+<li><code class="docutils literal"><span class="pre">(...)*</span></code> signifies 0 or more structure elements</li>
+</ul>
+<p>The name of the function, data-type respectively DOC is used as the section
+header. The names of section headers must be unique per source file.</p>
+<div class="section" id="functions">
+<span id="kernel-doc-syntax-functions"></span><h2>functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>/**
+ * function_name(:)? (- short description)?
+(* @parameterx: (description of parameter x)?)*
+(* a blank line)?
+ * (Description of function)?
+(* a blank line)?
+ * (sub-section header:
+ * (sub-section description) )*
+ (*)?*/
+</pre></div>
+</div>
+<p>All <em>description</em> text can span multiple lines, although the <code class="docutils literal"><span class="pre">function_name</span></code> &amp;
+its short description are traditionally on a single line.  Description text may
+also contain blank lines (i.e., lines that contain only a “*”).</p>
+<p>So, the trivial example would be:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * my_function</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<p>If the Description: header tag is omitted, then there must be a blank line
+after the last parameter specification.:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * my_function - does my stuff</span>
+<span class="cm"> * @my_arg: its mine damnit</span>
+<span class="cm"> *</span>
+<span class="cm"> * Does my stuff explained.</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<p>or, could also use:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * my_function - does my stuff</span>
+<span class="cm"> * @my_arg: its mine damnit</span>
+<span class="cm"> * Description:</span>
+<span class="cm"> * Does my stuff explained.</span>
+<span class="cm"> */</span>
+</pre></div>
+</div>
+<p>You can also add additional sections. When documenting kernel functions you
+should document the <code class="docutils literal"><span class="pre">Context:</span></code> of the function, e.g. whether the functions can
+be called form interrupts. Unlike other sections you can end it with an empty
+line.</p>
+<p>A non-void function should have a <code class="docutils literal"><span class="pre">Return:</span></code> section describing the return
+value(s).  Example-sections should contain the string <code class="docutils literal"><span class="pre">EXAMPLE</span></code> so that
+they are marked appropriately in the output format.</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * user_function - function that can only be called in user context</span>
+<span class="cm"> * @a: some argument</span>
+<span class="cm"> * @...: ellipsis operator</span>
+<span class="cm"> *</span>
+<span class="cm"> * This function makes no sense, it&#39;s only a kernel-doc demonstration.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Example:</span>
+<span class="cm"> * x = user_function(22);</span>
+<span class="cm"> *</span>
+<span class="cm"> * Return:</span>
+<span class="cm"> * Returns first argument</span>
+<span class="cm"> */</span>
+<span class="kt">int</span>
+<span class="nf">user_function</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="p">...)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-user-function"><span class="std std-ref">user_function</span></a></p>
+</div>
+<div class="section" id="structs-unions">
+<span id="kernel-doc-syntax-struct-unions"></span><h2>structs, unions<a class="headerlink" href="#structs-unions" title="Permalink to this headline">¶</a></h2>
+<p>Beside functions you can also write documentation for <code class="docutils literal"><span class="pre">structs</span></code>,
+<code class="docutils literal"><span class="pre">unions</span></code>. Instead of the function name you must write the name of the
+declaration; the <code class="docutils literal"><span class="pre">struct</span></code> or <code class="docutils literal"><span class="pre">union</span></code> must always precede the name. Nesting
+of declarations is supported.  Use the <code class="docutils literal"><span class="pre">&#64;argument</span></code> mechanism to document
+members or constants.</p>
+<p>Inside a <code class="docutils literal"><span class="pre">struct</span></code> description, you can use the ‘private:’ and ‘public:’ comment
+tags.  Structure fields that are inside a ‘private:’ area are not listed in the
+generated output documentation.  The ‘private:’ and ‘public:’ tags must begin
+immediately following a <code class="docutils literal"><span class="pre">/*</span></code> comment marker.  They may optionally include
+comments between the <code class="docutils literal"><span class="pre">:</span></code> and the ending <code class="docutils literal"><span class="pre">*/</span></code> marker.</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct my_struct - a struct with nested unions and structs</span>
+<span class="cm"> * @arg1: first argument of anonymous union/anonymous struct</span>
+<span class="cm"> * @arg2: second argument of anonymous union/anonymous struct</span>
+<span class="cm"> * @arg3: third argument of anonymous union/anonymous struct</span>
+<span class="cm"> * @arg4: fourth argument of anonymous union/anonymous struct</span>
+<span class="cm"> * @bar.st1.arg1: first argument of struct st1 on union bar</span>
+<span class="cm"> * @bar.st1.arg2: second argument of struct st1 on union bar</span>
+<span class="cm"> * @bar.st2.arg1: first argument of struct st2 on union bar</span>
+<span class="cm"> * @bar.st2.arg2: second argument of struct st2 on union bar</span>
+<span class="cm"> * @bar.st3.arg2: second argument of struct st3 on union bar</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="n">my_struct</span> <span class="p">{</span>
+    <span class="cm">/* Anonymous union/struct*/</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="n">__u8</span> <span class="nl">arg1</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">__u8</span> <span class="nl">arg2</span> <span class="p">:</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="p">};</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">arg1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg2</span><span class="p">;</span>
+        <span class="p">};</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">void</span> <span class="o">*</span><span class="n">arg3</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg4</span><span class="p">;</span>
+        <span class="p">};</span>
+    <span class="p">};</span>
+    <span class="cm">/* private: */</span>
+    <span class="kt">int</span> <span class="n">undoc_privat</span><span class="p">;</span>    <span class="cm">/* is undocumented but private, no warning */</span>
+
+    <span class="cm">/* public: */</span>
+    <span class="k">enum</span> <span class="p">{</span>
+        <span class="n">FOO</span><span class="p">,</span>
+        <span class="n">BAR</span><span class="p">,</span>
+    <span class="p">}</span> <span class="n">undoc_public</span><span class="p">;</span>      <span class="cm">/* is undocumented, cause a warning */</span>
+
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">arg1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg2</span><span class="p">;</span>
+        <span class="p">}</span> <span class="n">st1</span><span class="p">;</span>           <span class="cm">/* bar.st1 is undocumented, cause a warning */</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">void</span> <span class="o">*</span><span class="n">arg1</span><span class="p">;</span>  <span class="cm">/* bar.st3.arg1 is undocumented, cause a warning */</span>
+            <span class="kt">int</span> <span class="n">arg2</span><span class="p">;</span>
+        <span class="p">}</span> <span class="n">st2</span><span class="p">,</span> <span class="n">st3</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">bar</span><span class="p">;</span>               <span class="cm">/* bar is undocumented, cause a warning */</span>
+
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-my-struct"><span class="std std-ref">struct my_struct</span></a></p>
+<p>All descriptions can be multi-line, except the short function description.  For
+really longs <code class="docutils literal"><span class="pre">structs</span></code>, you can also describe arguments inside the body of the
+<code class="docutils literal"><span class="pre">struct</span></code>.  There are two styles, single-line comments where both the opening
+<code class="docutils literal"><span class="pre">/**</span></code> and closing <code class="docutils literal"><span class="pre">*/</span></code> are on the same line, and multi-line comments where
+they are each on a line of their own, like all other kernel-doc comments:</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * struct my_long_struct - short description with &amp;my_struct-&gt;a and &amp;my_struct-&gt;b</span>
+<span class="cm"> * @foo: The Foo member.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Longer description</span>
+<span class="cm"> */</span>
+<span class="k">struct</span> <span class="n">my_long_struct</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">foo</span><span class="p">;</span>
+        <span class="cm">/**</span>
+<span class="cm">         * @bar: The Bar member.</span>
+<span class="cm">         */</span>
+        <span class="kt">int</span> <span class="n">bar</span><span class="p">;</span>
+        <span class="cm">/**</span>
+<span class="cm">         * @baz: The Baz member.</span>
+<span class="cm">         *</span>
+<span class="cm">         * Here, the member description may contain several paragraphs.</span>
+<span class="cm">         */</span>
+        <span class="kt">int</span> <span class="n">baz</span><span class="p">;</span>
+        <span class="cm">/** @foobar: Single line description. */</span>
+        <span class="kt">int</span> <span class="n">foobar</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-my-long-struct"><span class="std std-ref">struct my_long_struct</span></a></p>
+</div>
+<div class="section" id="enums-and-typedefs">
+<h2>enums and typedefs<a class="headerlink" href="#enums-and-typedefs" title="Permalink to this headline">¶</a></h2>
+<p>To write documentation for enums and typedefs, you must write the name of the
+declaration; the <code class="docutils literal"><span class="pre">enum</span></code> or <code class="docutils literal"><span class="pre">typedef</span></code> must always precede the name.</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * enum my_enum - log level</span>
+<span class="cm"> * @QUIET: logs nothing</span>
+<span class="cm"> * @INFO: logs info messages</span>
+<span class="cm"> * @WARN: logs warn and info messages</span>
+<span class="cm"> * @DEBUG: logs debug, warn and info messages</span>
+<span class="cm"> */</span>
+
+<span class="k">enum</span> <span class="n">my_enum</span> <span class="p">{</span>
+  <span class="n">QUIET</span><span class="p">,</span>
+  <span class="n">INFO</span><span class="p">,</span>
+  <span class="n">WARN</span><span class="p">,</span>
+  <span class="n">DEBUG</span>
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-my-enum"><span class="std std-ref">enum my_enum</span></a></p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * typedef my_typedef - useless typdef of int</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="k">typedef</span> <span class="kt">int</span> <span class="n">my_typedef</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-my-typedef"><span class="std std-ref">typedef my_typedef</span></a></p>
+</div>
+<div class="section" id="documentation-blocks">
+<span id="kernel-doc-syntax-doc"></span><h2>documentation blocks<a class="headerlink" href="#documentation-blocks" title="Permalink to this headline">¶</a></h2>
+<p>To facilitate having source code and comments close together, you can include
+kernel-doc documentation blocks that are <em>free-form</em> comments instead of being
+kernel-doc for functions, structures, unions, enumerations, or typedefs.  This
+could be used for something like a theory of operation for a driver or library
+code, for example.</p>
+<p>This is done by using a <code class="docutils literal"><span class="pre">DOC:</span></code> section keyword with a section title. A small
+example:</p>
+<div class="highlight-c"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * DOC: Theory of Operation</span>
+<span class="cm"> *</span>
+<span class="cm"> * The whizbang foobar is a dilly of a gizmo.  It can do whatever you</span>
+<span class="cm"> * want it to do, at any time.  It reads your mind.  Here&#39;s how it works.</span>
+<span class="cm"> *</span>
+<span class="cm"> * foo bar splat</span>
+<span class="cm"> * -------------</span>
+<span class="cm"> *</span>
+<span class="cm"> * The only drawback to this gizmo is that is can sometimes damage hardware,</span>
+<span class="cm"> * software, or its subject(s).</span>
+<span class="cm"> *</span>
+<span class="cm"> * DOC: multiple DOC sections</span>
+<span class="cm"> *</span>
+<span class="cm"> * It&#39;s not recommended to place more than one &quot;DOC:&quot; section in the same</span>
+<span class="cm"> * comment block. To insert a new &quot;DOC:&quot; section, create a new comment block and</span>
+<span class="cm"> * to create a sub-section use the reST markup for headings, see documentation</span>
+<span class="cm"> * of function rst_mode()</span>
+<span class="cm"> */</span>
+</pre></div>
+</td></tr></table></div>
+<p>Rendered example: <a class="reference internal" href="all-in-a-tumble.html#example-theory-of-operation"><span class="std std-ref">Theory of Operation</span></a></p>
+</div>
+<div class="section" id="highlight-pattern">
+<span id="kernel-doc-highlights"></span><h2>highlight pattern<a class="headerlink" href="#highlight-pattern" title="Permalink to this headline">¶</a></h2>
+<p>All kernel-doc markup is processed as described above, all descriptive text is
+further processed, scanning for the following special patterns, which are
+highlighted appropriately.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">user_function()</span></code> : function</li>
+<li><code class="docutils literal"><span class="pre">&#64;a</span></code> : name of a parameter</li>
+<li><code class="docutils literal"><span class="pre">&amp;struct</span> <span class="pre">my_struct</span></code> : name of a structure (including the word struct)</li>
+<li><code class="docutils literal"><span class="pre">&amp;union</span> <span class="pre">my_union</span></code> : name of a union</li>
+<li><code class="docutils literal"><span class="pre">&amp;my_struct-&gt;a</span></code> or <code class="docutils literal"><span class="pre">&amp;my_struct.b</span></code> -  member of a struct or union.</li>
+<li><code class="docutils literal"><span class="pre">&amp;enum</span> <span class="pre">my_enum</span></code> : name of a enum</li>
+<li><code class="docutils literal"><span class="pre">&amp;typedef</span> <span class="pre">my_typedef</span></code> : name of a typedef</li>
+<li><code class="docutils literal"><span class="pre">%CONST</span></code> : name of a constant.</li>
+<li><code class="docutils literal"><span class="pre">$ENVVAR</span></code> : environmental variable</li>
+</ul>
+<p>The kernel-doc parser translates the pattern above to the corresponding <a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html">reST</a>
+markups (<a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html">sphinx domains</a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>- :c:func:`user_function` : function
+- ``a`` : name of a parameter
+- :c:type:`struct my_struct &lt;my_struct&gt;` : name of a structure (including the word struct)
+- :c:type:`union my_union &lt;my_union&gt;` : name of a union
+- :c:type:`my_struct-&gt;a &lt;my_struct&gt;` or :c:type:`my_struct.b &lt;my_struct&gt;` -  member of a struct or union.
+- :c:type:`enum my_enum &lt;my_enum&gt;` : name of a enum
+- :c:type:`typedef my_typedef &lt;my_typedef&gt;` : name of a typedef
+- ``CONST`` : name of a constant.
+- ``$ENVVAR`` : environmental variable
+</pre></div>
+</div>
+<p>The <a class="reference external" href="http://www.sphinx-doc.org/">sphinx-doc</a> generator highlights these markups and tries to cross
+referencing to arbitrary locations (<a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/inline.html#cross-referencing-arbitrary-locations">sphinx cross references</a>). The result of a
+cross reference depends on the context of the document which includes the
+kernel-doc comment. You don’t have to use the <em>highlight</em> pattern, if you prefer
+<em>pure</em> reST, use the reST markup.</p>
+<p>Since the prefixes <code class="docutils literal"><span class="pre">$...</span></code>, <code class="docutils literal"><span class="pre">&amp;...</span></code> and <code class="docutils literal"><span class="pre">&#64;...</span></code> are used to markup the
+highlight pattern, you have to escape them in other uses: <code class="docutils literal"><span class="pre">\$...</span></code>, <code class="docutils literal"><span class="pre">\&amp;...</span></code>
+and <code class="docutils literal"><span class="pre">\&#64;...</span></code>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The highlight pattern, are non regular reST markups. They are only available
+within kernel-doc comments, helping C developers to write short and compact
+documentation in source code comments. You can’t use them in plain reST files
+(“.rst”). If you are editing “.rst” files (e.g. files under <code class="docutils literal"><span class="pre">Documentation</span></code>)
+please use the corresponding <a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html">reST</a> markups (<a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html">sphinx domains</a>).</p>
+</div>
+</div>
+<div class="section" id="snippets">
+<span id="kernel-doc-syntax-snippets"></span><h2>Snippets<a class="headerlink" href="#snippets" title="Permalink to this headline">¶</a></h2>
+<p>The kernel-doc Parser supports a comment-markup for snippets out of the source
+code. To start a region to snip insert:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/*</span> <span class="n">parse</span><span class="o">-</span><span class="n">SNIP</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">snippet</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> <span class="o">*/</span>
+</pre></div>
+</div>
+<p>The snippet region stops with a new snippet region or at the next:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/*</span> <span class="n">parse</span><span class="o">-</span><span class="n">SNAP</span><span class="p">:</span> <span class="o">*/</span>
+</pre></div>
+</div>
+<p>A small source code example:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="cm">/* parse-SNIP: hello-world */</span>
+<span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cm">/* parse-SNAP: */</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kernel-doc-directive.html" class="btn btn-neutral float-right" title="kernel-doc in reST documents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kernel-doc-intro.html" class="btn btn-neutral" title="kernel-doc introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

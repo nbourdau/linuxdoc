@@ -1,0 +1,528 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.kfigure module &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="linuxdoc package" href="linuxdoc.html"/>
+        <link rel="next" title="linuxdoc.lint module" href="linuxdoc.lint.html"/>
+        <link rel="prev" title="linuxdoc.kernel_include module" href="linuxdoc.kernel_include.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="linuxdoc.html">linuxdoc package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="linuxdoc.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.autodoc.html">linuxdoc.autodoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.cdomain.html">linuxdoc.cdomain module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.grep_doc.html">linuxdoc.grep_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_doc.html">linuxdoc.kernel_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_include.html">linuxdoc.kernel_include module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">linuxdoc.kfigure module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scalable-figure-and-image-handling">scalable figure and image handling</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.lint.html">linuxdoc.lint module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.manKernelDoc.html">linuxdoc.manKernelDoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstFlatTable.html">linuxdoc.rstFlatTable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstKernelDoc.html">linuxdoc.rstKernelDoc module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linuxdoc.html#module-linuxdoc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="linuxdoc.html">linuxdoc package</a> &raquo;</li>
+        
+      <li>linuxdoc.kfigure module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-api/linuxdoc.kfigure.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-linuxdoc.kfigure">
+<span id="linuxdoc-kfigure-module"></span><h1>linuxdoc.kfigure module<a class="headerlink" href="#module-linuxdoc.kfigure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scalable-figure-and-image-handling">
+<h2>scalable figure and image handling<a class="headerlink" href="#scalable-figure-and-image-handling" title="Permalink to this headline">¶</a></h2>
+<p>Sphinx extension which implements scalable image handling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">Copyright (C) 2016  Markus Heiser</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">GPL Version 2, June 1991 see Linux/COPYING for details.</td>
+</tr>
+</tbody>
+</table>
+<p>The build for image formats depend on image’s source format and output’s
+destination format. This extension implement methods to simplify image
+handling from the author’s POV. Directives like <code class="docutils literal"><span class="pre">kernel-figure</span></code> implement
+methods <em>to</em> always get the best output-format even if some tools are not
+installed. For more details take a look at <code class="docutils literal"><span class="pre">convert_image(...)</span></code> which is
+the core of all conversions.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">..</span> <span class="pre">kernel-image</span></code>: for image handling / a <code class="docutils literal"><span class="pre">..</span> <span class="pre">image::</span></code> replacement</li>
+<li><code class="docutils literal"><span class="pre">..</span> <span class="pre">kernel-figure</span></code>: for figure handling / a <code class="docutils literal"><span class="pre">..</span> <span class="pre">figure::</span></code> replacement</li>
+<li><code class="docutils literal"><span class="pre">..</span> <span class="pre">kernel-render</span></code>: for render markup / a concept to embed <em>render</em>
+markups (or languages). Supported markups (see <code class="docutils literal"><span class="pre">RENDER_MARKUP_EXT</span></code>)<ul>
+<li><code class="docutils literal"><span class="pre">DOT</span></code>: render embedded Graphviz’s <strong>DOC</strong></li>
+<li><code class="docutils literal"><span class="pre">SVG</span></code>: render embedded Scalable Vector Graphics (<strong>SVG</strong>)</li>
+<li>… <em>developable</em></li>
+</ul>
+</li>
+</ul>
+<p>Used tools:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">dot(1)</span></code>: Graphviz (<a class="reference external" href="http://www.graphviz.org">http://www.graphviz.org</a>). If Graphviz is not
+available, the DOT language is inserted as literal-block.</li>
+<li>SVG to PDF: To generate PDF, you need at least one of this tools:<ul>
+<li><code class="docutils literal"><span class="pre">convert(1)</span></code>: ImageMagick (<a class="reference external" href="https://www.imagemagick.org">https://www.imagemagick.org</a>)</li>
+</ul>
+</li>
+</ul>
+<p>List of customizations:</p>
+<ul class="simple">
+<li>generate PDF from SVG / used by PDF (LaTeX) builder</li>
+<li>generate SVG (html-builder) and PDF (latex-builder) from DOT files.
+DOT: see <a class="reference external" href="http://www.graphviz.org/content/dot-language">http://www.graphviz.org/content/dot-language</a></li>
+</ul>
+<dl class="class">
+<dt id="linuxdoc.kfigure.KernelFigure">
+<em class="property">class </em><code class="descclassname">linuxdoc.kfigure.</code><code class="descname">KernelFigure</code><span class="sig-paren">(</span><em>name</em>, <em>arguments</em>, <em>options</em>, <em>content</em>, <em>lineno</em>, <em>content_offset</em>, <em>block_text</em>, <em>state</em>, <em>state_machine</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelFigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelFigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.directives.patches.Figure</span></code></p>
+<p>KernelImage directive</p>
+<p>Earns everything from <code class="docutils literal"><span class="pre">..</span> <span class="pre">figure::</span></code> directive, except <em>remote URI</em> and
+<em>glob</em> pattern.  The KernelFigure wraps a figure node into a kernel_figure
+node. See <code class="docutils literal"><span class="pre">visit_kernel_figure</span></code>.</p>
+<dl class="method">
+<dt id="linuxdoc.kfigure.KernelFigure.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelFigure.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelFigure.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="linuxdoc.kfigure.KernelImage">
+<em class="property">class </em><code class="descclassname">linuxdoc.kfigure.</code><code class="descname">KernelImage</code><span class="sig-paren">(</span><em>name</em>, <em>arguments</em>, <em>options</em>, <em>content</em>, <em>lineno</em>, <em>content_offset</em>, <em>block_text</em>, <em>state</em>, <em>state_machine</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">docutils.parsers.rst.directives.images.Image</span></code></p>
+<p>KernelImage directive</p>
+<p>Earns everything from <code class="docutils literal"><span class="pre">..</span> <span class="pre">image::</span></code> directive, except <em>remote URI</em> and
+<em>glob</em> pattern. The KernelImage wraps a image node into a
+kernel_image node. See <code class="docutils literal"><span class="pre">visit_kernel_image</span></code>.</p>
+<dl class="method">
+<dt id="linuxdoc.kfigure.KernelImage.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelImage.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelImage.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="linuxdoc.kfigure.KernelRender">
+<em class="property">class </em><code class="descclassname">linuxdoc.kfigure.</code><code class="descname">KernelRender</code><span class="sig-paren">(</span><em>name</em>, <em>arguments</em>, <em>options</em>, <em>content</em>, <em>lineno</em>, <em>content_offset</em>, <em>block_text</em>, <em>state</em>, <em>state_machine</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelRender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelRender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.directives.patches.Figure</span></code></p>
+<p>KernelRender directive</p>
+<p>Render content by external tool.  Has all the options known from the
+<em>figure</em>  directive, plus option <code class="docutils literal"><span class="pre">caption</span></code>.  If <code class="docutils literal"><span class="pre">caption</span></code> has a
+value, a figure node with the <em>caption</em> is inserted. If not, a image node is
+inserted.</p>
+<p>The KernelRender directive wraps the text of the directive into a
+literal_block node and wraps it into a kernel_render node. See
+<code class="docutils literal"><span class="pre">visit_kernel_render</span></code>.</p>
+<dl class="method">
+<dt id="linuxdoc.kfigure.KernelRender.build_node">
+<code class="descname">build_node</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelRender.build_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.build_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.kfigure.KernelRender.final_argument_whitespace">
+<code class="descname">final_argument_whitespace</code><em class="property"> = False</em><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.final_argument_whitespace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.kfigure.KernelRender.has_content">
+<code class="descname">has_content</code><em class="property"> = True</em><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.has_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.kfigure.KernelRender.option_spec">
+<code class="descname">option_spec</code><em class="property"> = {'figclass': &lt;function class_option&gt;, 'align': &lt;function Figure.align&gt;, 'caption': &lt;function unchanged&gt;, 'class': &lt;function class_option&gt;, 'target': &lt;function unchanged_required&gt;, 'alt': &lt;function unchanged&gt;, 'height': &lt;function length_or_unitless&gt;, 'scale': &lt;function percentage&gt;, 'width': &lt;function length_or_percentage_or_unitless&gt;, 'name': &lt;function unchanged&gt;, 'figwidth': &lt;function Figure.figwidth_value&gt;}</em><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.option_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.kfigure.KernelRender.optional_arguments">
+<code class="descname">optional_arguments</code><em class="property"> = 0</em><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.optional_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.kfigure.KernelRender.required_arguments">
+<code class="descname">required_arguments</code><em class="property"> = 1</em><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.required_arguments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="linuxdoc.kfigure.KernelRender.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#KernelRender.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.KernelRender.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.add_kernel_figure_to_std_domain">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">add_kernel_figure_to_std_domain</code><span class="sig-paren">(</span><em>app</em>, <em>doctree</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#add_kernel_figure_to_std_domain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.add_kernel_figure_to_std_domain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add kernel-figure anchors to ‘std’ domain.</p>
+<p>The <code class="docutils literal"><span class="pre">StandardDomain.process_doc(..)</span></code> method does not know how to resolve
+the caption (label) of <code class="docutils literal"><span class="pre">kernel-figure</span></code> directive (it only knows about
+standard nodes, e.g. table, figure etc.). Without any additional handling
+this will result in a ‘undefined label’ for kernel-figures.</p>
+<p>This handle adds labels of kernel-figure to the ‘std’ domain labels.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.convert_image">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">convert_image</code><span class="sig-paren">(</span><em>img_node</em>, <em>translator</em>, <em>src_fname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#convert_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.convert_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a image node for the builder.</p>
+<p>Different builder prefer different image formats, e.g. <em>latex</em> builder
+prefer PDF while <em>html</em> builder prefer SVG format for images.</p>
+<p>This function handles output image formats in dependence of source the
+format (of the image) and the translator’s output format.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.dot2format">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">dot2format</code><span class="sig-paren">(</span><em>app</em>, <em>dot_fname</em>, <em>out_fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#dot2format"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.dot2format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts DOT file to <code class="docutils literal"><span class="pre">out_fname</span></code> using <code class="docutils literal"><span class="pre">dot(1)</span></code>.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">dot_fname</span></code> pathname of the input DOT file, including extension <code class="docutils literal"><span class="pre">.dot</span></code></li>
+<li><code class="docutils literal"><span class="pre">out_fname</span></code> pathname of the output file, including format extension</li>
+</ul>
+<p>The <em>format extension</em> depends on the <code class="docutils literal"><span class="pre">dot</span></code> command (see <code class="docutils literal"><span class="pre">man</span> <span class="pre">dot</span></code>
+option <code class="docutils literal"><span class="pre">-Txxx</span></code>). Normally you will use one of the following extensions:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">.ps</span></code> for PostScript,</li>
+<li><code class="docutils literal"><span class="pre">.svg</span></code> or <code class="docutils literal"><span class="pre">svgz</span></code> for Structured Vector Graphics,</li>
+<li><code class="docutils literal"><span class="pre">.fig</span></code> for XFIG graphics and</li>
+<li><code class="docutils literal"><span class="pre">.png</span></code> or <code class="docutils literal"><span class="pre">gif</span></code> for common bitmap graphics.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.file2literal">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">file2literal</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#file2literal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.file2literal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.isNewer">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">isNewer</code><span class="sig-paren">(</span><em>path1</em>, <em>path2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#isNewer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.isNewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if <code class="docutils literal"><span class="pre">path1</span></code> is newer than <code class="docutils literal"><span class="pre">path2</span></code></p>
+<p>If <code class="docutils literal"><span class="pre">path1</span></code> exists and is newer than <code class="docutils literal"><span class="pre">path2</span></code> the function returns
+<code class="docutils literal"><span class="pre">True</span></code> is returned otherwise <code class="docutils literal"><span class="pre">False</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="linuxdoc.kfigure.kernel_figure">
+<em class="property">class </em><code class="descclassname">linuxdoc.kfigure.</code><code class="descname">kernel_figure</code><span class="sig-paren">(</span><em>rawsource=''</em>, <em>*children</em>, <em>**attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#kernel_figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.kernel_figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">docutils.nodes.figure</span></code></p>
+<p>Node for <code class="docutils literal"><span class="pre">kernel-figure</span></code> directive.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="linuxdoc.kfigure.kernel_image">
+<em class="property">class </em><code class="descclassname">linuxdoc.kfigure.</code><code class="descname">kernel_image</code><span class="sig-paren">(</span><em>rawsource=''</em>, <em>*children</em>, <em>**attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#kernel_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.kernel_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">docutils.nodes.image</span></code></p>
+<p>Node for <code class="docutils literal"><span class="pre">kernel-image</span></code> directive.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="linuxdoc.kfigure.kernel_render">
+<em class="property">class </em><code class="descclassname">linuxdoc.kfigure.</code><code class="descname">kernel_render</code><span class="sig-paren">(</span><em>rawsource=''</em>, <em>*children</em>, <em>**attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#kernel_render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.kernel_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">docutils.nodes.General</span></code>, <code class="xref py py-class docutils literal"><span class="pre">docutils.nodes.Inline</span></code>, <code class="xref py py-class docutils literal"><span class="pre">docutils.nodes.Element</span></code></p>
+<p>Node for <code class="docutils literal"><span class="pre">kernel-render</span></code> directive.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.mkdir">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">mkdir</code><span class="sig-paren">(</span><em>folder</em>, <em>mode=509</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#mkdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.mkdir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.pass_handle">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">pass_handle</code><span class="sig-paren">(</span><em>self</em>, <em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#pass_handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.pass_handle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.setup">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">setup</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.setupTools">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">setupTools</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#setupTools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.setupTools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check available build tools and log some <em>verbose</em> messages.</p>
+<p>This function is called once, when the builder is initiated.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.svg2pdf">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">svg2pdf</code><span class="sig-paren">(</span><em>app</em>, <em>svg_fname</em>, <em>pdf_fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#svg2pdf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.svg2pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts SVG to PDF with <code class="docutils literal"><span class="pre">convert(1)</span></code> command.</p>
+<p>Uses <code class="docutils literal"><span class="pre">convert(1)</span></code> from ImageMagick (<a class="reference external" href="https://www.imagemagick.org">https://www.imagemagick.org</a>) for
+conversion.  Returns <code class="docutils literal"><span class="pre">True</span></code> on success and <code class="docutils literal"><span class="pre">False</span></code> if an error occurred.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">svg_fname</span></code> pathname of the input SVG file with extension (<code class="docutils literal"><span class="pre">.svg</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">pdf_name</span></code>  pathname of the output PDF file with extension (<code class="docutils literal"><span class="pre">.pdf</span></code>)</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.visit_kernel_figure">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">visit_kernel_figure</code><span class="sig-paren">(</span><em>self</em>, <em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#visit_kernel_figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.visit_kernel_figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visitor of the <code class="docutils literal"><span class="pre">kernel_figure</span></code> Node.</p>
+<p>Handles the <code class="docutils literal"><span class="pre">image</span></code> child-node with the <code class="docutils literal"><span class="pre">convert_image(...)</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.visit_kernel_image">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">visit_kernel_image</code><span class="sig-paren">(</span><em>self</em>, <em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#visit_kernel_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.visit_kernel_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visitor of the <code class="docutils literal"><span class="pre">kernel_image</span></code> Node.</p>
+<p>Handles the <code class="docutils literal"><span class="pre">image</span></code> child-node with the <code class="docutils literal"><span class="pre">convert_image(...)</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.visit_kernel_render">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">visit_kernel_render</code><span class="sig-paren">(</span><em>self</em>, <em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#visit_kernel_render"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.visit_kernel_render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visitor of the <code class="docutils literal"><span class="pre">kernel_render</span></code> Node.</p>
+<p>If rendering tools available, save the markup of the <code class="docutils literal"><span class="pre">literal_block</span></code> child
+node into a file and replace the <code class="docutils literal"><span class="pre">literal_block</span></code> node with a new created
+<code class="docutils literal"><span class="pre">image</span></code> node, pointing to the saved markup file. Afterwards, handle the
+image child-node with the <code class="docutils literal"><span class="pre">convert_image(...)</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.kfigure.which">
+<code class="descclassname">linuxdoc.kfigure.</code><code class="descname">which</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/kfigure.html#which"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.kfigure.which" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches the <code class="docutils literal"><span class="pre">cmd</span></code> in the <code class="docutils literal"><span class="pre">PATH</span></code> enviroment.</p>
+<p>This <em>which</em> searches the PATH for executable <code class="docutils literal"><span class="pre">cmd</span></code> . First match is
+returned, if nothing is found, <code class="docutils literal"><span class="pre">None</span></code> is returned.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="linuxdoc.lint.html" class="btn btn-neutral float-right" title="linuxdoc.lint module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="linuxdoc.kernel_include.html" class="btn btn-neutral" title="linuxdoc.kernel_include module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

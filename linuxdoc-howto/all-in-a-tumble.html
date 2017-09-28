@@ -1,0 +1,1007 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>rendered all-in-a-tumble.[ch] &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="kernel-doc examples &amp; tests" href="kernel-doc-examples.html"/>
+        <link rel="next" title="Additional tests" href="kernel-doc-tests.html"/>
+        <link rel="prev" title="reST of all-in-a-tumble.h" href="all-in-a-tumble-debug.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="all-in-a-tumble-src.html">source of <code class="docutils literal"><span class="pre">all-in-a-tumble.[ch]</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="all-in-a-tumble-debug.html">reST of <code class="docutils literal"><span class="pre">all-in-a-tumble.h</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">rendered <code class="docutils literal"><span class="pre">all-in-a-tumble.[ch]</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#all-in-a-tumble-c">all-in-a-tumble.c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#all-in-a-tumble-h">all-in-a-tumble.h</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kernel-doc-tests.html">Additional tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="table-markup.html">About tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+          <li><a href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a> &raquo;</li>
+        
+      <li>rendered <code class="docutils literal"><span class="pre">all-in-a-tumble.[ch]</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/all-in-a-tumble.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="rendered-all-in-a-tumble-ch">
+<span id="all-in-a-tumble"></span><h1>rendered <code class="docutils literal"><span class="pre">all-in-a-tumble.[ch]</span></code><a class="headerlink" href="#rendered-all-in-a-tumble-ch" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="all-in-a-tumble-c">
+<h2>all-in-a-tumble.c<a class="headerlink" href="#all-in-a-tumble-c" title="Permalink to this headline">¶</a></h2>
+<p>Below you see, how the example file <code class="docutils literal"><span class="pre">all-in-a-tumble.c</span></code> is rendered.</p>
+<div class="section" id="user-function">
+<span id="example-user-function"></span><h3>user_function<a class="headerlink" href="#user-function" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.user_function">
+int <code class="descname">user_function</code><span class="sig-paren">(</span>int<em>&nbsp;a</em>, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.user_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>function that can only be called in user context</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<em>int</em>) – some argument</li>
+<li><strong>ellipsis</strong> (<em>ellipsis</em>) – ellipsis operator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="description">
+<span id="example-user-function-description"></span><h4>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h4>
+<p>This function makes no sense, it’s only a kernel-doc demonstration.</p>
+</div>
+<div class="section" id="example">
+<span id="example-user-function-example"></span><h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">user_function</span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="return">
+<span id="example-user-function-return"></span><h4>Return<a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h4>
+<p>Returns first argument</p>
+</div>
+</div>
+<div class="section" id="internal-function">
+<span id="example-internal-function"></span><h3>internal_function<a class="headerlink" href="#internal-function" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.internal_function">
+int <code class="descname">internal_function</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.internal_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>the answer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>void</strong> – no arguments</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="context">
+<span id="example-internal-function-context"></span><h4>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h4>
+<p>!sanity()</p>
+</div>
+<div class="section" id="example-internal-function-return">
+<span id="id1"></span><h4>Return<a class="headerlink" href="#example-internal-function-return" title="Permalink to this headline">¶</a></h4>
+<p>The answer to the ultimate question of life, the universe and everything.</p>
+</div>
+</div>
+<div class="section" id="sys-rt-sigprocmask">
+<span id="example-sys-rt-sigprocmask"></span><h3>sys_rt_sigprocmask<a class="headerlink" href="#sys-rt-sigprocmask" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.sys_rt_sigprocmask">
+long <code class="descname">sys_rt_sigprocmask</code><span class="sig-paren">(</span>int<em>&nbsp;how</em>, sigset_t __user<em>&nbsp;*nset</em>, sigset_t __user<em>&nbsp;*oset</em>, size_t<em>&nbsp;sigsetsize</em><span class="sig-paren">)</span><a class="headerlink" href="#c.sys_rt_sigprocmask" title="Permalink to this definition">¶</a></dt>
+<dd><p>change the list of currently blocked signals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>how</strong> (<em>int</em>) – whether to add, remove, or set signals</li>
+<li><strong>__user *nset</strong> (<em>sigset_t</em>) – stores pending signals</li>
+<li><strong>__user *oset</strong> (<em>sigset_t</em>) – previous value of signal mask if non-null</li>
+<li><strong>sigsetsize</strong> (<em>size_t</em>) – size of sigset_t type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="example-sys-rt-sigprocmask-return">
+<span id="id2"></span><h4>Return<a class="headerlink" href="#example-sys-rt-sigprocmask-return" title="Permalink to this headline">¶</a></h4>
+<p>0</p>
+</div>
+</div>
+<div class="section" id="enum-rarely-enum">
+<span id="example-rarely-enum"></span><h3>enum rarely_enum<a class="headerlink" href="#enum-rarely-enum" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.rarely_enum">
+enum <code class="descname">rarely_enum</code><a class="headerlink" href="#c.rarely_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>enum to test parsing rarely code styles</p>
+</dd></dl>
+
+<div class="section" id="definition">
+<span id="example-rarely-enum-definition"></span><h4>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">rarely_enum</span> <span class="p">{</span>
+    <span class="n">F1</span><span class="p">,</span>
+    <span class="n">F2</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constants">
+<span id="example-rarely-enum-constants"></span><h4>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>F1</dt>
+<dd>f1</dd>
+<dt>F2</dt>
+<dd>f2</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="struct-rarely-struct">
+<span id="example-rarely-struct"></span><h3>struct rarely_struct<a class="headerlink" href="#struct-rarely-struct" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.rarely_struct">
+struct <code class="descname">rarely_struct</code><a class="headerlink" href="#c.rarely_struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>struct to test parsing rarely code styles</p>
+</dd></dl>
+
+<div class="section" id="example-rarely-struct-definition">
+<span id="id3"></span><h4>Definition<a class="headerlink" href="#example-rarely-struct-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">rarely_struct</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">foo</span> <span class="n">foofoo</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">bar</span> <span class="n">barbar</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="members">
+<span id="example-rarely-struct-members"></span><h4>Members<a class="headerlink" href="#members" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>foofoo</dt>
+<dd>lorem</dd>
+<dt>barbar</dt>
+<dd>ipsum</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="all-in-a-tumble-h">
+<h2>all-in-a-tumble.h<a class="headerlink" href="#all-in-a-tumble-h" title="Permalink to this headline">¶</a></h2>
+<p>Below you see, how the example file <code class="docutils literal"><span class="pre">all-in-a-tumble.h</span></code> is rendered.</p>
+<div class="section" id="about-examples">
+<span id="example-about-examples"></span><h3>About Examples<a class="headerlink" href="#about-examples" title="Permalink to this headline">¶</a></h3>
+<p>The file <code class="docutils literal"><span class="pre">all-in-a-tumble.h</span></code> includes all the referred examples of the
+linuxdoc-HOWTO documentation. It is also used as a test of the kernel-doc
+parser, to see how kernel-doc content will be rendered and where the parser
+might fail.</p>
+<p>The content itself is nonsense / don’t look to close ;-)</p>
+</div>
+<div class="section" id="trace-block-touch-buffer">
+<span id="example-trace-block-touch-buffer"></span><h3>trace_block_touch_buffer<a class="headerlink" href="#trace-block-touch-buffer" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.trace_block_touch_buffer">
+void <code class="descname">trace_block_touch_buffer</code><span class="sig-paren">(</span>struct buffer_head<em>&nbsp;*bh</em><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_touch_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>mark a buffer accessed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>buffer_head *bh</strong> (<em>struct</em>) – buffer_head being touched</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="example-trace-block-touch-buffer-description">
+<span id="id4"></span><h4>Description<a class="headerlink" href="#example-trace-block-touch-buffer-description" title="Permalink to this headline">¶</a></h4>
+<p>Called from <code class="xref c c-func docutils literal"><span class="pre">touch_buffer()</span></code>.</p>
+</div>
+</div>
+<div class="section" id="trace-block-dirty-buffer">
+<span id="example-trace-block-dirty-buffer"></span><h3>trace_block_dirty_buffer<a class="headerlink" href="#trace-block-dirty-buffer" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.trace_block_dirty_buffer">
+void <code class="descname">trace_block_dirty_buffer</code><span class="sig-paren">(</span>struct buffer_head<em>&nbsp;*bh</em><span class="sig-paren">)</span><a class="headerlink" href="#c.trace_block_dirty_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>mark a buffer dirty</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>buffer_head *bh</strong> (<em>struct</em>) – buffer_head being dirtied</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="example-trace-block-dirty-buffer-description">
+<span id="id5"></span><h4>Description<a class="headerlink" href="#example-trace-block-dirty-buffer-description" title="Permalink to this headline">¶</a></h4>
+<p>Called from <code class="xref c c-func docutils literal"><span class="pre">mark_buffer_dirty()</span></code>.</p>
+</div>
+</div>
+<div class="section" id="theory-of-operation">
+<span id="example-theory-of-operation"></span><h3>Theory of Operation<a class="headerlink" href="#theory-of-operation" title="Permalink to this headline">¶</a></h3>
+<p>The whizbang foobar is a dilly of a gizmo.  It can do whatever you
+want it to do, at any time.  It reads your mind.  Here’s how it works.</p>
+<div class="section" id="foo-bar-splat">
+<h4>foo bar splat<a class="headerlink" href="#foo-bar-splat" title="Permalink to this headline">¶</a></h4>
+<p>The only drawback to this gizmo is that is can sometimes damage hardware,
+software, or its subject(s).</p>
+</div>
+</div>
+<div class="section" id="multiple-doc-sections">
+<span id="example-multiple-doc-sections"></span><h3>multiple DOC sections<a class="headerlink" href="#multiple-doc-sections" title="Permalink to this headline">¶</a></h3>
+<p>It’s not recommended to place more than one “DOC:” section in the same
+comment block. To insert a new “DOC:” section, create a new comment block and
+to create a sub-section use the reST markup for headings, see documentation
+of function <a class="reference internal" href="#c.rst_mode" title="rst_mode"><code class="xref c c-func docutils literal"><span class="pre">rst_mode()</span></code></a></p>
+</div>
+<div class="section" id="struct-my-struct">
+<span id="example-my-struct"></span><h3>struct my_struct<a class="headerlink" href="#struct-my-struct" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.my_struct">
+struct <code class="descname">my_struct</code><a class="headerlink" href="#c.my_struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>a struct with nested unions and structs</p>
+</dd></dl>
+
+<div class="section" id="example-my-struct-definition">
+<span id="id6"></span><h4>Definition<a class="headerlink" href="#example-my-struct-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_struct</span> <span class="p">{</span>
+    <span class="k">union</span> <span class="p">{</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="n">__u8</span> <span class="nl">arg1</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">__u8</span> <span class="nl">arg2</span> <span class="p">:</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="p">}</span> <span class="p">;</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">arg1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg2</span><span class="p">;</span>
+        <span class="p">}</span> <span class="p">;</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">void</span> <span class="o">*</span><span class="n">arg3</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg4</span><span class="p">;</span>
+        <span class="p">}</span> <span class="p">;</span>
+    <span class="p">}</span> <span class="p">;</span>
+    <span class="k">enum</span> <span class="p">{</span>
+        <span class="n">FOO</span><span class="p">,</span>
+        <span class="n">BAR</span><span class="p">,</span>
+    <span class="p">}</span> <span class="n">undoc_public</span><span class="p">;</span>
+    <span class="k">union</span> <span class="p">{,</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">arg1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg2</span><span class="p">;</span>
+        <span class="p">}</span> <span class="n">st1</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="p">{</span>
+            <span class="kt">void</span> <span class="o">*</span><span class="n">arg1</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">arg2</span><span class="p">;</span>
+        <span class="p">}</span> <span class="n">st2</span><span class="p">,</span> <span class="n">st3</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">bar</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-my-struct-members">
+<span id="id7"></span><h4>Members<a class="headerlink" href="#example-my-struct-members" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>{unnamed_union}</dt>
+<dd>anonymous</dd>
+<dt>{unnamed_struct}</dt>
+<dd>anonymous</dd>
+<dt>arg1</dt>
+<dd>first argument of anonymous union/anonymous struct</dd>
+<dt>arg2</dt>
+<dd>second argument of anonymous union/anonymous struct</dd>
+<dt>{unnamed_struct}</dt>
+<dd>anonymous</dd>
+<dt>arg1</dt>
+<dd>first argument of anonymous union/anonymous struct</dd>
+<dt>arg2</dt>
+<dd>second argument of anonymous union/anonymous struct</dd>
+<dt>{unnamed_struct}</dt>
+<dd>anonymous</dd>
+<dt>arg3</dt>
+<dd>third argument of anonymous union/anonymous struct</dd>
+<dt>arg4</dt>
+<dd>fourth argument of anonymous union/anonymous struct</dd>
+<dt>undoc_public</dt>
+<dd><em>undescribed</em></dd>
+<dt>bar</dt>
+<dd><em>undescribed</em></dd>
+<dt>bar.st1.arg1</dt>
+<dd>first argument of struct st1 on union bar</dd>
+<dt>bar.st1.arg2</dt>
+<dd>second argument of struct st1 on union bar</dd>
+<dt>bar.st2.arg1</dt>
+<dd>first argument of struct st2 on union bar</dd>
+<dt>bar.st2.arg2</dt>
+<dd>second argument of struct st2 on union bar</dd>
+<dt>bar.st3.arg2</dt>
+<dd>second argument of struct st3 on union bar</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="struct-my-long-struct">
+<span id="example-my-long-struct"></span><h3>struct my_long_struct<a class="headerlink" href="#struct-my-long-struct" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.my_long_struct">
+struct <code class="descname">my_long_struct</code><a class="headerlink" href="#c.my_long_struct" title="Permalink to this definition">¶</a></dt>
+<dd><p>short description with <a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">my_struct-&gt;a</span></code></a> and <a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">my_struct-&gt;b</span></code></a></p>
+</dd></dl>
+
+<div class="section" id="example-my-long-struct-definition">
+<span id="id8"></span><h4>Definition<a class="headerlink" href="#example-my-long-struct-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">my_long_struct</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">foo</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">bar</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">baz</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">foobar</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-my-long-struct-members">
+<span id="id9"></span><h4>Members<a class="headerlink" href="#example-my-long-struct-members" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>foo</dt>
+<dd>The Foo member.</dd>
+<dt>bar</dt>
+<dd>The Bar member.</dd>
+<dt>baz</dt>
+<dd>The Baz member.
+Here, the member description may contain several paragraphs.</dd>
+<dt>foobar</dt>
+<dd>Single line description.</dd>
+</dl>
+</div>
+<div class="section" id="example-my-long-struct-description">
+<span id="id10"></span><h4>Description<a class="headerlink" href="#example-my-long-struct-description" title="Permalink to this headline">¶</a></h4>
+<p>Longer description</p>
+</div>
+</div>
+<div class="section" id="union-my-union">
+<span id="example-my-union"></span><h3>union my_union<a class="headerlink" href="#union-my-union" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.my_union">
+struct <code class="descname">my_union</code><a class="headerlink" href="#c.my_union" title="Permalink to this definition">¶</a></dt>
+<dd><p>short description</p>
+</dd></dl>
+
+<div class="section" id="example-my-union-definition">
+<span id="id11"></span><h4>Definition<a class="headerlink" href="#example-my-union-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">union</span> <span class="n">my_union</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-my-union-members">
+<span id="id12"></span><h4>Members<a class="headerlink" href="#example-my-union-members" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>a</dt>
+<dd>first member</dd>
+<dt>b</dt>
+<dd>second member</dd>
+</dl>
+</div>
+<div class="section" id="example-my-union-description">
+<span id="id13"></span><h4>Description<a class="headerlink" href="#example-my-union-description" title="Permalink to this headline">¶</a></h4>
+<p>Longer description</p>
+</div>
+</div>
+<div class="section" id="enum-my-enum">
+<span id="example-my-enum"></span><h3>enum my_enum<a class="headerlink" href="#enum-my-enum" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.my_enum">
+enum <code class="descname">my_enum</code><a class="headerlink" href="#c.my_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>log level</p>
+</dd></dl>
+
+<div class="section" id="example-my-enum-definition">
+<span id="id14"></span><h4>Definition<a class="headerlink" href="#example-my-enum-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">my_enum</span> <span class="p">{</span>
+    <span class="n">QUIET</span><span class="p">,</span>
+    <span class="n">INFO</span><span class="p">,</span>
+    <span class="n">WARN</span><span class="p">,</span>
+    <span class="n">DEBUG</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-my-enum-constants">
+<span id="id15"></span><h4>Constants<a class="headerlink" href="#example-my-enum-constants" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>QUIET</dt>
+<dd>logs nothing</dd>
+<dt>INFO</dt>
+<dd>logs info messages</dd>
+<dt>WARN</dt>
+<dd>logs warn and info messages</dd>
+<dt>DEBUG</dt>
+<dd>logs debug, warn and info messages</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="typedef-my-typedef">
+<span id="example-my-typedef"></span><h3>typedef my_typedef<a class="headerlink" href="#typedef-my-typedef" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.my_typedef">
+typedef <code class="descname">my_typedef</code><a class="headerlink" href="#c.my_typedef" title="Permalink to this definition">¶</a></dt>
+<dd><p>useless typdef of int</p>
+</dd></dl>
+
+</div>
+<div class="section" id="rst-mode">
+<span id="example-rst-mode"></span><h3>rst_mode<a class="headerlink" href="#rst-mode" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.rst_mode">
+int <code class="descname">rst_mode</code><span class="sig-paren">(</span>int<em>&nbsp;a</em>, char<em>&nbsp;*b</em><span class="sig-paren">)</span><a class="headerlink" href="#c.rst_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>short description of this function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<em>int</em>) – first argument</li>
+<li><strong>*b</strong> (<em>char</em>) – second argument
+Context: <code class="xref c c-func docutils literal"><span class="pre">in_gizmo_mode()</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="example-rst-mode-description">
+<span id="id16"></span><h4>Description<a class="headerlink" href="#example-rst-mode-description" title="Permalink to this headline">¶</a></h4>
+<p>Long description. This function has two integer arguments. The first is
+<code class="docutils literal"><span class="pre">parameter_a</span></code> and the second is <code class="docutils literal"><span class="pre">parameter_b</span></code>.</p>
+<p>As long as the reST / sphinx-doc toolchain uses <a class="reference external" href="http://www.sphinx-doc.org/en/stable/ext/intersphinx.html">intersphinx</a> you can refer
+definitions <em>outside</em> like <code class="xref c c-type docutils literal"><span class="pre">struct</span> <span class="pre">media_device</span></code>.  If
+the description of <code class="docutils literal"><span class="pre">media_device</span></code> struct is found in any of the intersphinx
+locations, a hyperref to this target is generated a build time.</p>
+</div>
+<div class="section" id="example-rst-mode-example">
+<span id="id17"></span><h4>Example<a class="headerlink" href="#example-rst-mode-example" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-rst-mode-return">
+<span id="id18"></span><h4>Return<a class="headerlink" href="#example-rst-mode-return" title="Permalink to this headline">¶</a></h4>
+<p>Sum of <code class="docutils literal"><span class="pre">parameter_a</span></code> and the second is <code class="docutils literal"><span class="pre">parameter_b</span></code>.</p>
+</div>
+<div class="section" id="highlighting">
+<span id="example-rst-mode-highlighting"></span><h4>highlighting<a class="headerlink" href="#highlighting" title="Permalink to this headline">¶</a></h4>
+<p>The highlight pattern, are non regular reST markups. They are only available
+within kernel-doc comments, helping C developers to write short and compact
+documentation.</p>
+<ul class="simple">
+<li><a class="reference internal" href="kernel-doc-tests.html#c.user_function" title="user_function"><code class="xref c c-func docutils literal"><span class="pre">user_function()</span></code></a> : function</li>
+<li><code class="docutils literal"><span class="pre">a</span></code> : name of a parameter</li>
+<li><a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">struct</span> <span class="pre">my_struct</span></code></a> : name of a structure (including the word struct)</li>
+<li><a class="reference internal" href="#c.my_union" title="my_union"><code class="xref c c-type docutils literal"><span class="pre">union</span> <span class="pre">my_union</span></code></a> : name of a union</li>
+<li><a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">my_struct-&gt;a</span></code></a> or <a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">my_struct.b</span></code></a> -  member of a struct or union.</li>
+<li><a class="reference internal" href="#c.my_enum" title="my_enum"><code class="xref c c-type docutils literal"><span class="pre">enum</span> <span class="pre">my_enum</span></code></a> : name of a enum</li>
+<li><a class="reference internal" href="#c.my_typedef" title="my_typedef"><code class="xref c c-type docutils literal"><span class="pre">typedef</span> <span class="pre">my_typedef</span></code></a> : name of a typedef</li>
+<li><code class="docutils literal"><span class="pre">CONST</span></code> : name of a constant.</li>
+<li><code class="docutils literal"><span class="pre">$ENVVAR</span></code> : environmental variable</li>
+</ul>
+<p>The kernel-doc parser translates the pattern above to the corresponding reST
+markups. You don’t have to use the <em>highlight</em> pattern, if you prefer <em>pure</em>
+reST, use the reST markup.</p>
+<ul class="simple">
+<li><a class="reference internal" href="kernel-doc-tests.html#c.user_function" title="user_function"><code class="xref c c-func docutils literal"><span class="pre">user_function()</span></code></a> : function</li>
+<li><code class="docutils literal"><span class="pre">a</span></code> : name of a parameter</li>
+<li><a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">struct</span> <span class="pre">my_struct</span></code></a> : name of a structure (including the word struct)</li>
+<li><a class="reference internal" href="#c.my_union" title="my_union"><code class="xref c c-type docutils literal"><span class="pre">union</span> <span class="pre">my_union</span></code></a> : name of a union</li>
+<li><a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">my_struct-&gt;a</span></code></a> or <a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">my_struct.b</span></code></a> -  member of a struct or union.</li>
+<li><a class="reference internal" href="#c.my_enum" title="my_enum"><code class="xref c c-type docutils literal"><span class="pre">enum</span> <span class="pre">my_enum</span></code></a> : name of a enum</li>
+<li><a class="reference internal" href="#c.my_typedef" title="my_typedef"><code class="xref c c-type docutils literal"><span class="pre">typedef</span> <span class="pre">my_typedef</span></code></a> : name of a typedef</li>
+<li><code class="docutils literal"><span class="pre">CONST</span></code> : name of a constant.</li>
+<li><code class="docutils literal"><span class="pre">$ENVVAR</span></code> : environmental variable</li>
+</ul>
+<p>Since the prefixes <code class="docutils literal"><span class="pre">$...</span></code>, <code class="docutils literal"><span class="pre">&amp;...</span></code> and <code class="docutils literal"><span class="pre">&#64;...</span></code> are used to markup the
+highlight pattern, you have to escape them in other uses: <code class="docutils literal"><span class="pre">$lorem</span></code>, &amp;lorem,
+%lorem and &#64;lorem. To esacpe from function highlighting, use lorem().</p>
+</div>
+<div class="section" id="parser-mode">
+<span id="example-rst-mode-parser-mode"></span><h4>Parser Mode<a class="headerlink" href="#parser-mode" title="Permalink to this headline">¶</a></h4>
+<p>This is an example with activated reST additions, in this section you will
+find some common inline markups.</p>
+<p>Within the <em>reST mode</em> the kernel-doc parser pass through all markups to the
+reST toolchain, except the <em>vintage highlighting</em> but including any
+whitespace. With this, the full reST markup is available in the comments.</p>
+<p>This is a link to the <a class="reference external" href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/">Linux kernel source tree</a>.</p>
+<p>This description is only to show some reST inline markups like <em>emphasise</em>
+and <strong>emphasis strong</strong>. The following is a demo of a reST list markup:</p>
+</div>
+<div class="section" id="definition-list">
+<span id="example-rst-mode-definition-list"></span><h4>Definition list<a class="headerlink" href="#definition-list" title="Permalink to this headline">¶</a></h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">def1:</th><td class="field-body">lorem</td>
+</tr>
+<tr class="field-even field"><th class="field-name">def2:</th><td class="field-body">ipsum</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="ordered-list">
+<span id="example-rst-mode-ordered-list"></span><h4>Ordered List<a class="headerlink" href="#ordered-list" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>item one</li>
+<li>item two</li>
+<li>item three with
+a linebreak</li>
+</ul>
+</div>
+<div class="section" id="literal-blocks">
+<span id="example-rst-mode-literal-blocks"></span><h4>Literal blocks<a class="headerlink" href="#literal-blocks" title="Permalink to this headline">¶</a></h4>
+<p>The next example shows a literal block:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">+------+</span>          <span class="o">+------+</span>
+<span class="o">|</span>\     <span class="o">|</span>\        <span class="o">/|</span>     <span class="o">/|</span>
+<span class="o">|</span> <span class="o">+----+-+</span>      <span class="o">+-+----+</span> <span class="o">|</span>
+<span class="o">|</span> <span class="o">|</span>    <span class="o">|</span> <span class="o">|</span>      <span class="o">|</span> <span class="o">|</span>    <span class="o">|</span> <span class="o">|</span>
+<span class="o">+-+----+</span> <span class="o">|</span>      <span class="o">|</span> <span class="o">+----+-+</span>
+ \<span class="o">|</span>     \<span class="o">|</span>      <span class="o">|/</span>     <span class="o">|/</span>
+  <span class="o">+------+</span>      <span class="o">+------+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="highlighted-code-blocks">
+<span id="example-rst-mode-highlighted-code-blocks"></span><h4>Highlighted code blocks<a class="headerlink" href="#highlighted-code-blocks" title="Permalink to this headline">¶</a></h4>
+<p>The next example shows a code block, with highlighting C syntax in the
+output.</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="c1">// Hello World program</span>
+<span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello World&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rest-sectioning">
+<span id="example-rst-mode-rest-sectioning"></span><h4>reST sectioning<a class="headerlink" href="#rest-sectioning" title="Permalink to this headline">¶</a></h4>
+<p>colon markup: sectioning by colon markup in reST mode is less ugly. ;-)</p>
+<p>A kernel-doc section like <em>this</em> section is translated into a reST
+<em>subsection</em>. This means, you can only use the following <em>sub-levels</em> within a
+kernel-doc section.</p>
+<div class="section" id="a-subsubsection">
+<h5>a subsubsection<a class="headerlink" href="#a-subsubsection" title="Permalink to this headline">¶</a></h5>
+<p>lorem ipsum</p>
+<div class="section" id="a-paragraph">
+<h6>a paragraph<a class="headerlink" href="#a-paragraph" title="Permalink to this headline">¶</a></h6>
+<p>lorem ipsum</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="vintage">
+<span id="example-vintage"></span><h3>vintage<a class="headerlink" href="#vintage" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="c.vintage">
+int <code class="descname">vintage</code><span class="sig-paren">(</span>int<em>&nbsp;parameter_a</em>, char<em>&nbsp;parameter_b</em><span class="sig-paren">)</span><a class="headerlink" href="#c.vintage" title="Permalink to this definition">¶</a></dt>
+<dd><p>short description of this function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parameter_a</strong> (<em>int</em>) – first argument</li>
+<li><strong>parameter_b</strong> (<em>char</em>) – second argument</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="example-vintage-context">
+<span id="id19"></span><h4>Context<a class="headerlink" href="#example-vintage-context" title="Permalink to this headline">¶</a></h4>
+<p>in_gizmo_mode().</p>
+</div>
+<div class="section" id="example-vintage-description">
+<span id="id20"></span><h4>Description<a class="headerlink" href="#example-vintage-description" title="Permalink to this headline">¶</a></h4>
+<p>This is a test of a typical markup from *vintage* kernel-doc.  Don’t look to
+close here, it is only for testing some kernel-doc parser stuff.</p>
+<p>Long description. This function has two integer arguments. The first is
+<code class="docutils literal"><span class="pre">parameter_a</span></code> and the second is <code class="docutils literal"><span class="pre">parameter_b</span></code>.</p>
+</div>
+<div class="section" id="example-vintage-example">
+<span id="id21"></span><h4>Example<a class="headerlink" href="#example-vintage-example" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">user_function</span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-vintage-return">
+<span id="id22"></span><h4>Return<a class="headerlink" href="#example-vintage-return" title="Permalink to this headline">¶</a></h4>
+<p>Sum of <code class="docutils literal"><span class="pre">parameter_a</span></code> and <code class="docutils literal"><span class="pre">parameter_b</span></code>.</p>
+</div>
+<div class="section" id="example-vintage-highlighting">
+<span id="id23"></span><h4>highlighting<a class="headerlink" href="#example-vintage-highlighting" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference internal" href="#c.vintage" title="vintage"><code class="xref c c-func docutils literal"><span class="pre">vintage()</span></code></a>    : function</li>
+<li><code class="docutils literal"><span class="pre">parameter_a</span></code> : name of a parameter</li>
+<li><code class="docutils literal"><span class="pre">$ENVVAR</span></code>      : environmental variable</li>
+<li><a class="reference internal" href="#c.my_struct" title="my_struct"><code class="xref c c-type docutils literal"><span class="pre">struct</span> <span class="pre">my_struct</span></code></a>   : name of a structure (up to two words including ``struct``)</li>
+<li><code class="docutils literal"><span class="pre">CONST</span></code>       : name of a constant.</li>
+</ul>
+</div>
+<div class="section" id="example-vintage-parser-mode">
+<span id="id24"></span><h4>Parser Mode<a class="headerlink" href="#example-vintage-parser-mode" title="Permalink to this headline">¶</a></h4>
+<p>*vintage* kernel-doc mode</p>
+<p>Within the *vintage kernel-doc mode* ignores any whitespace or inline
+markup.</p>
+<ul class="simple">
+<li>Inline markup like *emphasis* or **emphasis strong**</li>
+<li>Literals and/or block indent:</li>
+</ul>
+<p>a + b</p>
+<p>In kernel-doc *vintage* mode, there are no special block or inline markups
+available. Markups like the one above result in ambiguous reST markup which
+could produce error messages in the subsequently sphinx-build
+process. Unexpected outputs are mostly the result.</p>
+<p>This is a link <a class="reference external" href="https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/">https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/</a>
+to the Linux kernel source tree</p>
+</div>
+<div class="section" id="colon-markup">
+<span id="example-vintage-colon-markup"></span><h4>colon markup<a class="headerlink" href="#colon-markup" title="Permalink to this headline">¶</a></h4>
+<p>sectioning by colon markup in vintage mode is partial ugly. ;-)</p>
+</div>
+</div>
+<div class="section" id="struct-nfp-flower-priv">
+<span id="example-nfp-flower-priv"></span><h3>struct nfp_flower_priv<a class="headerlink" href="#struct-nfp-flower-priv" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.nfp_flower_priv">
+struct <code class="descname">nfp_flower_priv</code><a class="headerlink" href="#c.nfp_flower_priv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flower APP per-vNIC priv data</p>
+</dd></dl>
+
+<div class="section" id="example-nfp-flower-priv-definition">
+<span id="id25"></span><h4>Definition<a class="headerlink" href="#example-nfp-flower-priv-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">nfp_flower_priv</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">nfp_net</span> <span class="o">*</span><span class="n">nn</span><span class="p">;</span>
+    <span class="n">u32</span> <span class="n">mask_id_seed</span><span class="p">;</span>
+    <span class="n">u64</span> <span class="n">flower_version</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">nfp_fl_mask_id</span> <span class="n">mask_ids</span><span class="p">;</span>
+    <span class="n">DECLARE_HASHTABLE</span><span class="p">(</span><span class="n">mask_table</span><span class="p">,</span> <span class="n">NFP_FLOWER_MASK_HASH_BITS</span><span class="p">);</span>
+    <span class="n">DECLARE_HASHTABLE</span><span class="p">(</span><span class="n">flow_table</span><span class="p">,</span> <span class="n">NFP_FLOWER_HASH_BITS</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-nfp-flower-priv-members">
+<span id="id26"></span><h4>Members<a class="headerlink" href="#example-nfp-flower-priv-members" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>nn</dt>
+<dd>Pointer to vNIC</dd>
+<dt>mask_id_seed</dt>
+<dd>Seed used for mask hash table</dd>
+<dt>flower_version</dt>
+<dd>HW version of flower</dd>
+<dt>mask_ids</dt>
+<dd>List of free mask ids</dd>
+<dt>mask_table</dt>
+<dd>Hash table used to store masks</dd>
+<dt>flow_table</dt>
+<dd>Hash table used to store flower rules</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="enum-foo">
+<span id="example-foo"></span><h3>enum foo<a class="headerlink" href="#enum-foo" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.foo">
+enum <code class="descname">foo</code><a class="headerlink" href="#c.foo" title="Permalink to this definition">¶</a></dt>
+<dd><p>foo</p>
+</dd></dl>
+
+<div class="section" id="example-foo-definition">
+<span id="id27"></span><h4>Definition<a class="headerlink" href="#example-foo-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">foo</span> <span class="p">{</span>
+    <span class="n">F1</span><span class="p">,</span>
+    <span class="n">F2</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-foo-constants">
+<span id="id28"></span><h4>Constants<a class="headerlink" href="#example-foo-constants" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>F1</dt>
+<dd>f1</dd>
+<dt>F2</dt>
+<dd>f2</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="struct-something">
+<span id="example-something"></span><h3>struct something<a class="headerlink" href="#struct-something" title="Permalink to this headline">¶</a></h3>
+<dl class="type">
+<dt id="c.something">
+struct <code class="descname">something</code><a class="headerlink" href="#c.something" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lorem ipsum dolor sit amet.</p>
+</dd></dl>
+
+<div class="section" id="example-something-definition">
+<span id="id29"></span><h4>Definition<a class="headerlink" href="#example-something-definition" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">something</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="n">foo</span> <span class="n">foofoo</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">bar</span> <span class="n">barbar</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-something-members">
+<span id="id30"></span><h4>Members<a class="headerlink" href="#example-something-members" title="Permalink to this headline">¶</a></h4>
+<dl class="docutils">
+<dt>foofoo</dt>
+<dd>lorem</dd>
+<dt>barbar</dt>
+<dd>ipsum</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kernel-doc-tests.html" class="btn btn-neutral float-right" title="Additional tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="all-in-a-tumble-debug.html" class="btn btn-neutral" title="reST of all-in-a-tumble.h" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

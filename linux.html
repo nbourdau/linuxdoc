@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Patch Linux Kernel Documentation &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="index.html"/>
+        <link rel="next" title="linuxdoc package" href="linuxdoc-api/linuxdoc.html"/>
+        <link rel="prev" title="Command line tools" href="cmd-line.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Patch Linux Kernel Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/linux.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="patch-linux-kernel-documentation">
+<span id="patch-linux-kernel"></span><h1>Patch Linux Kernel Documentation<a class="headerlink" href="#patch-linux-kernel-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Starting with Linux Kernel v4.8 a <a class="reference external" href="http://www.sphinx-doc.org/">sphinx-doc</a> build is available to build
+formats like HTML from reStructuredText (<a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html">reST</a>) markup. E.g. with <code class="docutils literal"><span class="pre">make</span>
+<span class="pre">SPHINXDIRS=&quot;driver-api&quot;</span> <span class="pre">htmldocs</span></code> the HTML of <em>The Linux driver implementer’s
+API guide</em> is build.  The sphinx extensions for this build, which are shipped by
+the kernel source tree, are placed in the <code class="docutils literal"><span class="pre">Documentation/sphinx</span></code> folder.</p>
+<p>If you like to see how the LinuxDoc extensions build your kernel documentation
+(HTML, man, …) install LinuxDoc and replace the extensions in the
+<code class="docutils literal"><span class="pre">conf.py</span></code>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">From the user’s scope of view, most of the extensions work like the one from
+the kernel source tree. Mainly the <code class="docutils literal"><span class="pre">kernel-doc</span></code> extension from source tree
+is replaced by the <code class="docutils literal"><span class="pre">rstKernelDoc</span></code> Sphinx extension and a <em>man page</em> builder
+is added.  The <code class="docutils literal"><span class="pre">rstKernelDoc</span></code> replacement is a <em>superset</em> with additional
+options <a class="reference internal" href="linuxdoc-howto/kernel-doc-directive.html#kernel-doc-directive"><span class="std std-ref">[ref]</span></a>. The <code class="docutils literal"><span class="pre">rstKernelDoc</span></code> extension
+uses a the kernel-doc parser from the LinuxDoc project.  Compared to the
+kernel-doc parser from the kernel’s source tree (written in Perl), especially
+the sectioning of the reST output is different and the ERROR/WARNING log is
+more strict/verbose.</p>
+</div>
+<p>To get LinuxDoc into your kernel-build I recommend to set up a <a class="reference external" href="https://virtualenv.pypa.io/">virtualenv</a>. The benefit is, that such a environment is
+isolated from your OS and other user-local installations.</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> <span class="nv">$HOME</span>
+$ virtualenv --python<span class="o">=</span>python3 py3env
+</pre></div>
+</div>
+<p>To activate the environment:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> ./py3env/bin/activate
+py3env$ ....
+</pre></div>
+</div>
+<p>From this point on everything runs in the <em>py3env</em>, you will recognized a prompt
+like <code class="docutils literal"><span class="pre">py3env$</span></code>. Now install LinuxDoc, sphinx_rtd_theme and Sphinx-doc
+into your fresh created environment:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>py3env$ pip install <span class="se">\</span>
+   git+http://github.com/return42/linuxdoc.git <span class="se">\</span>
+   sphinx_rtd_theme <span class="se">\</span>
+   Sphinx
+</pre></div>
+</div>
+<p>Thats all, the isolated environment is in <code class="docutils literal"><span class="pre">./py3env</span></code>. If you no longer need
+it, just drop it.</p>
+<p>Next and last step is to patch the Linux kernel source (Makefiles &amp; conf.py) to
+get in use of the LinuxDoc extensions. ATM the linux documentation build is
+heavily WIP. To avoid conflicts I recommend to use Jon’s docs-next (see
+DOCUMENTATION at MAINTAINERS-file):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">lwn</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">linux</span><span class="o">.</span><span class="n">git</span> <span class="n">docs</span><span class="o">-</span><span class="nb">next</span>
+</pre></div>
+</div>
+<p>OK, lets say you have a copy of Jon’s docs-next in <code class="docutils literal"><span class="pre">/share/linux-docs-next</span></code>.
+Download the patch and apply it:</p>
+<ul>
+<li><p class="first"><a class="reference download internal" href="_downloads/patch_linux.patch" download=""><code class="xref download docutils literal"><span class="pre">linux</span> <span class="pre">docs-next</span> <span class="pre">patch</span></code></a> e.g:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ git apply /download/folder/patch_linux.patch
+</pre></div>
+</div>
+</li>
+</ul>
+<p>With the patched kernel sources, you are able to build the HTML and man
+pages. To build the entire documentation use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>py3env$ make htmldocs mandocs
+</pre></div>
+</div>
+<p>Make sure, that your make command runs within the virtualenv (<code class="docutils literal"><span class="pre">py3env</span></code>).  As
+usual the build is placed in <code class="docutils literal"><span class="pre">Documentation/output</span></code> where you will find the
+man pages in a subfolder named <code class="docutils literal"><span class="pre">man</span></code>.  Building the entire documentation takes
+a long time, if you just wish to build e.g <em>The Linux driver implementer’s API
+guide</em> use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>py3env$ make SPHINXDIRS=&quot;driver-api&quot; htmldocs mandocs
+</pre></div>
+</div>
+<p>The output is now placed into <code class="docutils literal"><span class="pre">Documentation/output/driver-api</span></code>.</p>
+<p>Some comments about the build:</p>
+<p>ATM the PDF build is fragile and mostly broken. Both, the <em>linux kernel
+documentation</em> and the LinuxDoc have problems to build PDF. If you give it a
+try use target <code class="docutils literal"><span class="pre">pdfdocs</span></code>.</p>
+<p>The build shows much more log messages, particularly the <em>kernel-doc</em> parser is
+more strict and spits out a lot of warnings and errors to improve your
+kernel-doc comments in the source code.</p>
+<p>A <em>Oops</em> is inserted in the output (e.g. HTML) when the kernel-doc parser
+can’t parse requested documentation. For more details see
+<code class="docutils literal"><span class="pre">kernel_doc_raise_error</span></code> in the <a class="reference internal" href="linuxdoc-howto/kernel-doc-directive.html#kernel-doc-config"><span class="std std-ref">kernel-doc config</span></a>.</p>
+<p>If you want to refer all <em>Oops</em> messages in front of the document add the
+<em>todolist</em> directive to your <code class="docutils literal"><span class="pre">index.rst</span></code> file. E.g. for driver-api:</p>
+<div class="highlight-diff"><div class="highlight"><pre><span></span><span class="gh">diff --git a/Documentation/driver-api/index.rst b/Documentation/driver-api/index.rst</span>
+<span class="gh">index 3cf1ace..5aa6f87 100644</span>
+<span class="gd">--- a/Documentation/driver-api/index.rst</span>
+<span class="gi">+++ b/Documentation/driver-api/index.rst</span>
+<span class="gu">@@ -51,3 +51,5 @@ available subsections can be seen below.</span>
+    =======
+
+    * :ref:`genindex`
+<span class="gi">+</span>
+<span class="gi">+   .. todolist::</span>
+</pre></div>
+</div>
+<p>The patch linked above already contains some <code class="docutils literal"><span class="pre">todolist</span></code> directives. Build the
+HTML, open the index.html and scroll to the bottom and you will see for what
+Oops are good.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="linuxdoc-api/linuxdoc.html" class="btn btn-neutral float-right" title="linuxdoc package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cmd-line.html" class="btn btn-neutral" title="Command line tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

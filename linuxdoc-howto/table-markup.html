@@ -1,0 +1,823 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>About tables &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="LinuxDoc HowTo" href="index.html"/>
+        <link rel="next" title="Customized sphinx c-domain" href="cdomain.html"/>
+        <link rel="prev" title="Scalable figure and image handling" href="kfigure.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">LinuxDoc HowTo</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-intro.html">kernel-doc introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-syntax.html">kernel-doc syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-directive.html">kernel-doc in reST documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-doc-examples.html">kernel-doc examples &amp; tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST-kernel-doc-mode.html">reST kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vintage-kernel-doc-mode.html">Vintage kernel-doc mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kfigure.html">Scalable figure and image handling</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">About tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intro">Intro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ascii-art-tables">ASCII-art tables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simple-tables">Simple tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grid-tables">Grid tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#list-table-directives">List table directives</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#list-table">list-table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flat-table">flat-table</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#csv-table">CSV table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nested-tables">Nested Tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raw-html-tables">raw HTML tables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdomain.html">Customized sphinx c-domain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="man-pages.html">man pages from kernel-doc comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel-include-directive.html">Use kernel-include in reST documents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">LinuxDoc HowTo</a> &raquo;</li>
+        
+      <li>About tables</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-howto/table-markup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-tables">
+<span id="xref-table-concerns"></span><h1>About tables<a class="headerlink" href="#about-tables" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="#rest-flat-table"><span class="std std-ref">flat-table</span></a> directive is the most <strong>diff friendly</strong> table
+markup, it is preferred in the Linux kernel tree.</p>
+</div>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>Internally, the docutils uses a representation according to the <a class="reference external" href="https://www.oasis-open.org/specs/tm9901.html">OASIS XML
+Exchange Table Model</a> (same as DocBook). The <em>OASIS Table Model</em> gives a huge
+bandwidth of possibilities to form tables. This often seduce authors to force a
+specific layout. The misuse of tables in this manner is not recommended, it
+breaks the separation of <em>presentation from content</em> which most often ends in
+various problems in the range of output formats. Tables (and pre-formated text
+like source code listings) should be used advisedly. In a HTML viewer, the
+horizontal and vertical expansion is handled by a scrollbar. On print medias
+(paper / pdf) there is no scrollbar and automatically page-breaking a table or
+line-breaking a pre-formated text in the layout process ends mostly in unwanted
+results.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Tables and pre-formated text in itself violate the separation of <em>presentation
+from content</em>, but we will never be able to entirely renounce them. Use them
+with care, if your content should be rendered well, in the wide variation of
+output formats.</p>
+</div>
+</div>
+<div class="section" id="ascii-art-tables">
+<h2>ASCII-art tables<a class="headerlink" href="#ascii-art-tables" title="Permalink to this headline">¶</a></h2>
+<p>ASCII-art tables might be comfortable for readers of the text-files, but they
+have huge disadvantages in the creation and modifying. First, they are hard to
+edit. Think about adding a row or a column to a ASCII-art table or adding a
+paragraph in a cell, it is a nightmare on big tables. Second the diff of
+modifying ASCII-art tables is not meaningful, e.g. widening a cell generates a
+diff in which also changes are included, which are only ascribable to the
+ASCII-art (see also <a class="reference internal" href="#list-table-directives"><span class="std std-ref">List table directives</span></a>).</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.emacswiki.org/emacs/TableMode">Emacs Table Mode</a></li>
+<li><a class="reference external" href="http://www.tablesgenerator.com/text_tables">Online Tables Generator</a></li>
+</ul>
+<div class="section" id="simple-tables">
+<h3>Simple tables<a class="headerlink" href="#simple-tables" title="Permalink to this headline">¶</a></h3>
+<p>simple tables allow <em>colspan</em> but not <em>rowspan</em>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>====== ====== ======
+    Inputs    Output
+------------- ------
+A      B      A or B
+====== ====== ======
+False
+--------------------
+True
+--------------------
+True   False  True
+------ ------ ------
+False  True
+====== =============
+</pre></div>
+</div>
+<p>Rendered as:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Inputs</th>
+<th class="head">Output</th>
+</tr>
+<tr class="row-even"><th class="head">A</th>
+<th class="head">B</th>
+<th class="head">A or B</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td colspan="3">False</td>
+</tr>
+<tr class="row-even"><td colspan="3">True</td>
+</tr>
+<tr class="row-odd"><td>True</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="row-even"><td>False</td>
+<td colspan="2">True</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="grid-tables">
+<h3>Grid tables<a class="headerlink" href="#grid-tables" title="Permalink to this headline">¶</a></h3>
+<p>grid tables allow colspan <em>colspan</em> and <em>rowspan</em>:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span>+------------+------------+-----------+
+<span class="o">|</span> Header 1   | Header 2   | Header 3  |
++============+============+===========+
+<span class="o">|</span> body row 1 | column 2   | column 3  |
++------------+------------+-----------+
+<span class="o">|</span> body row 2 | Cells may span columns.|
++------------+------------+-----------+
+<span class="o">|</span> body row 3 | Cells may  | - Cells   |
++------------+ span rows. | - contain |
+<span class="o">|</span> body row 4 |            | - blocks. |
++------------+------------+-----------+
+</pre></div>
+</div>
+<p>Rendered as:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="34%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Header 1</th>
+<th class="head">Header 2</th>
+<th class="head">Header 3</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>body row 1</td>
+<td>column 2</td>
+<td>column 3</td>
+</tr>
+<tr class="row-odd"><td>body row 2</td>
+<td colspan="2">Cells may span columns.</td>
+</tr>
+<tr class="row-even"><td>body row 3</td>
+<td rowspan="2">Cells may
+span rows.</td>
+<td rowspan="2"><ul class="first last simple">
+<li>Cells</li>
+<li>contain</li>
+<li>blocks.</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>body row 4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="list-table-directives">
+<span id="id1"></span><h2>List table directives<a class="headerlink" href="#list-table-directives" title="Permalink to this headline">¶</a></h2>
+<p>The <em>list table</em> formats are double stage list, compared to the ASCII-art they
+might not be as comfortable for readers of the text-files. Their advantage is,
+that they are easy to create/modify and that the diff of a modification is much
+more meaningful, because it is limited to the modified content.</p>
+<div class="section" id="list-table">
+<span id="rest-list-table"></span><h3>list-table<a class="headerlink" href="#list-table" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">list-tables</span></code> has no ability to <em>colspan</em> nor <em>rowspan</em>:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">list-table</span><span class="p">::</span> table title
+   <span class="nc">:header-rows:</span> <span class="nf">1</span>
+   <span class="nc">:stub-columns:</span> <span class="nf">1</span>
+
+   <span class="m">*</span> - ..
+     <span class="m">-</span> head col 1
+     <span class="m">-</span> head col 2
+
+   <span class="m">*</span> - stub col row 1
+     <span class="m">-</span> column
+     <span class="m">-</span> column
+
+   <span class="m">*</span> - stub col row 2
+     <span class="m">-</span> column
+     <span class="m">-</span> column
+
+   <span class="m">*</span> - stub col row 3
+     <span class="m">-</span> column
+     <span class="m">-</span> column
+</pre></div>
+</div>
+<p>Rendered as:</p>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">table title</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head stub"></th>
+<th class="head">head col 1</th>
+<th class="head">head col 2</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><th class="stub">stub col row 1</th>
+<td>column</td>
+<td>column</td>
+</tr>
+<tr class="row-odd"><th class="stub">stub col row 2</th>
+<td>column</td>
+<td>column</td>
+</tr>
+<tr class="row-even"><th class="stub">stub col row 3</th>
+<td>column</td>
+<td>column</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="flat-table">
+<span id="rest-flat-table"></span><h3>flat-table<a class="headerlink" href="#flat-table" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">flat-table</span></code> (<code class="xref py py-class docutils literal"><span class="pre">FlatTable</span></code>) is a double-stage list similar
+to the <code class="docutils literal"><span class="pre">list-table</span></code> with some additional features:</p>
+<ul class="simple">
+<li><em>column-span</em>: with the role <code class="docutils literal"><span class="pre">cspan</span></code> a cell can be extended through
+additional columns</li>
+<li><em>row-span</em>: with the role <code class="docutils literal"><span class="pre">rspan</span></code> a cell can be extended through
+additional rows</li>
+<li><em>auto-span</em> rightmost cell of a table row over the missing cells on the right
+side of that table-row.  With Option <code class="docutils literal"><span class="pre">:fill-cells:</span></code> this behavior can
+changed from <em>auto span</em> to <em>auto fill</em>, which automatically inserts (empty)
+cells instead of spanning the last cell.</li>
+</ul>
+<dl class="docutils">
+<dt>options:</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">[int] count of header rows</td>
+</tr>
+<tr class="field-even field"><th class="field-name">stub-columns:</th><td class="field-body">[int] count of stub columns</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">widths:</th><td class="field-body">[[int] [int] … ] widths of columns</td>
+</tr>
+<tr class="field-even field"><th class="field-name">fill-cells:</th><td class="field-body">instead of auto-span missing cells, insert missing cells</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>roles:</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">cspan:</th><td class="field-body">[int] additional columns (<em>morecols</em>)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rspan:</th><td class="field-body">[int] additional rows (<em>morerows</em>)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<p>The example below shows how to use this markup.  The first level of the staged
+list is the <em>table-row</em>. In the <em>table-row</em> there is only one markup allowed,
+the list of the cells in this <em>table-row</em>. Exception are <em>comments</em> ( <code class="docutils literal"><span class="pre">..</span></code> )
+and <em>targets</em> (e.g. a ref to <a class="reference internal" href="#row-body-2"><span class="std std-ref">row 2 of table’s body</span></a>).</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">flat-table</span><span class="p">::</span> table title
+   <span class="nc">:header-rows:</span> <span class="nf">2</span>
+   <span class="nc">:stub-columns:</span> <span class="nf">1</span>
+   <span class="nc">:widths:</span> <span class="nf">1 1 1 1 2</span>
+
+   <span class="m">*</span> - <span class="na">:rspan:</span><span class="nv">`1`</span> head / stub
+     <span class="m">-</span> <span class="na">:cspan:</span><span class="nv">`3`</span> head 1.1-4
+
+   <span class="m">*</span> - head 2.1
+     <span class="m">-</span> head 2.2
+     <span class="m">-</span> head 2.3
+     <span class="m">-</span> head 2.4
+
+   <span class="m">*</span> .. row body 1 / this is a comment
+
+     <span class="m">-</span> row 1
+     <span class="m">-</span> <span class="na">:rspan:</span><span class="nv">`2`</span> cell 1-3.1
+     <span class="m">-</span> cell 1.2
+     <span class="m">-</span> cell 1.3
+     <span class="m">-</span> cell 1.4
+
+   <span class="m">*</span> .. Comments and targets are allowed on <span class="ge">*table-row*</span> stage.
+<span class="p">     ..</span> <span class="nt">_`row body 2`:</span>
+
+     <span class="m">-</span> row 2
+     <span class="m">-</span> cell 2.2
+     <span class="m">-</span> <span class="na">:rspan:</span><span class="nv">`1`</span> <span class="na">:cspan:</span><span class="nv">`1`</span>
+       cell 2.3 with a span over
+
+       <span class="m">*</span> col 3-4 &amp;
+       <span class="m">*</span> row 2-3
+
+   <span class="m">*</span> - row 3
+     <span class="m">-</span> cell 3.2
+
+   <span class="m">*</span> - row 4
+     <span class="m">-</span> cell 4.1
+     <span class="m">-</span> cell 4.2
+     <span class="m">-</span> cell 4.3
+     <span class="m">-</span> cell 4.4
+
+   <span class="m">*</span> - row 5
+     <span class="m">-</span> cell 5.1 with automatic span to rigth end
+
+   <span class="m">*</span> - row 6
+     <span class="m">-</span> cell 6.1
+     <span class="m">-</span> ..
+</pre></div>
+</div>
+<p>Rendered as:</p>
+<blockquote>
+<div><table border="1" class="docutils" id="id3">
+<caption><span class="caption-text">table title</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head stub" rowspan="2"> head / stub</th>
+<th class="head" colspan="4"> head 1.1-4</th>
+</tr>
+<tr class="row-even"><th class="head stub">head 2.1</th>
+<th class="head">head 2.2</th>
+<th class="head">head 2.3</th>
+<th class="head">head 2.4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><th class="stub">row 1</th>
+<td rowspan="3"> cell 1-3.1</td>
+<td>cell 1.2</td>
+<td>cell 1.3</td>
+<td>cell 1.4</td>
+</tr>
+<tr class="row-even"><th class="stub">row 2</th>
+<td>cell 2.2</td>
+<td colspan="2" rowspan="2"><p class="first" id="row-body-2"> 
+cell 2.3 with a span over</p>
+<ul class="last simple">
+<li>col 3-4 &amp;</li>
+<li>row 2-3</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub">row 3</th>
+<td>cell 3.2</td>
+</tr>
+<tr class="row-even"><th class="stub">row 4</th>
+<td>cell 4.1</td>
+<td>cell 4.2</td>
+<td>cell 4.3</td>
+<td>cell 4.4</td>
+</tr>
+<tr class="row-odd"><th class="stub">row 5</th>
+<td colspan="4">cell 5.1 with automatic span to rigth end</td>
+</tr>
+<tr class="row-even"><th class="stub">row 6</th>
+<td>cell 6.1</td>
+<td colspan="3"></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="csv-table">
+<h2>CSV table<a class="headerlink" href="#csv-table" title="Permalink to this headline">¶</a></h2>
+<p>CSV table might be the choice if you want to include CSV-data from a outstanding
+(build) process into your documentation.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">csv-table</span><span class="p">::</span> table title
+   <span class="nc">:header:</span> <span class="nf">, Header1, Header2</span>
+   <span class="nc">:widths:</span> <span class="nf">15, 10, 30</span>
+   <span class="nc">:stub-columns:</span> <span class="nf">1</span>
+   <span class="nc">:file:</span> <span class="nf">csv_table.txt</span>
+</pre></div>
+</div>
+<p>Content of file <code class="docutils literal"><span class="pre">csv_table.txt</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">stub</span> <span class="n">col</span> <span class="n">row</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="s2">&quot;loremLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</span>
+<span class="n">eirmod</span> <span class="n">tempor</span> <span class="n">invidunt</span> <span class="n">ut</span> <span class="n">labore</span> <span class="n">et</span> <span class="n">dolore</span> <span class="n">magna</span> <span class="n">aliquyam</span> <span class="n">erat</span><span class="p">,</span> <span class="n">sed</span> <span class="n">diam</span>
+<span class="n">voluptua</span><span class="o">.</span><span class="s2">&quot;</span>
+<span class="n">stub</span> <span class="n">col</span> <span class="n">row</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;At vero eos et accusam et justo duo dolores et ea rebum. Stet clita</span>
+<span class="n">kasd</span> <span class="n">gubergren</span><span class="p">,</span> <span class="n">no</span> <span class="n">sea</span> <span class="n">takimata</span> <span class="n">sanctus</span> <span class="n">est</span> <span class="n">Lorem</span> <span class="n">ipsum</span> <span class="n">dolor</span> <span class="n">sit</span> <span class="n">amet</span><span class="o">.</span><span class="s2">&quot;, column</span>
+<span class="n">stub</span> <span class="n">col</span> <span class="n">row</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">column</span>
+</pre></div>
+</div>
+<p>Rendered as:</p>
+<table border="1" class="colwidths-given docutils" id="id4">
+<caption><span class="caption-text">table title</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="27%" />
+<col width="18%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head stub">&#160;</th>
+<th class="head">Header1</th>
+<th class="head">Header2</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><th class="stub">stub col row 1</th>
+<td>column</td>
+<td>loremLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua.</td>
+</tr>
+<tr class="row-odd"><th class="stub">stub col row 1</th>
+<td>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
+kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</td>
+<td>column</td>
+</tr>
+<tr class="row-even"><th class="stub">stub col row 1</th>
+<td>column</td>
+<td>column</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="nested-tables">
+<h2>Nested Tables<a class="headerlink" href="#nested-tables" title="Permalink to this headline">¶</a></h2>
+<p>Nested tables are ugly, don’t use them! This part here is only to show what you
+should never do. They are ugly because they cause huge problems in many output
+formats and there is always no need for nested tables.</p>
+<div class="highlight-rst"><div class="highlight"><pre><span></span>+-----------+----------------------------------------------------+
+<span class="o">|</span> W/NW cell | N/NE cell                                          |
+<span class="o">|</span>           +-------------+--------------------------+-----------+
+<span class="o">|</span>           | W/NW center | N/NE center              | E/SE cell |
+<span class="o">|</span>           |             +------------+-------------+           |
+<span class="o">|</span>           |             | +--------+ | E/SE center |           |
+<span class="o">|</span>           |             | | nested | |             |           |
+<span class="o">|</span>           |             | +--------+ |             |           |
+<span class="o">|</span>           |             | | table  | |             |           |
+<span class="o">|</span>           |             | +--------+ |             |           |
+<span class="o">|</span>           +-------------+------------+             |           |
+<span class="o">|</span>           | S/SE center              |             |           |
++-----------+--------------------------+-------------+           |
+<span class="o">|</span> S/SW cell                                          |           |
++----------------------------------------------------+-----------+
+</pre></div>
+</div>
+<p>Rendered as: Not supported by all sphinx-builders, don’t use nested tables!!!</p>
+</div>
+<div class="section" id="raw-html-tables">
+<h2>raw HTML tables<a class="headerlink" href="#raw-html-tables" title="Permalink to this headline">¶</a></h2>
+<p>If HTML is the only format you want to render, you could use a raw-import of a
+HTML table markup. But be aware, this breaks the separation of <em>presentation from
+content</em>. HTML-Tables are only rendered within a HTML output.</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;wy-table-responsive&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;docutils&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;font-weight: bold;&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Owner Module/Drivers<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Group<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Property Name<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Type<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Property Values<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Object attached<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Description/Restrictions<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">rowspan</span><span class="o">=</span><span class="s">&quot;4&quot;</span><span class="p">&gt;</span>DRM<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Generic<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>&quot;rotation&quot;<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>BITMASK<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{ 0, &quot;rotate-0&quot; }, { 1, &quot;rotate-90&quot; }, { 2, &quot;rotate-180&quot; }, { 3,
+        &quot;rotate-270&quot; }, { 4, &quot;reflect-x&quot; }, { 5, &quot;reflect-y&quot; }<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>CRTC, Plane<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>rotate-(degrees) rotates the image by the specified amount in
+       degrees in counter clockwise direction. reflect-x and reflect-y
+       reflects the image along the specified axis prior to rotation<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span> <span class="na">rowspan</span><span class="o">=</span><span class="s">&quot;3&quot;</span><span class="p">&gt;</span>Connector<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>&quot;EDID&quot;<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>BLOB | IMMUTABLE<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>0<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Connector<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Contains id of edid blob ptr object.<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>&quot;DPMS&quot;<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>ENUM<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{ &quot;On&quot;, &quot;Standby&quot;, &quot;Suspend&quot;, &quot;Off&quot; }<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Connector<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Contains DPMS operation mode value.<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>&quot;PATH&quot;<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>BLOB | IMMUTABLE<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>0<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Connector<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Contains topology path to a connector.<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="wy-table-responsive">
+<table class="docutils">
+  <thead>
+    <tr style="font-weight: bold;">
+      <td>Owner Module/Drivers</td>
+      <td>Group</td>
+      <td>Property Name</td>
+      <td>Type</td>
+      <td>Property Values</td>
+      <td>Object attached</td>
+      <td>Description/Restrictions</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4">DRM</td>
+      <td>Generic</td>
+      <td>"rotation"</td>
+      <td>BITMASK</td>
+      <td>{ 0, "rotate-0" }, { 1, "rotate-90" }, { 2, "rotate-180" }, { 3,
+        "rotate-270" }, { 4, "reflect-x" }, { 5, "reflect-y" }</td>
+      <td>CRTC, Plane</td>
+      <td>rotate-(degrees) rotates the image by the specified amount in
+       degrees in counter clockwise direction. reflect-x and reflect-y
+       reflects the image along the specified axis prior to rotation</td>
+    </tr>
+
+    <tr>
+      <td rowspan="3">Connector</td>
+      <td>"EDID"</td>
+      <td>BLOB | IMMUTABLE</td>
+      <td>0</td>
+      <td>Connector</td>
+      <td>Contains id of edid blob ptr object.</td>
+    </tr>
+
+    <tr>
+      <td>"DPMS"</td>
+      <td>ENUM</td>
+      <td>{ "On", "Standby", "Suspend", "Off" }</td>
+      <td>Connector</td>
+      <td>Contains DPMS operation mode value.</td>
+    </tr>
+
+    <tr>
+      <td>"PATH"</td>
+      <td>BLOB | IMMUTABLE</td>
+      <td>0</td>
+      <td>Connector</td>
+      <td>Contains topology path to a connector.</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cdomain.html" class="btn btn-neutral float-right" title="Customized sphinx c-domain" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kfigure.html" class="btn btn-neutral" title="Scalable figure and image handling" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

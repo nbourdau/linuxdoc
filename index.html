@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LinuxDoc &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="#"/>
+        <link rel="next" title="Install LinuxDoc" href="install.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="linuxdoc-api/linuxdoc.html">linuxdoc package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>LinuxDoc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linuxdoc">
+<span id="id1"></span><h1>LinuxDoc<a class="headerlink" href="#linuxdoc" title="Permalink to this headline">¶</a></h1>
+<p>The LinuxDoc library contains <a class="reference external" href="http://www.sphinx-doc.org/">sphinx-doc</a> extensions and command line tools to
+extract documentation from C/C++ source file comments. Even if this project
+started in context of the Linux-Kernel documentation, you can use these
+extensions in common <a class="reference external" href="http://www.sphinx-doc.org/">sphinx-doc</a> projects. LinuxDoc is hosted at github:
+<a class="reference external" href="https://github.com/return42/linuxdoc">https://github.com/return42/linuxdoc</a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+</div>
+<div class="section" id="linuxdoc-feature-overview">
+<h2>LinuxDoc feature overview<a class="headerlink" href="#linuxdoc-feature-overview" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>kernel-doc</dt>
+<dd><p class="first">A “C” friendly markup, the parser, the Sphinx-doc extension and some tools.
+The kernel-doc markup embeds documentation within the C source files, using a
+few simple conventions. The parser grabs the documentation from source and
+generates proper reST <a class="reference internal" href="linuxdoc-howto/kernel-doc-intro.html#kernel-doc-intro"><span class="std std-ref">[ref]</span></a>.  The parser is written
+in Python and its API is used by the corresponding Sphinx-doc extension.
+Command line tools shipped with:</p>
+<ul class="last simple">
+<li>kernel-autodoc: Suitable for automatic API documentation <a class="reference internal" href="cmd-line.html#kernel-autodoc"><span class="std std-ref">[ref]</span></a>.</li>
+<li>kernel-lintdoc: <em>Lint</em> kernel-doc comments from source code <a class="reference internal" href="cmd-line.html#kernel-lintdoc"><span class="std std-ref">[ref]</span></a>.</li>
+<li>kernel-doc: A command line interface for kernel-doc’s parser API <a class="reference internal" href="cmd-line.html#kernel-doc-cmd"><span class="std std-ref">[ref]</span></a>.</li>
+</ul>
+</dd>
+<dt>kernel-doc-man</dt>
+<dd>A man page builder. An extension/replacement of the common Sphinx-doc <em>man</em>
+builder also integrated in the kernel-doc Sphinx-doc extension <a class="reference internal" href="linuxdoc-howto/man-pages.html#man-pages"><span class="std std-ref">[ref]</span></a>.</dd>
+<dt>flat-table</dt>
+<dd>A diff and author friendly list-table replacement with <em>column-span</em>,
+<em>row-span</em> and <em>auto-span</em> <a class="reference internal" href="linuxdoc-howto/table-markup.html#rest-flat-table"><span class="std std-ref">[ref]</span></a>.</dd>
+<dt>cdomain</dt>
+<dd>A customized <a class="reference external" href="http://www.sphinx-doc.org/en/stable/domains.html#cross-referencing-c-constructs">Sphinx’s C Domain</a> extension. Suitable for demanding projects
+<a class="reference internal" href="linuxdoc-howto/cdomain.html#customized-c-domain"><span class="std std-ref">[ref]</span></a>.</dd>
+<dt>kfigure</dt>
+<dd>Sphinx extension which implements scalable image handling. Simplifies image
+handling from the author’s POV. Wins where Sphinx-doc image handling
+fails. Whatever graphic tools available on your build host, you always get the
+best output-format. Graphviz’s DOT format included <a class="reference internal" href="linuxdoc-howto/kfigure.html#kfigure"><span class="std std-ref">[ref]</span></a>.</dd>
+<dt>kernel-include</dt>
+<dd>A replacement for the <code class="docutils literal"><span class="pre">include</span></code> reST directive. The directive expand
+environment variables in the path name and allows to include files from
+arbitrary locations ref:<cite>[ref] &lt;kernel-include-directive&gt;</cite>.</dd>
+</dl>
+</div>
+<div class="section" id="remarks-for-kernel-developer">
+<h2>Remarks for Kernel developer<a class="headerlink" href="#remarks-for-kernel-developer" title="Permalink to this headline">¶</a></h2>
+<p>Some of the LinuxDoc features are already a part of the kernel source others not
+(yet). E.g. the Sphinx-doc extensions flat-table, cdomain, kfigure and
+kernel-include are merged into Kernel’s source tree. On the other side, e.g. for
+parsing kernel-doc comments, the Linux Kernel build process uses a Perl scripts
+while LinuxDoc brings a python module with a kernel-doc parser. With this, the
+documentation build becomes more reliable, flexible and faster.  There is a
+patch <a class="reference internal" href="linux.html#patch-linux-kernel"><span class="std std-ref">[ref]</span></a> for Kernel’s sources available with you
+can use LinuxDoc when building the Kernel (and its documentation).</p>
+</div>
+<div class="section" id="known-applications">
+<h2>Known applications<a class="headerlink" href="#known-applications" title="Permalink to this headline">¶</a></h2>
+<p>There is a <em>POC</em> which made use of LinuxDoc.  The <em>POC</em> demonstrates and tests
+some alternative concepts for the Linux-Kernel documentation.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/return42/sphkerneldoc">https://github.com/return42/sphkerneldoc</a> for the output see</li>
+<li><a class="reference external" href="https://h2626237.stratoserver.net/kernel">https://h2626237.stratoserver.net/kernel</a></li>
+</ul>
+</div>
+<div class="section" id="source-code">
+<h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="linuxdoc-api/linuxdoc.html">linuxdoc package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="linuxdoc-api/linuxdoc.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linuxdoc-api/linuxdoc.html#module-linuxdoc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="Install LinuxDoc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>linuxdoc.cdomain module &mdash; LinuxDoc 20170614 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="LinuxDoc 20170614 documentation" href="../index.html"/>
+        <link rel="up" title="linuxdoc package" href="linuxdoc.html"/>
+        <link rel="next" title="linuxdoc.grep_doc module" href="linuxdoc.grep_doc.html"/>
+        <link rel="prev" title="linuxdoc.autodoc module" href="linuxdoc.autodoc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LinuxDoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                20170614
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Install LinuxDoc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linuxdoc-howto/index.html">LinuxDoc HowTo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cmd-line.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../linux.html">Patch Linux Kernel Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="linuxdoc.html">linuxdoc package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="linuxdoc.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.autodoc.html">linuxdoc.autodoc module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">linuxdoc.cdomain module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cdomain">cdomain</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.grep_doc.html">linuxdoc.grep_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_doc.html">linuxdoc.kernel_doc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kernel_include.html">linuxdoc.kernel_include module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.kfigure.html">linuxdoc.kfigure module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.lint.html">linuxdoc.lint module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.manKernelDoc.html">linuxdoc.manKernelDoc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstFlatTable.html">linuxdoc.rstFlatTable module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linuxdoc.rstKernelDoc.html">linuxdoc.rstKernelDoc module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="linuxdoc.html#module-linuxdoc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LinuxDoc</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="linuxdoc.html">linuxdoc package</a> &raquo;</li>
+        
+      <li>linuxdoc.cdomain module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/linuxdoc-api/linuxdoc.cdomain.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-linuxdoc.cdomain">
+<span id="linuxdoc-cdomain-module"></span><h1>linuxdoc.cdomain module<a class="headerlink" href="#module-linuxdoc.cdomain" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cdomain">
+<h2>cdomain<a class="headerlink" href="#cdomain" title="Permalink to this headline">¶</a></h2>
+<p>Replacement for the sphinx c-domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">copyright:</th><td class="field-body">Copyright (C) 2016  Markus Heiser</td>
+</tr>
+<tr class="field-even field"><th class="field-name">license:</th><td class="field-body">GPL Version 2, June 1991 see Linux/COPYING for details.</td>
+</tr>
+</tbody>
+</table>
+<p>List of customizations:</p>
+<ul>
+<li><p class="first">Moved the <em>duplicate C object description</em> warnings for function
+declarations in the nitpicky mode. See Sphinx documentation for
+the config values for <code class="docutils literal"><span class="pre">nitpick</span></code> and <code class="docutils literal"><span class="pre">nitpick_ignore</span></code>.</p>
+</li>
+<li><p class="first">Add option ‘name’ to the “c:function:” directive.  With option ‘name’ the
+ref-name of a function can be modified. E.g.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">c</span><span class="p">:</span><span class="n">function</span><span class="p">::</span> <span class="nb">int</span> <span class="n">ioctl</span><span class="p">(</span> <span class="nb">int</span> <span class="n">fd</span><span class="p">,</span> <span class="nb">int</span> <span class="n">request</span> <span class="p">)</span>
+   <span class="p">:</span><span class="n">name</span><span class="p">:</span> <span class="n">VIDIOC_LOG_STATUS</span>
+</pre></div>
+</div>
+<p>The func-name (e.g. ioctl) remains in the output but the ref-name changed
+from ‘ioctl’ to ‘VIDIOC_LOG_STATUS’. The function is referenced by:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>* :c:func:`VIDIOC_LOG_STATUS` or
+* :any:`VIDIOC_LOG_STATUS` (``:any:`` needs sphinx 1.3)
+</pre></div>
+</div>
+</li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li>Handle signatures of function-like macros well. Don’t try to deduce
+arguments types of function-like macros.</li>
+</ul>
+</div></blockquote>
+<dl class="class">
+<dt id="linuxdoc.cdomain.CDomain">
+<em class="property">class </em><code class="descclassname">linuxdoc.cdomain.</code><code class="descname">CDomain</code><span class="sig-paren">(</span><em>env</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#CDomain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.CDomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.domains.c.CDomain</span></code></p>
+<p>C language domain.</p>
+<dl class="attribute">
+<dt id="linuxdoc.cdomain.CDomain.directives">
+<code class="descname">directives</code><em class="property"> = {'macro': &lt;class 'linuxdoc.cdomain.CObject'&gt;, 'member': &lt;class 'linuxdoc.cdomain.CObject'&gt;, 'function': &lt;class 'linuxdoc.cdomain.CObject'&gt;, 'type': &lt;class 'linuxdoc.cdomain.CObject'&gt;, 'var': &lt;class 'linuxdoc.cdomain.CObject'&gt;}</em><a class="headerlink" href="#linuxdoc.cdomain.CDomain.directives" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.cdomain.CDomain.label">
+<code class="descname">label</code><em class="property"> = 'C'</em><a class="headerlink" href="#linuxdoc.cdomain.CDomain.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.cdomain.CDomain.name">
+<code class="descname">name</code><em class="property"> = 'c'</em><a class="headerlink" href="#linuxdoc.cdomain.CDomain.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="linuxdoc.cdomain.CObject">
+<em class="property">class </em><code class="descclassname">linuxdoc.cdomain.</code><code class="descname">CObject</code><span class="sig-paren">(</span><em>name</em>, <em>arguments</em>, <em>options</em>, <em>content</em>, <em>lineno</em>, <em>content_offset</em>, <em>block_text</em>, <em>state</em>, <em>state_machine</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#CObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.CObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.domains.c.CObject</span></code></p>
+<p>Description of a C language object.</p>
+<dl class="method">
+<dt id="linuxdoc.cdomain.CObject.add_target_and_index">
+<code class="descname">add_target_and_index</code><span class="sig-paren">(</span><em>name</em>, <em>sig</em>, <em>signode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#CObject.add_target_and_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.CObject.add_target_and_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="linuxdoc.cdomain.CObject.get_index_text">
+<code class="descname">get_index_text</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#CObject.get_index_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.CObject.get_index_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="linuxdoc.cdomain.CObject.handle_func_like_macro">
+<code class="descname">handle_func_like_macro</code><span class="sig-paren">(</span><em>sig</em>, <em>signode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#CObject.handle_func_like_macro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.CObject.handle_func_like_macro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles signatures of function-like macros.</p>
+<p>If the objtype is ‘function’ and the the signature <code class="docutils literal"><span class="pre">sig</span></code> is a
+function-like macro, the name of the macro is returned. Otherwise
+<code class="docutils literal"><span class="pre">False</span></code> is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="linuxdoc.cdomain.CObject.handle_signature">
+<code class="descname">handle_signature</code><span class="sig-paren">(</span><em>sig</em>, <em>signode</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#CObject.handle_signature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.CObject.handle_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a C signature into RST nodes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.cdomain.CObject.is_function_like_macro">
+<code class="descname">is_function_like_macro</code><em class="property"> = False</em><a class="headerlink" href="#linuxdoc.cdomain.CObject.is_function_like_macro" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="linuxdoc.cdomain.CObject.option_spec">
+<code class="descname">option_spec</code><em class="property"> = {'name': &lt;function unchanged&gt;}</em><a class="headerlink" href="#linuxdoc.cdomain.CObject.option_spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="linuxdoc.cdomain.setup">
+<code class="descclassname">linuxdoc.cdomain.</code><code class="descname">setup</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/linuxdoc/cdomain.html#setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#linuxdoc.cdomain.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="linuxdoc.grep_doc.html" class="btn btn-neutral float-right" title="linuxdoc.grep_doc module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="linuxdoc.autodoc.html" class="btn btn-neutral" title="linuxdoc.autodoc module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017 Markus Heiser.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'20170614',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
