@@ -32,6 +32,7 @@ from sphinx.util.nodes import inline_all_toctrees
 from sphinx.writers.manpage import ManualPageWriter
 
 from .kernel_doc import Container
+from .headers import HeadersHint
 
 logger = logging.getLogger(__name__)
 
@@ -160,6 +161,10 @@ class Section2Manpage(Transform):
 
     manTitleOrder = [t for r, t in manTitles]
 
+    def __init__(self, document, hdr_list):
+        super().__init__(document)
+        self.hdr_list = hdr_list
+
     @classmethod
     def sec2man_get_first_child(cls, subtree, *classes):
         for _c in classes:
@@ -249,6 +254,16 @@ class Section2Manpage(Transform):
 
         return sec_by_title
 
+    def _add_headers(self):
+        desc =  addnodes.desc(domain='c')
+
+        for hdr in self.hdr_list:
+            sig = addnodes.desc_signature(domain='c')
+            sig += addnodes.desc_sig_element(text=f'#include <{hdr}>')
+            desc += sig
+
+        return desc
+
     def isolate_synopsis(self, sec_by_title):
         synopsis = None
         c_desc = self.sec2man_get_first_child(self.document[0], addnodes.desc)
@@ -256,6 +271,8 @@ class Section2Manpage(Transform):
             c_desc.parent.remove(c_desc)
             synopsis = nodes.section()
             synopsis += nodes.title(text="synopsis")
+            if self.hdr_list:
+                synopsis += self._add_headers()
             synopsis += c_desc
             sec_by_title["SYNOPSIS"] = sec_by_title.get("SYNOPSIS", []) + [synopsis]
         return sec_by_title
@@ -274,6 +291,9 @@ class Section2Manpage(Transform):
             "typedef",
         ]:
             self.isolate_synopsis(sec_by_title)
+
+        if self.hdr_list:
+            node = sec_by_title.get('SYNOPSIS')
 
         for sec_name in self.manTitleOrder:
             sec_list = sec_by_title.pop(sec_name, [])
@@ -318,6 +338,18 @@ class KernelDocManBuilder(ManualPageBuilder):
         doc_tree += children
         return doc_tree
 
+    def get_preceding_headers_node(self, start_node):
+        # search preceding HeadersHint node
+        parent = start_node.parent
+        if parent is None:
+            return None
+        last_ind = parent.index(start_node)-1
+        for node in parent.children[last_ind:0:-1]:
+            if isinstance(node, HeadersHint):
+                return node
+
+        return self.get_preceding_headers_node(parent)
+
     def write(self, *ignored):  # pylint: disable=overridden-final-method
         if self.config.man_pages:
             # build manpages from config.man_pages as usual
@@ -349,9 +381,10 @@ class KernelDocManBuilder(ManualPageBuilder):
         logger.info(bold("START writing man pages ... "), nonl=True)
 
         for man_parent in man_nodes:
-
+            hdr_node = self.get_preceding_headers_node(man_parent)
+            hdr_list = hdr_node['headers'] if hdr_node else []
             doc_tree = self.get_partial_document(man_parent)
-            Section2Manpage(doc_tree).apply()
+            Section2Manpage(doc_tree, hdr_list).apply()
 
             if not doc_tree.man_info["authors"] and self.config.author:
                 doc_tree.man_info["authors"].append(self.config.author)
